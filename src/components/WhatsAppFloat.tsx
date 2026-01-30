@@ -14,6 +14,7 @@ export default function WhatsAppFloat({
       rel="noreferrer"
       className="fixed bottom-5 right-5 z-50 rounded-full border bg-white px-4 py-3 text-sm font-semibold shadow-md hover:shadow-lg"
       aria-label="WhatsApp"
+      title="WhatsApp"
     >
       WhatsApp
     </a>
