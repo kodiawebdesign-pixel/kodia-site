@@ -13,6 +13,10 @@ pnpm dev
 # or
 bun dev
 ```
+اضافة التعديلات
+git add .
+git commit -m "update"
+git push
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
