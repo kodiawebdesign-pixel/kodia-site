@@ -467,7 +467,7 @@ export default function ContactPage() {
                 <h3 className="text-lg font-bold mb-4">تابعنا على</h3>
                 <div className="flex flex-wrap gap-3">
                   {sameAs?.map((url, idx) => {
-                    let Icon = Globe;
+                    let Icon: any = Globe;
                     if (url.includes('facebook')) Icon = Facebook;
                     else if (url.includes('instagram')) Icon = Instagram;
                     else if (url.includes('linkedin')) Icon = Linkedin;
