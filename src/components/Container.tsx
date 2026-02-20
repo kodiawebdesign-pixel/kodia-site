@@ -1,24 +1,23 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface ContainerProps {
   children: ReactNode;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType; // ✅ Fix: بدل JSX.IntrinsicElements
   size?: "sm" | "md" | "lg" | "xl" | "full";
   noPadding?: boolean;
 }
 
-export default function Container({ 
-  children, 
-  className = "", 
+export default function Container({
+  children,
+  className = "",
   as: Component = "div",
   size = "lg",
-  noPadding = false
+  noPadding = false,
 }: ContainerProps) {
-  
   // تحديد الحجم الأقصى بناءً على الخاصية size
-  const maxWidthClasses = {
+  const maxWidthClasses: Record<NonNullable<ContainerProps["size"]>, string> = {
     sm: "max-w-3xl",
     md: "max-w-4xl",
     lg: "max-w-6xl",
@@ -27,18 +26,11 @@ export default function Container({
   };
 
   // تحديد padding بناءً على noPadding
-  const paddingClasses = noPadding 
-    ? "" 
-    : "px-4 sm:px-6 lg:px-8";
+  const paddingClasses = noPadding ? "" : "px-4 sm:px-6 lg:px-8";
 
   return (
     <Component
-      className={twMerge(
-        "mx-auto w-full",
-        maxWidthClasses[size],
-        paddingClasses,
-        className
-      )}
+      className={twMerge("mx-auto w-full", maxWidthClasses[size], paddingClasses, className)}
     >
       {children}
     </Component>
