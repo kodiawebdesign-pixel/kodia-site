@@ -109,6 +109,7 @@ export default function BlogPage() {
 
   // المقالات المميزة
   const featuredPosts = blogWithImages.filter((post) => post.featured);
+  const featuredPost = featuredPosts[0]; // ✅ Fix: safe access
   const regularPosts = currentPosts.filter((post) => !post.featured);
 
   // متغيرات الحركة
@@ -228,13 +229,15 @@ export default function BlogPage() {
             </div>
 
             {/* عدد النتائج */}
-            <p className="text-center text-sm text-gray-500">{filteredPosts.length} مقالة</p>
+            <p className="text-center text-sm text-gray-500">
+              {filteredPosts.length} مقالة
+            </p>
           </motion.div>
         </Container>
       </section>
 
       {/* المقال المميز (أول مقال) */}
-      {featuredPosts.length > 0 && selectedCategory === "all" && searchQuery === "" && (
+      {featuredPost && selectedCategory === "all" && searchQuery === "" && (
         <section className="py-8">
           <Container>
             <motion.div
@@ -243,7 +246,7 @@ export default function BlogPage() {
               viewport={{ once: true }}
               className="relative group cursor-pointer"
             >
-              <Link href={featuredPosts[0].href}>
+              <Link href={featuredPost.href}>
                 <div className="relative bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl overflow-hidden shadow-2xl">
                   {/* خلفية متحركة */}
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
@@ -259,24 +262,28 @@ export default function BlogPage() {
                       {/* التصنيف */}
                       <span className="inline-flex items-center gap-1 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm mb-4 mr-2">
                         <Tag className="w-3 h-3" />
-                        {featuredPosts[0].category}
+                        {featuredPost.category}
                       </span>
 
                       {/* العنوان */}
-                      <h2 className="text-3xl md:text-4xl font-bold mb-4">{featuredPosts[0].title}</h2>
+                      <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                        {featuredPost.title}
+                      </h2>
 
                       {/* الملخص */}
-                      <p className="text-white/90 mb-6 text-lg">{featuredPosts[0].summary}</p>
+                      <p className="text-white/90 mb-6 text-lg">
+                        {featuredPost.summary}
+                      </p>
 
                       {/* معلومات المقال */}
                       <div className="flex items-center gap-4 text-sm text-white/80 mb-6">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
-                          {featuredPosts[0].date}
+                          {featuredPost.date}
                         </span>
                         <span className="flex items-center gap-1">
                           <Clock className="w-4 h-4" />
-                          {featuredPosts[0].readTime}
+                          {featuredPost.readTime}
                         </span>
                       </div>
 
@@ -306,15 +313,13 @@ export default function BlogPage() {
             viewport={{ once: true, margin: "-50px" }}
             variants={{
               hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.1 },
-              },
+              visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
             }}
             className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {regularPosts.map((post, idx) => {
-              const gradient = categoryColors[post.category] || "from-gray-500 to-gray-600";
+              const gradient =
+                categoryColors[post.category] || "from-gray-500 to-gray-600";
 
               return (
                 <motion.div
@@ -341,7 +346,6 @@ export default function BlogPage() {
 
                         {/* أيقونة المقالة كخلفية مؤقتة */}
                         <div className="absolute inset-0 flex items-center justify-center">
-                          {/* ملاحظة: الكلاس الديناميكي قد لا يتم توليده من Tailwind، لكنه لا يكسر البناء */}
                           <BookOpen className="w-16 h-16 opacity-20 text-gray-400" />
                         </div>
 
@@ -372,7 +376,9 @@ export default function BlogPage() {
                         </h3>
 
                         {/* الملخص */}
-                        <p className="text-sm text-gray-600 mb-3 line-clamp-2">{post.summary || ""}</p>
+                        <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                          {post.summary || ""}
+                        </p>
 
                         {/* معلومات المقال */}
                         <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
@@ -451,7 +457,9 @@ export default function BlogPage() {
               ))}
 
               <button
-                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
                 disabled={currentPage === totalPages}
                 className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
@@ -491,7 +499,9 @@ export default function BlogPage() {
                 className="text-center p-6 bg-white rounded-2xl border border-gray-200 shadow-lg"
               >
                 <stat.icon className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {stat.value}
+                </div>
                 <div className="text-sm text-gray-500">{stat.label}</div>
               </motion.div>
             ))}
@@ -514,7 +524,9 @@ export default function BlogPage() {
             <div className="relative z-10 max-w-2xl mx-auto">
               <Sparkles className="w-12 h-12 mx-auto mb-4 text-yellow-300" />
 
-              <h2 className="text-3xl font-bold mb-4">اشترك في نشرتنا البريدية</h2>
+              <h2 className="text-3xl font-bold mb-4">
+                اشترك في نشرتنا البريدية
+              </h2>
 
               <p className="text-white/90 mb-8">
                 احصل على أحدث المقالات والنصائح والحلول مباشرة في بريدك الإلكتروني
