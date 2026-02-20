@@ -2,22 +2,22 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { siteData } from "@/lib/siteData";
-import { 
-  MessageCircle, 
-  Phone, 
-  Mail, 
+import {
+  MessageCircle,
+  Phone,
+  Mail,
   X,
   ChevronUp,
-  Sparkles,
-  HelpCircle
+  HelpCircle,
 } from "lucide-react";
 
 export default function FloatingActions() {
   const wa = siteData.brand.whatsappLink;
   const tel = `tel:${siteData.brand.phoneE164}`;
   const mail = `mailto:${siteData.brand.email}`;
-  
+
   const [isOpen, setIsOpen] = useState(false);
   const [showHint, setShowHint] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -27,11 +27,13 @@ export default function FloatingActions() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
+
       setLastScrollY(currentScrollY);
     };
 
@@ -45,39 +47,40 @@ export default function FloatingActions() {
     return () => clearTimeout(timer);
   }, []);
 
-  // متغيرات الحركة
-  const containerVariants = {
+  // ✅ متغيرات الحركة (Fix TS: type literal + Variants)
+  const containerVariants: Variants = {
     hidden: { opacity: 0, x: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       x: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 260,
         damping: 20,
-      }
+      },
     },
-    exit: { 
-      opacity: 0, 
+    exit: {
+      opacity: 0,
       x: 20,
-      transition: { duration: 0.2 }
-    }
+      transition: { duration: 0.2 },
+    },
   };
 
-  const buttonVariants = {
+  // ✅ زرار العناصر (function variant) — نثبت type أيضًا
+  const buttonVariants: Variants = {
     hidden: { opacity: 0, scale: 0.5, y: 20 },
     visible: (custom: number) => ({
       opacity: 1,
       scale: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 260,
         damping: 20,
         delay: custom * 0.1,
-      }
+      },
     }),
-    exit: { opacity: 0, scale: 0.5, y: 20 }
+    exit: { opacity: 0, scale: 0.5, y: 20 },
   };
 
   return (
@@ -130,7 +133,9 @@ export default function FloatingActions() {
                 >
                   <Mail className="w-4 h-4" />
                   <span className="text-sm font-medium">بريد</span>
-                  <span className="text-xs opacity-75 hidden sm:inline">| {siteData.brand.email}</span>
+                  <span className="text-xs opacity-75 hidden sm:inline">
+                    | {siteData.brand.email}
+                  </span>
                 </motion.a>
 
                 {/* زر الاتصال */}
@@ -148,7 +153,9 @@ export default function FloatingActions() {
                 >
                   <Phone className="w-4 h-4" />
                   <span className="text-sm font-medium">اتصال</span>
-                  <span className="text-xs opacity-75 hidden sm:inline">| {siteData.brand.phoneDisplay}</span>
+                  <span className="text-xs opacity-75 hidden sm:inline">
+                    | {siteData.brand.phoneDisplay}
+                  </span>
                 </motion.a>
 
                 {/* زر واتساب */}
@@ -168,7 +175,9 @@ export default function FloatingActions() {
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span className="text-sm font-medium">واتساب</span>
-                  <span className="text-xs opacity-75 hidden sm:inline">| رد فوري</span>
+                  <span className="text-xs opacity-75 hidden sm:inline">
+                    | رد فوري
+                  </span>
                 </motion.a>
               </motion.div>
             )}
@@ -176,21 +185,20 @@ export default function FloatingActions() {
 
           {/* الزر الرئيسي (للفتح/الإغلاق) */}
           <motion.button
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setIsOpen((v) => !v)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className={`relative flex items-center justify-center w-14 h-14 rounded-full shadow-xl transition-all ${
-              isOpen 
-                ? "bg-gradient-to-r from-red-600 to-pink-600 rotate-180" 
+              isOpen
+                ? "bg-gradient-to-r from-red-600 to-pink-600 rotate-180"
                 : "bg-gradient-to-r from-blue-600 to-purple-600"
             }`}
+            aria-label={isOpen ? "إغلاق" : "فتح"}
           >
             {/* خلفية متوهجة */}
             <motion.div
               className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 blur-xl opacity-50"
-              animate={{
-                scale: [1, 1.2, 1],
-              }}
+              animate={{ scale: [1, 1.2, 1] }}
               transition={{
                 duration: 2,
                 repeat: Infinity,
@@ -215,21 +223,23 @@ export default function FloatingActions() {
             )}
           </motion.button>
 
-          {/* زر الرجوع للأعلى (يظهر عند التمرير لأسفل) */}
-          {lastScrollY > 300 && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.5 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="w-10 h-10 rounded-full bg-gray-800 text-white shadow-lg flex items-center justify-center hover:bg-gray-700 transition-all"
-              aria-label="الرجوع للأعلى"
-            >
-              <ChevronUp className="w-5 h-5" />
-            </motion.button>
-          )}
+          {/* زر الرجوع للأعلى */}
+          <AnimatePresence>
+            {lastScrollY > 300 && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="w-10 h-10 rounded-full bg-gray-800 text-white shadow-lg flex items-center justify-center hover:bg-gray-700 transition-all"
+                aria-label="الرجوع للأعلى"
+              >
+                <ChevronUp className="w-5 h-5" />
+              </motion.button>
+            )}
+          </AnimatePresence>
         </motion.div>
       )}
     </AnimatePresence>
