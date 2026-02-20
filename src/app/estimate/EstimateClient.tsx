@@ -387,8 +387,7 @@ export default function EstimateClient() {
                 <ul className="space-y-2 mb-6">
                   {pkg.features.map((feature, fidx) => (
                     <li key={`package-${idx}-feature-${fidx}`} className="flex items-center gap-2 text-sm text-gray-600">
-                      <CheckCircle2 className={`w-4 h-4 text-${pkg.gradient.split(' ')[0].replace('from-', '')}`} />
-                      {feature}
+<CheckCircle2 className="w-4 h-4 text-blue-600" />                      {feature}
                     </li>
                   ))}
                 </ul>
