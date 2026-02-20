@@ -20,7 +20,7 @@ import {
   TrendingUp,
   Star,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // أرقام ثابتة للمشاهدات والإعجابات
 const viewCounts = [856, 691, 945, 1102, 768, 534, 1230, 876, 654, 432];
@@ -84,22 +84,21 @@ export default function BlogPage() {
   const q = searchQuery.trim().toLowerCase();
 
   // تصفية المقالات حسب البحث والتصنيف - ✅ إصلاح TypeScript نهائي
-  const filteredPosts = blogWithImages.filter((post) => {
-    const title = (post.title ?? "").toLowerCase();
-    const summary = (post.summary ?? "").toLowerCase();
-    const category = (post.category ?? "").toLowerCase();
+  const filteredPosts = useMemo(() => {
+    return blogWithImages.filter((post) => {
+      const title = (post.title ?? "").toLowerCase();
+      const summary = (post.summary ?? "").toLowerCase();
+      const category = (post.category ?? "").toLowerCase();
 
-    const matchesSearch =
-      q === "" ||
-      title.includes(q) ||
-      summary.includes(q) ||
-      category.includes(q);
+      const matchesSearch =
+        q === "" || title.includes(q) || summary.includes(q) || category.includes(q);
 
-    const matchesCategory =
-      selectedCategory === "all" || post.category === selectedCategory;
+      const matchesCategory =
+        selectedCategory === "all" || post.category === selectedCategory;
 
-    return matchesSearch && matchesCategory;
-  });
+      return matchesSearch && matchesCategory;
+    });
+  }, [q, selectedCategory]);
 
   // حساب المقالات للصفحة الحالية
   const indexOfLastPost = currentPage * postsPerPage;
@@ -109,7 +108,7 @@ export default function BlogPage() {
 
   // المقالات المميزة
   const featuredPosts = blogWithImages.filter((post) => post.featured);
-  const featuredPost = featuredPosts[0]; // ✅ Fix: safe access
+  const featuredPost = featuredPosts[0];
   const regularPosts = currentPosts.filter((post) => !post.featured);
 
   // متغيرات الحركة
@@ -168,10 +167,7 @@ export default function BlogPage() {
             </motion.h1>
 
             {/* الوصف */}
-            <motion.p
-              variants={fadeInUp}
-              className="text-lg text-gray-600 leading-relaxed"
-            >
+            <motion.p variants={fadeInUp} className="text-lg text-gray-600 leading-relaxed">
               نصائح وأفكار وحلول لتطوير أعمالك الرقمية والوصول إلى النجاح
             </motion.p>
           </motion.div>
@@ -246,7 +242,8 @@ export default function BlogPage() {
               viewport={{ once: true }}
               className="relative group cursor-pointer"
             >
-              <Link href={featuredPost.href}>
+              {/* ✅ href آمن */}
+              <Link href={featuredPost.href ?? "/blog"}>
                 <div className="relative bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl overflow-hidden shadow-2xl">
                   {/* خلفية متحركة */}
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
@@ -262,7 +259,7 @@ export default function BlogPage() {
                       {/* التصنيف */}
                       <span className="inline-flex items-center gap-1 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm mb-4 mr-2">
                         <Tag className="w-3 h-3" />
-                        {featuredPost.category}
+                        {featuredPost.category ?? "عام"}
                       </span>
 
                       {/* العنوان */}
@@ -272,7 +269,7 @@ export default function BlogPage() {
 
                       {/* الملخص */}
                       <p className="text-white/90 mb-6 text-lg">
-                        {featuredPost.summary}
+                        {featuredPost.summary ?? ""}
                       </p>
 
                       {/* معلومات المقال */}
@@ -319,7 +316,9 @@ export default function BlogPage() {
           >
             {regularPosts.map((post, idx) => {
               const gradient =
-                categoryColors[post.category] || "from-gray-500 to-gray-600";
+                categoryColors[post.category ?? ""] || "from-gray-500 to-gray-600";
+
+              const href = post.href ?? "/blog";
 
               return (
                 <motion.div
@@ -331,7 +330,7 @@ export default function BlogPage() {
                   whileHover={{ y: -8 }}
                   className="group relative cursor-pointer"
                 >
-                  <Link href={post.href}>
+                  <Link href={href}>
                     <div className="relative bg-white rounded-2xl border border-gray-200/50 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full">
                       {/* خلفية متدرجة متحركة */}
                       <motion.div
@@ -355,7 +354,7 @@ export default function BlogPage() {
                             className={`inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r ${gradient} text-white text-xs font-bold rounded-full shadow-lg`}
                           >
                             <Tag className="w-3 h-3" />
-                            {post.category}
+                            {post.category ?? "عام"}
                           </span>
                         </div>
 
@@ -377,7 +376,7 @@ export default function BlogPage() {
 
                         {/* الملخص */}
                         <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                          {post.summary || ""}
+                          {post.summary ?? ""}
                         </p>
 
                         {/* معلومات المقال */}
@@ -457,9 +456,7 @@ export default function BlogPage() {
               ))}
 
               <button
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
                 className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
@@ -499,9 +496,7 @@ export default function BlogPage() {
                 className="text-center p-6 bg-white rounded-2xl border border-gray-200 shadow-lg"
               >
                 <stat.icon className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-gray-900">
-                  {stat.value}
-                </div>
+                <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
                 <div className="text-sm text-gray-500">{stat.label}</div>
               </motion.div>
             ))}
@@ -524,9 +519,7 @@ export default function BlogPage() {
             <div className="relative z-10 max-w-2xl mx-auto">
               <Sparkles className="w-12 h-12 mx-auto mb-4 text-yellow-300" />
 
-              <h2 className="text-3xl font-bold mb-4">
-                اشترك في نشرتنا البريدية
-              </h2>
+              <h2 className="text-3xl font-bold mb-4">اشترك في نشرتنا البريدية</h2>
 
               <p className="text-white/90 mb-8">
                 احصل على أحدث المقالات والنصائح والحلول مباشرة في بريدك الإلكتروني
