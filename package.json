@@ -1,0 +1,120 @@
+{
+  "name": "kodia-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kodia Web Design - موقع احترافي لتصميم وتطوير المواقع والتطبيقات",
+  "author": "Kodia Web Design",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/kodia-site"
+  },
+  "scripts": {
+    "gen:demos": "node scripts/generate-demo-svgs.mjs",
+    "dev": "next dev --turbopack",
+    "dev:secure": "next dev --experimental-https",
+    "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
+    "start": "next start",
+    "start:prod": "NODE_ENV=production next start",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,md}\"",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf .next node_modules",
+    "clean:build": "rm -rf .next",
+    "preview": "next build && next start",
+    "analyze": "cross-env ANALYZE=true next build",
+    "postinstall": "echo '✅ تم تثبيت الحزم بنجاح'",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@hookform/resolvers": "^4.1.3",
+    "@mui/icons-material": "^7.3.8",
+    "@mui/material": "^7.3.8",
+    "@vercel/analytics": "^1.6.1",
+    "@vercel/speed-insights": "^1.3.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.34.2",
+    "lucide-react": "^0.575.0",
+    "next": "16.1.6",
+    "next-seo": "^6.6.0",
+    "next-sitemap": "^4.2.3",
+    "react": "19.2.3",
+    "react-countup": "^6.5.3",
+    "react-dom": "19.2.3",
+    "react-hook-form": "^7.55.0",
+    "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.15.1",
+    "sharp": "^0.33.5",
+    "sonner": "^2.0.7",
+    "swiper": "^11.2.6",
+    "tailwind-merge": "^2.6.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^16.1.6",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4.2.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.24",
+    "babel-plugin-react-compiler": "1.0.0",
+    "cross-env": "^7.0.3",
+    "cssnano": "^7.1.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "postcss": "^8.5.6",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4.2.0",
+    "typescript": "^5"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.{css,md}": [
+      "prettier --write"
+    ]
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "tailwindcss",
+    "typescript",
+    "web-design",
+    "saudi-arabia",
+    "egypt",
+    "arabic"
+  ]
+}

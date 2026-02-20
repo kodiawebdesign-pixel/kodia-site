@@ -1,0 +1,94 @@
+{
+  "compilerOptions": {
+    // هدف الترجمة والمكتبات
+    "target": "ES2022",
+    "lib": [
+      "dom", 
+      "dom.iterable", 
+      "esnext",
+      "ES2022"
+    ],
+    
+    // إعدادات الوحدة
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    
+    // إعدادات إضافية لتحسين تجربة التطوير
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": false, // يمكن تغييرها إلى true للتحقق من المتغيرات غير المستخدمة
+    "noUnusedParameters": false, // يمكن تغييرها إلى true للتحقق من المعاملات غير المستخدمة
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "allowUnreachableCode": false,
+    
+    // تحسين الأداء
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "pretty": true,
+    
+    // إعدادات المسارات
+    "paths": {
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@app/*": ["./src/app/*"],
+      "@public/*": ["./public/*"],
+      "@images/*": ["./public/images/*"],
+      "@styles/*": ["./src/styles/*"]
+    },
+    
+    // إعدادات متقدمة
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+    "alwaysStrict": true,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": false,
+    
+    // إعدادات Next.js
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  
+  // الملفات المشمولة
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  
+  // الملفات المستثناة
+  "exclude": [
+    "node_modules",
+    ".next",
+    "out",
+    "dist",
+    "build",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "coverage"
+  ]
+}
