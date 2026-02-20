@@ -1,15 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Container from "@/components/Container";
 import { siteData } from "@/lib/siteData";
-import { 
-  Star, 
-  MessageCircle, 
-  ThumbsUp, 
+import {
+  Star,
+  MessageCircle,
+  ThumbsUp,
   Share2,
-  Calendar,
   User,
   Award,
   Sparkles,
@@ -17,7 +16,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Heart,
-  Filter
+  Filter,
 } from "lucide-react";
 
 // توسيع بيانات الشهادات مع أيقونات وتفاصيل إضافية
@@ -44,19 +43,34 @@ const stats = [
 
 export default function TestimonialsPage() {
   const t = siteData.home.testimonials;
+
   const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1); // 1 = next (يمين->يسار)، -1 = prev
   const [likedTestimonials, setLikedTestimonials] = useState<number[]>([]);
   const [filterRating, setFilterRating] = useState<number | null>(null);
 
   // تصفية الشهادات حسب التقييم
-  const filteredTestimonials = filterRating
-    ? enhancedTestimonials.filter(t => t.rating >= filterRating)
-    : enhancedTestimonials;
+  const filteredTestimonials = useMemo(() => {
+    return filterRating
+      ? enhancedTestimonials.filter((x) => x.rating >= filterRating)
+      : enhancedTestimonials;
+  }, [filterRating]);
+
+  // ضمان إن activeIndex ما يطلعش برّه حدود القائمة بعد الفلترة
+  useEffect(() => {
+    if (filteredTestimonials.length === 0) {
+      setActiveIndex(0);
+      return;
+    }
+    setActiveIndex((prev) => Math.min(prev, filteredTestimonials.length - 1));
+  }, [filteredTestimonials.length]);
+
+  const activeTestimonial = filteredTestimonials[activeIndex];
 
   const handleLike = (idx: number, e: React.MouseEvent) => {
     e.stopPropagation();
-    setLikedTestimonials(prev => 
-      prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]
+    setLikedTestimonials((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
     );
   };
 
@@ -64,7 +78,7 @@ export default function TestimonialsPage() {
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: { duration: 0.6, ease: "easeOut" },
   };
 
   const staggerChildren = {
@@ -72,8 +86,41 @@ export default function TestimonialsPage() {
       transition: {
         staggerChildren: 0.1,
         delayChildren: 0.2,
-      }
-    }
+      },
+    },
+  };
+
+  const goPrev = () => {
+    const len = filteredTestimonials.length;
+    if (!len) return;
+    setDirection(-1);
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : len - 1));
+  };
+
+  const goNext = () => {
+    const len = filteredTestimonials.length;
+    if (!len) return;
+    setDirection(1);
+    setActiveIndex((prev) => (prev < len - 1 ? prev + 1 : 0));
+  };
+
+  // أنيميشن للسلايدر حسب الاتجاه
+  const sliderVariants = {
+    enter: (dir: 1 | -1) => ({
+      opacity: 0,
+      x: dir === 1 ? 120 : -120,
+      filter: "blur(6px)",
+    }),
+    center: {
+      opacity: 1,
+      x: 0,
+      filter: "blur(0px)",
+    },
+    exit: (dir: 1 | -1) => ({
+      opacity: 0,
+      x: dir === 1 ? -120 : 120,
+      filter: "blur(6px)",
+    }),
   };
 
   return (
@@ -83,7 +130,10 @@ export default function TestimonialsPage() {
         {/* خلفية متحركة */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" />
-          <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style={{ animationDelay: "2s" }} />
+          <div
+            className="absolute bottom-20 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"
+            style={{ animationDelay: "2s" }}
+          />
         </div>
 
         <Container>
@@ -102,11 +152,8 @@ export default function TestimonialsPage() {
             </motion.div>
 
             {/* العنوان */}
-            <motion.h1 
-              variants={fadeInUp}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
-            >
-              ماذا يقول 
+            <motion.h1 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              ماذا يقول
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mx-2">
                 عملاؤنا
               </span>
@@ -114,10 +161,7 @@ export default function TestimonialsPage() {
             </motion.h1>
 
             {/* الوصف */}
-            <motion.p 
-              variants={fadeInUp}
-              className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto"
-            >
+            <motion.p variants={fadeInUp} className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
               {t.subtitle}
             </motion.p>
           </motion.div>
@@ -133,12 +177,7 @@ export default function TestimonialsPage() {
             viewport={{ once: true, margin: "-50px" }}
             variants={{
               hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.1,
-                }
-              }
+              visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
             }}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto"
           >
@@ -149,7 +188,7 @@ export default function TestimonialsPage() {
                   key={idx}
                   variants={{
                     hidden: { opacity: 0, y: 20, scale: 0.9 },
-                    visible: { opacity: 1, y: 0, scale: 1 }
+                    visible: { opacity: 1, y: 0, scale: 1 },
                   }}
                   whileHover={{ y: -4 }}
                   className="text-center p-4 bg-white rounded-xl border border-gray-200 shadow-sm"
@@ -175,6 +214,7 @@ export default function TestimonialsPage() {
           >
             <Filter className="w-4 h-4 text-gray-400" />
             <span className="text-sm text-gray-500">فلتر حسب التقييم:</span>
+
             {[5, 4, 3].map((rating) => (
               <button
                 key={rating}
@@ -188,11 +228,9 @@ export default function TestimonialsPage() {
                 {rating} نجوم
               </button>
             ))}
+
             {filterRating && (
-              <button
-                onClick={() => setFilterRating(null)}
-                className="text-xs text-gray-400 hover:text-gray-600"
-              >
+              <button onClick={() => setFilterRating(null)} className="text-xs text-gray-400 hover:text-gray-600">
                 إزالة الفلتر
               </button>
             )}
@@ -209,12 +247,7 @@ export default function TestimonialsPage() {
             viewport={{ once: true, margin: "-50px" }}
             variants={{
               hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.1,
-                }
-              }
+              visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
             }}
             className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
@@ -226,7 +259,7 @@ export default function TestimonialsPage() {
                   key={idx}
                   variants={{
                     hidden: { opacity: 0, y: 30, scale: 0.9 },
-                    visible: { opacity: 1, y: 0, scale: 1 }
+                    visible: { opacity: 1, y: 0, scale: 1 },
                   }}
                   whileHover={{ y: -8 }}
                   className="group relative"
@@ -235,9 +268,7 @@ export default function TestimonialsPage() {
                     {/* خلفية متدرجة متحركة */}
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
-                      animate={{
-                        scale: [1, 1.1, 1],
-                      }}
+                      animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 3, repeat: Infinity }}
                     />
 
@@ -251,11 +282,7 @@ export default function TestimonialsPage() {
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          className={`w-4 h-4 ${
-                            i < testimonial.rating
-                              ? "text-yellow-400 fill-yellow-400"
-                              : "text-gray-300"
-                          }`}
+                          className={`w-4 h-4 ${i < testimonial.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`}
                         />
                       ))}
                     </div>
@@ -268,11 +295,7 @@ export default function TestimonialsPage() {
                           <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-0.5">
                             <div className="w-full h-full rounded-full bg-white overflow-hidden">
                               {testimonial.avatar ? (
-                                <img
-                                  src={testimonial.avatar}
-                                  alt={testimonial.name}
-                                  className="w-full h-full object-cover"
-                                />
+                                <img src={testimonial.avatar} alt={testimonial.name} className="w-full h-full object-cover" />
                               ) : (
                                 <User className="w-full h-full p-3 text-gray-400" />
                               )}
@@ -297,23 +320,17 @@ export default function TestimonialsPage() {
                       </div>
 
                       {/* نص الشهادة */}
-                      <p className="text-gray-600 leading-relaxed mb-4">
-                        “{testimonial.quote}”
-                      </p>
+                      <p className="text-gray-600 leading-relaxed mb-4">“{testimonial.quote}”</p>
 
                       {/* اسم الشركة */}
-                      <p className="text-sm font-medium text-blue-600 mb-3">
-                        {testimonial.company}
-                      </p>
+                      <p className="text-sm font-medium text-blue-600 mb-3">{testimonial.company}</p>
 
                       {/* أزرار التفاعل */}
                       <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                         <button
                           onClick={(e) => handleLike(idx, e)}
                           className={`flex items-center gap-1.5 text-xs transition-all ${
-                            isLiked 
-                              ? "text-blue-600" 
-                              : "text-gray-500 hover:text-blue-600"
+                            isLiked ? "text-blue-600" : "text-gray-500 hover:text-blue-600"
                           }`}
                         >
                           <ThumbsUp className={`w-4 h-4 ${isLiked ? "fill-blue-600" : ""}`} />
@@ -357,11 +374,7 @@ export default function TestimonialsPage() {
 
           {/* رسالة إذا لم توجد نتائج */}
           {filteredTestimonials.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              className="text-center py-12"
-            >
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-center py-12">
               <p className="text-gray-500">لا توجد شهادات تطابق الفلتر المحدد</p>
             </motion.div>
           )}
@@ -377,88 +390,105 @@ export default function TestimonialsPage() {
             viewport={{ once: true }}
             className="relative max-w-3xl mx-auto"
           >
-            <div className="relative bg-white rounded-2xl border border-gray-200 p-8 shadow-xl">
+            <div className="relative bg-white rounded-2xl border border-gray-200 p-8 shadow-xl overflow-hidden">
               {/* أزرار التنقل */}
               <button
-                onClick={() => setActiveIndex(prev => (prev > 0 ? prev - 1 : filteredTestimonials.length - 1))}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors z-10"
+                onClick={goPrev}
+                disabled={filteredTestimonials.length === 0}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors z-10 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
 
               <button
-                onClick={() => setActiveIndex(prev => (prev < filteredTestimonials.length - 1 ? prev + 1 : 0))}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors z-10"
+                onClick={goNext}
+                disabled={filteredTestimonials.length === 0}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors z-10 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
-              {/* الشهادة المركزية */}
-              {filteredTestimonials.length > 0 && (
-                <motion.div
-                  key={activeIndex}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-center"
-                >
-                  <div className="flex justify-center mb-4">
-                    <div className="relative">
-                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-1">
-                        <div className="w-full h-full rounded-full bg-white overflow-hidden">
-                          {filteredTestimonials[activeIndex].avatar ? (
-                            <img
-                              src={filteredTestimonials[activeIndex].avatar}
-                              alt={filteredTestimonials[activeIndex].name}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <User className="w-full h-full p-4 text-gray-400" />
-                          )}
+              {/* الشهادة المركزية مع AnimatePresence */}
+              <div className="relative min-h-[360px] flex items-center justify-center">
+                <AnimatePresence initial={false} custom={direction} mode="wait">
+                  {activeTestimonial ? (
+                    <motion.div
+                      key={activeIndex}
+                      custom={direction}
+                      variants={sliderVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.28, ease: "easeOut" }}
+                      className="text-center w-full"
+                    >
+                      <div className="flex justify-center mb-4">
+                        <div className="relative">
+                          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-1">
+                            <div className="w-full h-full rounded-full bg-white overflow-hidden">
+                              {activeTestimonial.avatar ? (
+                                <img
+                                  src={activeTestimonial.avatar}
+                                  alt={activeTestimonial.name}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <User className="w-full h-full p-4 text-gray-400" />
+                              )}
+                            </div>
+                          </div>
+                          <div className="absolute -bottom-2 -right-2 bg-green-500 w-5 h-5 rounded-full border-2 border-white" />
                         </div>
                       </div>
-                      <div className="absolute -bottom-2 -right-2 bg-green-500 w-5 h-5 rounded-full border-2 border-white" />
-                    </div>
-                  </div>
 
-                  <div className="flex justify-center gap-1 mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-5 h-5 ${
-                          i < filteredTestimonials[activeIndex].rating
-                            ? "text-yellow-400 fill-yellow-400"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
-                  </div>
+                      <div className="flex justify-center gap-1 mb-3">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-5 h-5 ${
+                              i < activeTestimonial.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
+                            }`}
+                          />
+                        ))}
+                      </div>
 
-                  <p className="text-xl text-gray-700 leading-relaxed mb-4">
-                    “{filteredTestimonials[activeIndex].quote}”
-                  </p>
+                      <p className="text-xl text-gray-700 leading-relaxed mb-4">“{activeTestimonial.quote}”</p>
 
-                  <h4 className="font-bold text-lg">{filteredTestimonials[activeIndex].name}</h4>
-                  <p className="text-gray-500 text-sm mb-2">{filteredTestimonials[activeIndex].role}</p>
-                  <p className="text-xs text-gray-400">{filteredTestimonials[activeIndex].date}</p>
+                      <h4 className="font-bold text-lg">{activeTestimonial.name}</h4>
+                      <p className="text-gray-500 text-sm mb-2">{activeTestimonial.role}</p>
+                      <p className="text-xs text-gray-400">{activeTestimonial.date}</p>
 
-                  {/* نقاط التنقل */}
-                  <div className="flex justify-center gap-2 mt-6">
-                    {filteredTestimonials.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setActiveIndex(idx)}
-                        className={`h-2 rounded-full transition-all ${
-                          idx === activeIndex
-                            ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500"
-                            : "w-2 bg-gray-300 hover:bg-gray-400"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </motion.div>
-              )}
+                      {/* نقاط التنقل */}
+                      <div className="flex justify-center gap-2 mt-6">
+                        {filteredTestimonials.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => {
+                              setDirection(idx > activeIndex ? 1 : -1);
+                              setActiveIndex(idx);
+                            }}
+                            className={`h-2 rounded-full transition-all ${
+                              idx === activeIndex
+                                ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500"
+                                : "w-2 bg-gray-300 hover:bg-gray-400"
+                            }`}
+                            aria-label={`انتقل للشهادة رقم ${idx + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="empty"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-center py-8 text-gray-500"
+                    >
+                      لا توجد شهادات للعرض
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </motion.div>
         </Container>
@@ -479,7 +509,7 @@ export default function TestimonialsPage() {
               إذا كنت من عملائنا، نود سماع تجربتك معنا. شاركنا رأيك ليساعد الآخرين في اختيار خدماتنا.
             </p>
             <button
-              onClick={() => window.location.href = "/contact"}
+              onClick={() => (window.location.href = "/contact")}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
             >
               <Sparkles className="w-5 h-5" />

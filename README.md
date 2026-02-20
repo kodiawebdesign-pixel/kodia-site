@@ -14,6 +14,12 @@ pnpm dev
 bun dev
 ```
 اضافة التعديلات
+git status
+git add .
+git commit -m "Fix build TypeScript issues"
+git push origin main
+
+
 git add .
 git commit -m "update"
 git push
