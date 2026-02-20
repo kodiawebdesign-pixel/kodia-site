@@ -238,8 +238,7 @@ export default function PoliciesClient() {
                             transition={{ delay: 0.2 + iidx * 0.1 }}
                             className="flex items-start gap-2 text-sm text-gray-700"
                           >
-                            <CheckCircle2 className={`w-5 h-5 text-${policy.gradient.split(' ')[0].replace('from-', '')} flex-shrink-0 mt-0.5`} />
-                            {item}
+<CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />                            {item}
                           </motion.li>
                         ))}
                       </ul>
