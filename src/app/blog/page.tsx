@@ -83,18 +83,15 @@ export default function BlogPage() {
 
   const q = searchQuery.trim().toLowerCase();
 
-  // تصفية المقالات حسب البحث والتصنيف - ✅ إصلاح TypeScript نهائي
+  // تصفية المقالات حسب البحث والتصنيف - ✅ TypeScript Safe
   const filteredPosts = useMemo(() => {
     return blogWithImages.filter((post) => {
       const title = (post.title ?? "").toLowerCase();
       const summary = (post.summary ?? "").toLowerCase();
       const category = (post.category ?? "").toLowerCase();
 
-      const matchesSearch =
-        q === "" || title.includes(q) || summary.includes(q) || category.includes(q);
-
-      const matchesCategory =
-        selectedCategory === "all" || post.category === selectedCategory;
+      const matchesSearch = q === "" || title.includes(q) || summary.includes(q) || category.includes(q);
+      const matchesCategory = selectedCategory === "all" || post.category === selectedCategory;
 
       return matchesSearch && matchesCategory;
     });
@@ -242,7 +239,6 @@ export default function BlogPage() {
               viewport={{ once: true }}
               className="relative group cursor-pointer"
             >
-              {/* ✅ href آمن */}
               <Link href={featuredPost.href ?? "/blog"}>
                 <div className="relative bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl overflow-hidden shadow-2xl">
                   {/* خلفية متحركة */}
@@ -315,21 +311,19 @@ export default function BlogPage() {
             className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {regularPosts.map((post, idx) => {
-              const gradient =
-                categoryColors[post.category ?? ""] || "from-gray-500 to-gray-600";
-
+              const gradient = categoryColors[post.category ?? ""] || "from-gray-500 to-gray-600";
               const href = post.href ?? "/blog";
 
               return (
                 <motion.div
-  key={`post-${post.href}-${idx}`}
-  variants={{
-    hidden: { opacity: 0, y: 30, scale: 0.9 },
-    visible: { opacity: 1, y: 0, scale: 1 },
-  }}
-  whileHover={{ y: -8 }}
-  className="group relative cursor-pointer"
->
+                  key={`post-${post.href}-${idx}`}
+                  variants={{
+                    hidden: { opacity: 0, y: 30, scale: 0.9 },
+                    visible: { opacity: 1, y: 0, scale: 1 },
+                  }}
+                  whileHover={{ y: -8 }}
+                  className="group relative cursor-pointer"
+                >
                   <Link href={href}>
                     <div className="relative bg-white rounded-2xl border border-gray-200/50 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full">
                       {/* خلفية متدرجة متحركة */}
