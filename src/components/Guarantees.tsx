@@ -2,11 +2,11 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { 
-  Shield, 
-  Award, 
-  Clock, 
-  Headphones, 
+import {
+  Shield,
+  Award,
+  Clock,
+  Headphones,
   RefreshCw,
   Heart,
   CheckCircle2,
@@ -19,8 +19,7 @@ import {
   ShieldCheck,
   BadgeCheck,
   Rocket,
-  Target,
-  Users
+  Users,
 } from "lucide-react";
 import Section from "./Section";
 import { siteData } from "@/lib/siteData";
@@ -103,8 +102,15 @@ const guaranteeDetails = [
   },
 ];
 
+// ✅ fallback آمن يمنع detail undefined
+const fallbackDetail = {
+  stat: "",
+  statLabel: "",
+  description: "",
+};
+
 export default function Guarantees() {
-  const g = siteData.home.guarantees;
+  const g = siteData.home.guarantees ?? guaranteesData;
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
@@ -117,11 +123,7 @@ export default function Guarantees() {
   ];
 
   return (
-    <Section 
-      title={g.title} 
-      subtitle={g.subtitle}
-      badge="نضمن لك"
-    >
+    <Section title={g.title} subtitle={g.subtitle} badge="نضمن لك">
       <div ref={sectionRef}>
         {/* شبكة الضمانات */}
         <motion.div
@@ -140,29 +142,35 @@ export default function Guarantees() {
         >
           {g.items.map((guarantee, idx) => {
             // التأكد من أن guarantee هو نص
-            const guaranteeText = typeof guarantee === 'string' 
-              ? guarantee 
-              : (guarantee as any).text || JSON.stringify(guarantee);
-            
+            const guaranteeText =
+              typeof guarantee === "string"
+                ? guarantee
+                : (guarantee as any).text || JSON.stringify(guarantee);
+
             const IconComponent = iconMap[guaranteeText] || Shield;
             const gradient = gradientColors[idx % gradientColors.length];
             const badge = badgeMap[guaranteeText] || "ضمان";
-            const detail = guaranteeDetails[idx % guaranteeDetails.length];
+
+            // ✅ استخدام fallbackDetail لتجنب undefined
+            const detail =
+              guaranteeDetails.length > 0
+                ? guaranteeDetails[idx % guaranteeDetails.length] ?? fallbackDetail
+                : fallbackDetail;
 
             return (
               <motion.div
                 key={`guarantee-${idx}-${guaranteeText.substring(0, 20)}`}
                 variants={{
                   hidden: { opacity: 0, y: 30, scale: 0.9 },
-                  visible: { 
-                    opacity: 1, 
-                    y: 0, 
+                  visible: {
+                    opacity: 1,
+                    y: 0,
                     scale: 1,
                     transition: {
-                      type: "spring",
+                      type: "spring" as const, // ✅ Fix TS
                       stiffness: 100,
                       damping: 15,
-                    }
+                    },
                   },
                 }}
                 whileHover={{ y: -8, scale: 1.02 }}
@@ -172,15 +180,15 @@ export default function Guarantees() {
                   {/* خلفية متدرجة متحركة */}
                   <motion.div
                     className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                    animate={{
-                      scale: [1, 1.1, 1],
-                    }}
+                    animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   />
 
                   {/* شارة الضمان */}
                   <div className="absolute top-3 right-3">
-                    <span className={`inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r ${gradient} text-white text-xs font-bold rounded-full shadow-lg`}>
+                    <span
+                      className={`inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r ${gradient} text-white text-xs font-bold rounded-full shadow-lg`}
+                    >
                       <Award className="w-3 h-3" />
                       {badge}
                     </span>
@@ -195,7 +203,7 @@ export default function Guarantees() {
                       className={`relative w-16 h-16 mb-4 rounded-xl bg-gradient-to-br ${gradient} p-4 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}
                     >
                       <IconComponent className="w-full h-full" />
-                      
+
                       {/* تأثير نبض */}
                       <motion.div
                         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
@@ -212,7 +220,7 @@ export default function Guarantees() {
                     {/* تفاصيل إضافية تظهر عند الهوفر */}
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
-                      whileHover={{ opacity: 1, height: 'auto' }}
+                      whileHover={{ opacity: 1, height: "auto" }}
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
@@ -220,19 +228,20 @@ export default function Guarantees() {
                         {/* إحصائية سريعة */}
                         <div className="flex items-center justify-between">
                           <span className="text-xs text-gray-500">{detail.statLabel}</span>
-                          <span className={`text-sm font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
+                          <span
+                            className={`text-sm font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}
+                          >
                             {detail.stat}
                           </span>
                         </div>
 
                         {/* وصف تفصيلي */}
-                        <p className="text-xs text-gray-600 leading-relaxed">
-                          {detail.description}
-                        </p>
+                        <p className="text-xs text-gray-600 leading-relaxed">{detail.description}</p>
 
                         {/* نقاط إضافية */}
                         <div className="flex items-center gap-2 text-xs text-gray-500">
-<CheckCircle2 className="w-3 h-3 text-blue-600" />                          <span>ضمان مكتوب</span>
+                          <CheckCircle2 className="w-3 h-3 text-blue-600" />
+                          <span>ضمان مكتوب</span>
                         </div>
                       </div>
                     </motion.div>
@@ -241,7 +250,9 @@ export default function Guarantees() {
                     <div className="mt-4">
                       <div className="flex items-center justify-between text-xs mb-1">
                         <span className="text-gray-400">معدل الثقة</span>
-                        <span className={`text-xs font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
+                        <span
+                          className={`text-xs font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}
+                        >
                           ٩٨٪
                         </span>
                       </div>
@@ -257,7 +268,7 @@ export default function Guarantees() {
                   </div>
 
                   {/* خط سفلي متدرج */}
-                  <motion.div 
+                  <motion.div
                     className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient}`}
                     initial={{ scaleX: 0 }}
                     whileHover={{ scaleX: 1 }}
@@ -328,18 +339,12 @@ export default function Guarantees() {
           <div className="relative bg-white rounded-2xl border border-gray-200 p-8 text-center overflow-hidden">
             {/* خلفية متحركة */}
             <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 5, -5, 0],
-              }}
+              animate={{ scale: [1, 1.2, 1], rotate: [0, 5, -5, 0] }}
               transition={{ duration: 10, repeat: Infinity }}
               className="absolute -top-20 -right-20 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-30"
             />
             <motion.div
-              animate={{
-                scale: [1, 1.3, 1],
-                rotate: [0, -5, 5, 0],
-              }}
+              animate={{ scale: [1, 1.3, 1], rotate: [0, -5, 5, 0] }}
               transition={{ duration: 12, repeat: Infinity }}
               className="absolute -bottom-20 -left-20 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-30"
             />
@@ -355,14 +360,11 @@ export default function Guarantees() {
                   />
                 </div>
               </div>
-              
-              <h3 className="text-2xl font-bold mb-3">
-                ضمان استعادة الحقوق
-              </h3>
-              
+
+              <h3 className="text-2xl font-bold mb-3">ضمان استعادة الحقوق</h3>
+
               <p className="text-gray-600 max-w-2xl mx-auto mb-6">
-                إذا لم نلتزم بالمواصفات المتفق عليها في العقد، نضمن لك استرداد أموالك كاملة. 
-                ثقتك هي رأس مالنا الحقيقي.
+                إذا لم نلتزم بالمواصفات المتفق عليها في العقد، نضمن لك استرداد أموالك كاملة. ثقتك هي رأس مالنا الحقيقي.
               </p>
 
               <div className="flex flex-wrap justify-center gap-4">
@@ -395,7 +397,7 @@ export default function Guarantees() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => window.location.href = "/quote"}
+            onClick={() => (window.location.href = "/quote")}
             className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <Sparkles className="w-5 h-5" />
