@@ -322,14 +322,14 @@ export default function BlogPage() {
 
               return (
                 <motion.div
-                  key={`post-${post.slug || idx}`}
-                  variants={{
-                    hidden: { opacity: 0, y: 30, scale: 0.9 },
-                    visible: { opacity: 1, y: 0, scale: 1 },
-                  }}
-                  whileHover={{ y: -8 }}
-                  className="group relative cursor-pointer"
-                >
+  key={`post-${post.href}-${idx}`}
+  variants={{
+    hidden: { opacity: 0, y: 30, scale: 0.9 },
+    visible: { opacity: 1, y: 0, scale: 1 },
+  }}
+  whileHover={{ y: -8 }}
+  className="group relative cursor-pointer"
+>
                   <Link href={href}>
                     <div className="relative bg-white rounded-2xl border border-gray-200/50 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full">
                       {/* خلفية متدرجة متحركة */}
