@@ -23,7 +23,12 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-// توسيع بيانات المدونة مع صور وتفاصيل إضافية
+// أرقام ثابتة للمشاهدات والإعجابات
+const viewCounts = [856, 691, 945, 1102, 768, 534, 1230, 876, 654, 432];
+const likesCounts = [67, 92, 78, 84, 71, 65, 93, 77, 82, 54];
+const commentsCounts = [15, 31, 19, 27, 16, 12, 29, 21, 18, 23];
+
+// توسيع بيانات المدونة مع صور وتفاصيل إضافية - بأرقام ثابتة
 const blogData = siteData.home.blog;
 
 // إضافة صور وهمية للمقالات
@@ -32,9 +37,9 @@ const blogWithImages = blogData.items.map((item, index) => ({
   image: `/images/blog/blog-${index + 1}.jpg`,
   date: ["١٥ مارس ٢٠٢٤", "١٠ مارس ٢٠٢٤", "٥ مارس ٢٠٢٤", "١ مارس ٢٠٢٤", "٢٥ فبراير ٢٠٢٤"][index % 5],
   readTime: ["٥ دقائق", "٧ دقائق", "٤ دقائق", "٦ دقائق", "٨ دقائق"][index % 5],
-  views: Math.floor(Math.random() * 1000) + 500,
-  likes: Math.floor(Math.random() * 100) + 50,
-  comments: Math.floor(Math.random() * 30) + 10,
+  views: viewCounts[index % viewCounts.length],
+  likes: likesCounts[index % likesCounts.length],
+  comments: commentsCounts[index % commentsCounts.length],
   author: "فريق Kodia",
   authorAvatar: "/images/avatars/author.jpg",
   summary: [
@@ -76,7 +81,7 @@ export default function BlogPage() {
   // تصفية المقالات حسب البحث والتصنيف
   const filteredPosts = blogWithImages.filter((post) => {
     const matchesSearch = post.title.includes(searchQuery) || 
-                         post.summary.includes(searchQuery) ||
+                         (post.summary && post.summary.includes(searchQuery)) ||
                          post.category.includes(searchQuery);
     const matchesCategory = selectedCategory === "all" || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -180,10 +185,13 @@ export default function BlogPage() {
             <div className="flex flex-wrap justify-center gap-2">
               {categories.map((cat) => (
                 <motion.button
-                  key={cat.id}
+                  key={`cat-${cat.id}`}
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => setSelectedCategory(cat.id)}
+                  onClick={() => {
+                    setSelectedCategory(cat.id);
+                    setCurrentPage(1);
+                  }}
                   className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                     selectedCategory === cat.id
                       ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
@@ -299,7 +307,7 @@ export default function BlogPage() {
 
               return (
                 <motion.div
-                  key={post.title}
+                  key={`post-${post.slug || idx}`}
                   variants={{
                     hidden: { opacity: 0, y: 30, scale: 0.9 },
                     visible: { opacity: 1, y: 0, scale: 1 }
@@ -353,7 +361,7 @@ export default function BlogPage() {
 
                         {/* الملخص */}
                         <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                          {post.summary}
+                          {post.summary || ""}
                         </p>
 
                         {/* معلومات المقال */}
@@ -420,7 +428,7 @@ export default function BlogPage() {
               
               {[...Array(totalPages)].map((_, idx) => (
                 <button
-                  key={idx}
+                  key={`page-${idx + 1}`}
                   onClick={() => setCurrentPage(idx + 1)}
                   className={`w-10 h-10 rounded-xl font-medium transition-all ${
                     currentPage === idx + 1
@@ -469,7 +477,7 @@ export default function BlogPage() {
               { icon: TrendingUp, label: "نمو", value: "+٤٠٪" },
             ].map((stat, idx) => (
               <motion.div
-                key={idx}
+                key={`stat-${idx}`}
                 variants={{
                   hidden: { opacity: 0, y: 20, scale: 0.9 },
                   visible: { opacity: 1, y: 0, scale: 1 }
