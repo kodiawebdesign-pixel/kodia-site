@@ -216,8 +216,7 @@ export default function PoliciesClient() {
                     <div className={`absolute inset-0 bg-gradient-to-br ${policy.gradient} opacity-0 group-hover:opacity-5 transition-opacity`} />
 
                     {/* أيقونة كبيرة في الخلفية */}
-                    <Icon className={`absolute -bottom-4 -left-4 w-32 h-32 text-${policy.gradient.split(' ')[0].replace('from-', '')} opacity-5`} />
-
+<Icon className="absolute -bottom-4 -left-4 w-32 h-32 text-blue-600 opacity-5" />
                     {/* المحتوى */}
                     <div className="relative z-10">
                       <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${policy.gradient} p-3.5 text-white mb-6 shadow-lg`}>
