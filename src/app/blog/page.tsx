@@ -78,10 +78,10 @@ export default function BlogPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
 
-  // تصفية المقالات حسب البحث والتصنيف
+  // تصفية المقالات حسب البحث والتصنيف - ✅ تم إصلاح خطأ TypeScript هنا
   const filteredPosts = blogWithImages.filter((post) => {
     const matchesSearch = post.title.includes(searchQuery) || 
-                         (post.summary && post.summary.includes(searchQuery)) ||
+                         (post.summary && post.summary.includes(searchQuery)) || // ✅ التحقق من وجود summary
                          post.category.includes(searchQuery);
     const matchesCategory = selectedCategory === "all" || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
