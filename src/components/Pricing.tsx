@@ -169,8 +169,7 @@ export default function Pricing() {
                         transition={{ delay: 0.3 + fidx * 0.1 }}
                         className="flex items-center gap-2"
                       >
-                        <CheckCircle2 className={`w-5 h-5 text-${gradient.split(' ')[0].replace('from-', '')} flex-shrink-0`} />
-                        <span className="text-sm text-gray-700">{feature}</span>
+<CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />                        <span className="text-sm text-gray-700">{feature}</span>
                       </motion.div>
                     ))}
                   </div>

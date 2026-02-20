@@ -122,8 +122,7 @@ export default function BlogPreview() {
                     
                     {/* أيقونة المقالة كخلفية مؤقتة */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <BookOpen className={`w-16 h-16 text-${gradient.split(' ')[0].replace('from-', '')} opacity-20`} />
-                    </div>
+<BookOpen className="w-16 h-16 text-blue-600 opacity-20" />                    </div>
 
                     {/* شارة التصنيف */}
                     <div className="absolute top-3 right-3">

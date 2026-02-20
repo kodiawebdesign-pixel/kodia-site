@@ -90,8 +90,11 @@ export default function BlogPage() {
       const summary = (post.summary ?? "").toLowerCase();
       const category = (post.category ?? "").toLowerCase();
 
-      const matchesSearch = q === "" || title.includes(q) || summary.includes(q) || category.includes(q);
-      const matchesCategory = selectedCategory === "all" || post.category === selectedCategory;
+      const matchesSearch =
+        q === "" || title.includes(q) || summary.includes(q) || category.includes(q);
+
+      const matchesCategory =
+        selectedCategory === "all" || post.category === selectedCategory;
 
       return matchesSearch && matchesCategory;
     });
@@ -311,7 +314,8 @@ export default function BlogPage() {
             className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {regularPosts.map((post, idx) => {
-              const gradient = categoryColors[post.category ?? ""] || "from-gray-500 to-gray-600";
+              const gradient =
+                categoryColors[post.category ?? ""] || "from-gray-500 to-gray-600";
               const href = post.href ?? "/blog";
 
               return (

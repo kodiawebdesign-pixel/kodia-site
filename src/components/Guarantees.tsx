@@ -232,8 +232,7 @@ export default function Guarantees() {
 
                         {/* نقاط إضافية */}
                         <div className="flex items-center gap-2 text-xs text-gray-500">
-                          <CheckCircle2 className={`w-3 h-3 text-${gradient.split(' ')[0].replace('from-', '')}`} />
-                          <span>ضمان مكتوب</span>
+<CheckCircle2 className="w-3 h-3 text-blue-600" />                          <span>ضمان مكتوب</span>
                         </div>
                       </div>
                     </motion.div>

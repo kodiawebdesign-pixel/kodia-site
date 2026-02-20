@@ -213,8 +213,7 @@ export default function AddOns() {
                   <div className="space-y-2 mb-4">
                     {features.map((feature, fidx) => (
                       <div key={`feature-${idx}-${fidx}`} className="flex items-center gap-2 text-xs text-gray-600">
-                        <CheckCircle2 className={`w-3 h-3 text-${gradient.split(' ')[0].replace('from-', '')}`} />
-                        {feature}
+<CheckCircle2 className="w-3 h-3 text-blue-600" />                        {feature}
                       </div>
                     ))}
                   </div>

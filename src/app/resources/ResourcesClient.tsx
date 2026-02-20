@@ -253,8 +253,7 @@ export default function ResourcesClient() {
                     <div className={`absolute inset-0 bg-gradient-to-br ${resource.gradient} opacity-0 group-hover:opacity-5 transition-opacity`} />
 
                     {/* أيقونة كبيرة في الخلفية */}
-                    <Icon className={`absolute -bottom-4 -left-4 w-32 h-32 text-${resource.gradient.split(' ')[0].replace('from-', '')} opacity-5`} />
-
+<Icon className="absolute -bottom-4 -left-4 w-32 h-32 text-blue-600 opacity-5" />
                     {/* المحتوى */}
                     <div className="relative z-10">
                       {/* الأيقونة الرئيسية */}
@@ -271,8 +270,7 @@ export default function ResourcesClient() {
                       <div className="space-y-2 mb-6">
                         {resource.features.map((feature, fidx) => (
                           <div key={`resource-${idx}-feature-${fidx}`} className="flex items-start gap-2 text-sm text-gray-700">
-                            <CheckCircle2 className={`w-4 h-4 text-${resource.gradient.split(' ')[0].replace('from-', '')} flex-shrink-0 mt-0.5`} />
-                            {feature}
+<CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />                            {feature}
                           </div>
                         ))}
                       </div>
