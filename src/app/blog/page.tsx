@@ -4,24 +4,23 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Container from "@/components/Container";
 import { siteData } from "@/lib/siteData";
-import { 
-  Calendar, 
-  Clock, 
-  Eye, 
-  Heart, 
+import {
+  Calendar,
+  Clock,
+  Eye,
+  Heart,
   MessageCircle,
   ArrowLeft,
   Tag,
-  User,
   Search,
   Sparkles,
   BookOpen,
   ChevronLeft,
   ChevronRight,
   TrendingUp,
-  Star
+  Star,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // أرقام ثابتة للمشاهدات والإعجابات
 const viewCounts = [856, 691, 945, 1102, 768, 534, 1230, 876, 654, 432];
@@ -46,7 +45,7 @@ const blogWithImages = blogData.items.map((item, index) => ({
     "تعرف على أسرار تحسين التحويل في المواقع الإلكترونية وكيف تجعل زوارك يتواصلون معك.",
     "مقارنة بين أفضل شركات الاستضافة وأهم العوامل التي تحدد اختيارك.",
     "١٠ خطوات أساسية لتحسين ظهور موقعك في نتائج البحث وجذب زوار مجانيين.",
-    "احذر هذه الأخطاء الشائعة في تصميم التطبيقات التي تجعل المستخدمين يحذفون تطبيقك.",
+    "احذر هذه الأخطاء الشائعة في تصميم التطبيقات التي تجعل المستخدمون يحذفون تطبيقك.",
     "٥ أسباب تجعل المتجر الإلكتروني ضرورة لأي نشاط تجاري اليوم.",
   ][index % 5],
   featured: index === 0,
@@ -56,7 +55,7 @@ const blogWithImages = blogData.items.map((item, index) => ({
 const categoryColors: Record<string, string> = {
   "تصميم مواقع": "from-blue-500 to-cyan-500",
   "استضافة": "from-purple-500 to-pink-500",
-  "SEO": "from-emerald-500 to-teal-500",
+  SEO: "from-emerald-500 to-teal-500",
   "تطبيقات": "from-orange-500 to-amber-500",
   "تجارة إلكترونية": "from-indigo-500 to-blue-500",
 };
@@ -72,18 +71,33 @@ const categories = [
 ];
 
 export default function BlogPage() {
-  const b = siteData.home.blog;
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
 
-  // تصفية المقالات حسب البحث والتصنيف - ✅ تم إصلاح خطأ TypeScript هنا
+  // لو المستخدم بيبحث أو غير التصنيف، رجّع للصفحة الأولى تلقائياً
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedCategory]);
+
+  const q = searchQuery.trim().toLowerCase();
+
+  // تصفية المقالات حسب البحث والتصنيف - ✅ إصلاح TypeScript نهائي
   const filteredPosts = blogWithImages.filter((post) => {
-    const matchesSearch = post.title.includes(searchQuery) || 
-                         (post.summary && post.summary.includes(searchQuery)) || // ✅ التحقق من وجود summary
-                         post.category.includes(searchQuery);
-    const matchesCategory = selectedCategory === "all" || post.category === selectedCategory;
+    const title = (post.title ?? "").toLowerCase();
+    const summary = (post.summary ?? "").toLowerCase();
+    const category = (post.category ?? "").toLowerCase();
+
+    const matchesSearch =
+      q === "" ||
+      title.includes(q) ||
+      summary.includes(q) ||
+      category.includes(q);
+
+    const matchesCategory =
+      selectedCategory === "all" || post.category === selectedCategory;
+
     return matchesSearch && matchesCategory;
   });
 
@@ -94,14 +108,14 @@ export default function BlogPage() {
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
   // المقالات المميزة
-  const featuredPosts = blogWithImages.filter(post => post.featured);
-  const regularPosts = currentPosts.filter(post => !post.featured);
+  const featuredPosts = blogWithImages.filter((post) => post.featured);
+  const regularPosts = currentPosts.filter((post) => !post.featured);
 
   // متغيرات الحركة
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: { duration: 0.6, ease: "easeOut" },
   };
 
   const staggerChildren = {
@@ -109,8 +123,8 @@ export default function BlogPage() {
       transition: {
         staggerChildren: 0.1,
         delayChildren: 0.2,
-      }
-    }
+      },
+    },
   };
 
   return (
@@ -120,7 +134,10 @@ export default function BlogPage() {
         {/* خلفية متحركة */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" />
-          <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style={{ animationDelay: "2s" }} />
+          <div
+            className="absolute bottom-20 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"
+            style={{ animationDelay: "2s" }}
+          />
         </div>
 
         <Container>
@@ -139,18 +156,18 @@ export default function BlogPage() {
             </motion.div>
 
             {/* العنوان */}
-            <motion.h1 
+            <motion.h1
               variants={fadeInUp}
               className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
             >
-              مدونة 
+              مدونة
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mx-2">
                 Kodia
               </span>
             </motion.h1>
 
             {/* الوصف */}
-            <motion.p 
+            <motion.p
               variants={fadeInUp}
               className="text-lg text-gray-600 leading-relaxed"
             >
@@ -199,9 +216,11 @@ export default function BlogPage() {
                   }`}
                 >
                   {cat.label}
-                  <span className={`mr-2 text-xs ${
-                    selectedCategory === cat.id ? "text-white/80" : "text-gray-400"
-                  }`}>
+                  <span
+                    className={`mr-2 text-xs ${
+                      selectedCategory === cat.id ? "text-white/80" : "text-gray-400"
+                    }`}
+                  >
                     {cat.count}
                   </span>
                 </motion.button>
@@ -209,9 +228,7 @@ export default function BlogPage() {
             </div>
 
             {/* عدد النتائج */}
-            <p className="text-center text-sm text-gray-500">
-              {filteredPosts.length} مقالة
-            </p>
+            <p className="text-center text-sm text-gray-500">{filteredPosts.length} مقالة</p>
           </motion.div>
         </Container>
       </section>
@@ -230,7 +247,7 @@ export default function BlogPage() {
                 <div className="relative bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl overflow-hidden shadow-2xl">
                   {/* خلفية متحركة */}
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
-                  
+
                   <div className="relative p-8 md:p-12 text-white">
                     <div className="max-w-2xl">
                       {/* شارة مميز */}
@@ -246,14 +263,10 @@ export default function BlogPage() {
                       </span>
 
                       {/* العنوان */}
-                      <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                        {featuredPosts[0].title}
-                      </h2>
+                      <h2 className="text-3xl md:text-4xl font-bold mb-4">{featuredPosts[0].title}</h2>
 
                       {/* الملخص */}
-                      <p className="text-white/90 mb-6 text-lg">
-                        {featuredPosts[0].summary}
-                      </p>
+                      <p className="text-white/90 mb-6 text-lg">{featuredPosts[0].summary}</p>
 
                       {/* معلومات المقال */}
                       <div className="flex items-center gap-4 text-sm text-white/80 mb-6">
@@ -295,10 +308,8 @@ export default function BlogPage() {
               hidden: { opacity: 0 },
               visible: {
                 opacity: 1,
-                transition: {
-                  staggerChildren: 0.1,
-                }
-              }
+                transition: { staggerChildren: 0.1 },
+              },
             }}
             className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
@@ -310,7 +321,7 @@ export default function BlogPage() {
                   key={`post-${post.slug || idx}`}
                   variants={{
                     hidden: { opacity: 0, y: 30, scale: 0.9 },
-                    visible: { opacity: 1, y: 0, scale: 1 }
+                    visible: { opacity: 1, y: 0, scale: 1 },
                   }}
                   whileHover={{ y: -8 }}
                   className="group relative cursor-pointer"
@@ -320,24 +331,25 @@ export default function BlogPage() {
                       {/* خلفية متدرجة متحركة */}
                       <motion.div
                         className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                        animate={{
-                          scale: [1, 1.1, 1],
-                        }}
+                        animate={{ scale: [1, 1.1, 1] }}
                         transition={{ duration: 3, repeat: Infinity }}
                       />
 
                       {/* صورة المقال */}
                       <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent" />
-                        
+
                         {/* أيقونة المقالة كخلفية مؤقتة */}
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <BookOpen className={`w-16 h-16 text-${gradient.split(' ')[0].replace('from-', '')} opacity-20`} />
+                          {/* ملاحظة: الكلاس الديناميكي قد لا يتم توليده من Tailwind، لكنه لا يكسر البناء */}
+                          <BookOpen className="w-16 h-16 opacity-20 text-gray-400" />
                         </div>
 
                         {/* شارة التصنيف */}
                         <div className="absolute top-3 right-3">
-                          <span className={`inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r ${gradient} text-white text-xs font-bold rounded-full shadow-lg`}>
+                          <span
+                            className={`inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r ${gradient} text-white text-xs font-bold rounded-full shadow-lg`}
+                          >
                             <Tag className="w-3 h-3" />
                             {post.category}
                           </span>
@@ -360,9 +372,7 @@ export default function BlogPage() {
                         </h3>
 
                         {/* الملخص */}
-                        <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                          {post.summary || ""}
-                        </p>
+                        <p className="text-sm text-gray-600 mb-3 line-clamp-2">{post.summary || ""}</p>
 
                         {/* معلومات المقال */}
                         <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
@@ -397,7 +407,7 @@ export default function BlogPage() {
                       </div>
 
                       {/* خط سفلي متدرج */}
-                      <motion.div 
+                      <motion.div
                         className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient}`}
                         initial={{ scaleX: 0 }}
                         whileHover={{ scaleX: 1 }}
@@ -419,13 +429,13 @@ export default function BlogPage() {
               className="flex justify-center gap-2 mt-12"
             >
               <button
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
                 className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
-              
+
               {[...Array(totalPages)].map((_, idx) => (
                 <button
                   key={`page-${idx + 1}`}
@@ -441,7 +451,7 @@ export default function BlogPage() {
               ))}
 
               <button
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
                 className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
@@ -461,12 +471,7 @@ export default function BlogPage() {
             viewport={{ once: true, margin: "-50px" }}
             variants={{
               hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.1,
-                }
-              }
+              visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
             }}
             className="grid grid-cols-2 md:grid-cols-4 gap-6"
           >
@@ -480,7 +485,7 @@ export default function BlogPage() {
                 key={`stat-${idx}`}
                 variants={{
                   hidden: { opacity: 0, y: 20, scale: 0.9 },
-                  visible: { opacity: 1, y: 0, scale: 1 }
+                  visible: { opacity: 1, y: 0, scale: 1 },
                 }}
                 whileHover={{ y: -4 }}
                 className="text-center p-6 bg-white rounded-2xl border border-gray-200 shadow-lg"
@@ -505,14 +510,12 @@ export default function BlogPage() {
           >
             {/* خلفية متحركة */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
-            
+
             <div className="relative z-10 max-w-2xl mx-auto">
               <Sparkles className="w-12 h-12 mx-auto mb-4 text-yellow-300" />
-              
-              <h2 className="text-3xl font-bold mb-4">
-                اشترك في نشرتنا البريدية
-              </h2>
-              
+
+              <h2 className="text-3xl font-bold mb-4">اشترك في نشرتنا البريدية</h2>
+
               <p className="text-white/90 mb-8">
                 احصل على أحدث المقالات والنصائح والحلول مباشرة في بريدك الإلكتروني
               </p>
