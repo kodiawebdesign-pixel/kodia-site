@@ -200,7 +200,7 @@ export default function PortfolioTabs() {
         >
           {(current.items ?? []).map((item: any) => (
             <motion.div
-              key={item?.slug ?? item?.title ?? Math.random()}
+              key={item?.slug ?? item?.title ?? `${Math.random()}`}
               variants={itemVariants}
               custom={direction}
               whileHover={{ y: -8 }}
@@ -282,20 +282,20 @@ export default function PortfolioTabs() {
                       ))}
                     </div>
 
-                    {/* مميزات المشروع */}
-                    {item.deliverables && (
+                    {/* ✅ مميزات المشروع (FIXED JSX) */}
+                    {(item.deliverables?.length ?? 0) > 0 && (
                       <div className="border-t border-gray-100 pt-3">
                         <div className="flex flex-wrap gap-1">
-                          (item.deliverables ?? []).slice(0, 2).map((del: string, idx: number) => (
+                          {(item.deliverables ?? []).slice(0, 2).map((del: string, idx: number) => (
                             <span
                               key={`${item.slug}-del-${idx}`}
                               className="text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded-full"
                             >
                               {del}
                             </span>
-                          ))
-                          {item.deliverables.length > 2 && (
-                            <span className="text-xs text-gray-400">+{item.deliverables.length - 2}</span>
+                          ))}
+                          {(item.deliverables?.length ?? 0) > 2 && (
+                            <span className="text-xs text-gray-400">+{(item.deliverables?.length ?? 0) - 2}</span>
                           )}
                         </div>
                       </div>
