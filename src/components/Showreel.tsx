@@ -1,21 +1,20 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Play, 
-  Volume2, 
-  VolumeX, 
+import {
+  Play,
+  Volume2,
+  VolumeX,
   Pause,
   Maximize2,
   Minimize2,
   SkipBack,
   SkipForward,
-  Settings,
   Film,
   Sparkles,
-  Eye
+  Eye,
 } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { siteData } from "@/lib/siteData";
 
 export default function Showreel() {
@@ -28,10 +27,13 @@ export default function Showreel() {
   const [showControls, setShowControls] = useState(true);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [volume, setVolume] = useState(50);
-  
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const controlsTimeout = useRef<NodeJS.Timeout>();
+
+  // ✅ Fix: لازم initial value + type مناسب للـ browser
+  const controlsTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const { showreel } = siteData.home;
 
   // تحديث وقت الفيديو
@@ -40,113 +42,138 @@ export default function Showreel() {
     if (!video) return;
 
     const updateProgress = () => {
-      setProgress((video.currentTime / video.duration) * 100);
-      setCurrentTime(video.currentTime);
+      // حماية من NaN لو duration = 0
+      const d = video.duration || 0;
+      const pct = d > 0 ? (video.currentTime / d) * 100 : 0;
+      setProgress(pct);
+      setCurrentTime(video.currentTime || 0);
     };
 
     const handleLoadedMetadata = () => {
-      setDuration(video.duration);
+      setDuration(video.duration || 0);
     };
 
-    video.addEventListener('timeupdate', updateProgress);
-    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener("timeupdate", updateProgress);
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
 
     return () => {
-      video.removeEventListener('timeupdate', updateProgress);
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener("timeupdate", updateProgress);
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
     };
   }, []);
 
   // إخفاء التحكمات بعد فترة
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
     const handleMouseMove = () => {
       setShowControls(true);
-      clearTimeout(controlsTimeout.current);
+
+      if (controlsTimeout.current) clearTimeout(controlsTimeout.current);
+
       controlsTimeout.current = setTimeout(() => {
         if (isPlaying) setShowControls(false);
       }, 3000);
     };
 
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('mousemove', handleMouseMove);
-      container.addEventListener('mouseleave', () => setShowControls(true));
-    }
+    const handleMouseLeave = () => {
+      // لما يطلع الماوس، خلي التحكمات تظهر (أو سيبها كما هي)
+      setShowControls(true);
+      if (controlsTimeout.current) clearTimeout(controlsTimeout.current);
+      controlsTimeout.current = null;
+    };
+
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      if (container) {
-        container.removeEventListener('mousemove', handleMouseMove);
-        container.removeEventListener('mouseleave', () => setShowControls(true));
-      }
-      clearTimeout(controlsTimeout.current);
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+
+      if (controlsTimeout.current) clearTimeout(controlsTimeout.current);
+      controlsTimeout.current = null;
     };
   }, [isPlaying]);
 
   const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isPlaying) video.pause();
+    else video.play();
+
+    setIsPlaying(!isPlaying);
   };
 
   const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-      if (!isMuted) setVolume(0);
-      else setVolume(50);
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    const nextMuted = !isMuted;
+    video.muted = nextMuted;
+    setIsMuted(nextMuted);
+
+    if (nextMuted) setVolume(0);
+    else setVolume(50);
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseInt(e.target.value);
+    const newVolume = parseInt(e.target.value, 10);
     setVolume(newVolume);
-    if (videoRef.current) {
-      videoRef.current.volume = newVolume / 100;
-      setIsMuted(newVolume === 0);
+
+    const video = videoRef.current;
+    if (video) {
+      video.volume = newVolume / 100;
+      const muted = newVolume === 0;
+      video.muted = muted;
+      setIsMuted(muted);
     }
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newProgress = parseInt(e.target.value);
-    if (videoRef.current) {
-      videoRef.current.currentTime = (newProgress / 100) * videoRef.current.duration;
-      setProgress(newProgress);
-    }
+    const newProgress = parseInt(e.target.value, 10);
+    const video = videoRef.current;
+    if (!video) return;
+
+    const d = video.duration || 0;
+    if (d <= 0) return;
+
+    video.currentTime = (newProgress / 100) * d;
+    setProgress(newProgress);
   };
 
-  const toggleFullscreen = () => {
-    if (!containerRef.current) return;
-    
-    if (!document.fullscreenElement) {
-      containerRef.current.requestFullscreen();
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen();
-      setIsFullscreen(false);
+  const toggleFullscreen = async () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    try {
+      if (!document.fullscreenElement) {
+        await container.requestFullscreen();
+        setIsFullscreen(true);
+      } else {
+        await document.exitFullscreen();
+        setIsFullscreen(false);
+      }
+    } catch {
+      // تجاهل لو المتصفح منعها
     }
   };
 
   const skipForward = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime += 10;
-    }
+    const video = videoRef.current;
+    if (video) video.currentTime = Math.min((video.duration || 0) || video.currentTime + 10, video.currentTime + 10);
   };
 
   const skipBackward = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime -= 10;
-    }
+    const video = videoRef.current;
+    if (video) video.currentTime = Math.max(0, video.currentTime - 10);
   };
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
   return (
@@ -187,10 +214,7 @@ export default function Showreel() {
                   <h3 className="text-white font-bold">Kodia Showreel</h3>
                 </div>
                 <div className="flex items-center gap-2">
-                  <motion.div
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
+                  <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>
                     <Sparkles className="w-5 h-5 text-yellow-300" />
                   </motion.div>
                 </div>
@@ -204,6 +228,7 @@ export default function Showreel() {
                 whileTap={{ scale: 0.9 }}
                 onClick={skipBackward}
                 className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                aria-label="رجوع 10 ثواني"
               >
                 <SkipBack size={24} />
               </motion.button>
@@ -213,6 +238,7 @@ export default function Showreel() {
                 whileTap={{ scale: 0.9 }}
                 onClick={togglePlay}
                 className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center text-blue-600 hover:bg-white transition-colors shadow-xl"
+                aria-label={isPlaying ? "إيقاف" : "تشغيل"}
               >
                 {isPlaying ? <Pause size={32} /> : <Play size={32} />}
               </motion.button>
@@ -222,6 +248,7 @@ export default function Showreel() {
                 whileTap={{ scale: 0.9 }}
                 onClick={skipForward}
                 className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                aria-label="تقديم 10 ثواني"
               >
                 <SkipForward size={24} />
               </motion.button>
@@ -247,6 +274,7 @@ export default function Showreel() {
                   <button
                     onClick={togglePlay}
                     className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                    aria-label={isPlaying ? "إيقاف" : "تشغيل"}
                   >
                     {isPlaying ? <Pause size={16} /> : <Play size={16} />}
                   </button>
@@ -258,6 +286,7 @@ export default function Showreel() {
                       onMouseEnter={() => setShowVolumeSlider(true)}
                       onMouseLeave={() => setShowVolumeSlider(false)}
                       className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                      aria-label="صوت"
                     >
                       {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
                     </button>
@@ -279,7 +308,7 @@ export default function Showreel() {
                             value={volume}
                             onChange={handleVolumeChange}
                             className="w-20 h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-blue-500"
-                            style={{ transform: 'rotate(-90deg)' }}
+                            style={{ transform: "rotate(-90deg)" }}
                           />
                         </motion.div>
                       )}
@@ -298,6 +327,7 @@ export default function Showreel() {
                     whileTap={{ scale: 0.9 }}
                     onClick={toggleFullscreen}
                     className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                    aria-label="ملء الشاشة"
                   >
                     {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
                   </motion.button>
@@ -315,7 +345,7 @@ export default function Showreel() {
       </AnimatePresence>
 
       {/* عناوين الفيديو (تظهر عند الإيقاف) */}
-      {!isPlaying && !showControls && (
+      {!isPlaying && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
