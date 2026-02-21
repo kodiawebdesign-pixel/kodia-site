@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { 
-  CheckCircle2, 
-  Star, 
-  Zap, 
-  Shield, 
+import {
+  CheckCircle2,
+  Star,
+  Zap,
+  Shield,
   Headphones,
   Sparkles,
   Gift,
@@ -14,8 +14,9 @@ import {
   Rocket,
   Heart,
   Clock,
-  Users
+  Users,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import Section from "./Section";
 import { siteData } from "@/lib/siteData";
 
@@ -30,8 +31,8 @@ const gradientColors = [
   "from-emerald-500 to-teal-500",
 ];
 
-// أيقونات مميزة لكل باقة
-const packageIcons = [Rocket, Zap, Award, Star];
+// ✅ أيقونات مميزة لكل باقة (Typed)
+const packageIcons: LucideIcon[] = [Rocket, Zap, Award, Star];
 
 // مميزات إضافية لكل باقة
 const extraFeatures: Record<string, string[]> = {
@@ -48,14 +49,10 @@ const packageBadges: Record<string, string> = {
 };
 
 export default function Pricing() {
-  const p = siteData.home.packages;
+  const p = siteData.home.packages ?? packagesData;
 
   return (
-    <Section 
-      title={p.title} 
-      subtitle={p.subtitle}
-      badge="الأسعار"
-    >
+    <Section title={p.title} subtitle={p.subtitle} badge="الأسعار">
       {/* شبكة الباقات */}
       <motion.div
         initial="hidden"
@@ -65,16 +62,15 @@ export default function Pricing() {
           hidden: { opacity: 0 },
           visible: {
             opacity: 1,
-            transition: {
-              staggerChildren: 0.2,
-            },
+            transition: { staggerChildren: 0.2 },
           },
         }}
         className="grid gap-8 lg:grid-cols-3 relative"
       >
-        {p.items.map((pkg, idx) => {
+        {(p.items ?? []).map((pkg, idx) => {
           const gradient = gradientColors[idx % gradientColors.length];
-          const IconComponent = packageIcons[idx % packageIcons.length];
+          const IconComponent: LucideIcon = packageIcons[idx % packageIcons.length] ?? Sparkles;
+
           const isPopular = idx === 1; // الباقة الثانية هي الأكثر طلباً
           const extra = extraFeatures[pkg.name] || ["دعم فني", "ضمان", "تحديثات"];
           const badge = packageBadges[pkg.name] || "مميزة";
@@ -84,15 +80,15 @@ export default function Pricing() {
               key={pkg.name}
               variants={{
                 hidden: { opacity: 0, y: 50, scale: 0.9 },
-                visible: { 
-                  opacity: 1, 
-                  y: 0, 
+                visible: {
+                  opacity: 1,
+                  y: 0,
                   scale: 1,
                   transition: {
-                    type: "spring",
+                    type: "spring" as const,
                     stiffness: 100,
                     damping: 15,
-                  }
+                  },
                 },
               }}
               whileHover={{ y: -12, scale: 1.03 }}
@@ -103,7 +99,7 @@ export default function Pricing() {
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 0.5, type: "spring" }}
+                  transition={{ delay: 0.5, type: "spring" as const }}
                   className="absolute -top-6 left-1/2 -translate-x-1/2 z-20"
                 >
                   <div className="relative">
@@ -118,20 +114,24 @@ export default function Pricing() {
               )}
 
               {/* بطاقة السعر */}
-              <div className={`relative bg-white rounded-3xl border-2 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 ${
-                isPopular ? 'border-purple-200' : 'border-gray-200/50'
-              }`}>
+              <div
+                className={`relative bg-white rounded-3xl border-2 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 ${
+                  isPopular ? "border-purple-200" : "border-gray-200/50"
+                }`}
+              >
                 {/* خلفية متدرجة متحركة */}
                 <motion.div
                   className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                  animate={{
-                    scale: [1, 1.1, 1],
-                  }}
+                  animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 3, repeat: Infinity }}
                 />
 
                 {/* رأس الباقة */}
-                <div className={`relative p-6 text-center border-b ${isPopular ? 'bg-gradient-to-r from-purple-50 to-pink-50' : 'bg-gray-50'}`}>
+                <div
+                  className={`relative p-6 text-center border-b ${
+                    isPopular ? "bg-gradient-to-r from-purple-50 to-pink-50" : "bg-gray-50"
+                  }`}
+                >
                   {/* أيقونة الباقة */}
                   <motion.div
                     whileHover={{ rotate: 360, scale: 1.1 }}
@@ -143,11 +143,13 @@ export default function Pricing() {
 
                   {/* اسم الباقة */}
                   <h3 className="text-2xl font-bold mb-1">{pkg.name}</h3>
-                  
+
                   {/* شارة الباقة */}
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                    isPopular ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-600'
-                  }`}>
+                  <span
+                    className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                      isPopular ? "bg-purple-100 text-purple-700" : "bg-gray-100 text-gray-600"
+                    }`}
+                  >
                     {badge}
                   </span>
 
@@ -161,7 +163,7 @@ export default function Pricing() {
                 <div className="p-6">
                   {/* المميزات الأساسية */}
                   <div className="space-y-3 mb-6">
-                    {pkg.features.map((feature, fidx) => (
+                    {(pkg.features ?? []).map((feature, fidx) => (
                       <motion.div
                         key={fidx}
                         initial={{ x: -20, opacity: 0 }}
@@ -169,7 +171,8 @@ export default function Pricing() {
                         transition={{ delay: 0.3 + fidx * 0.1 }}
                         className="flex items-center gap-2"
                       >
-<CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />                        <span className="text-sm text-gray-700">{feature}</span>
+                        <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                        <span className="text-sm text-gray-700">{feature}</span>
                       </motion.div>
                     ))}
                   </div>
@@ -177,7 +180,7 @@ export default function Pricing() {
                   {/* مميزات إضافية - تظهر عند الهوفر */}
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
-                    whileHover={{ opacity: 1, height: 'auto' }}
+                    whileHover={{ opacity: 1, height: "auto" }}
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
@@ -195,15 +198,13 @@ export default function Pricing() {
                   </motion.div>
 
                   {/* زر الشراء */}
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="mt-6"
-                  >
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mt-6">
                     <Link href={pkg.cta.href}>
-                      <button className={`w-full py-3 rounded-xl font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r ${gradient} ${
-                        isPopular ? 'shadow-purple-200' : ''
-                      }`}>
+                      <button
+                        className={`w-full py-3 rounded-xl font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r ${gradient} ${
+                          isPopular ? "shadow-purple-200" : ""
+                        }`}
+                      >
                         {pkg.cta.label}
                       </button>
                     </Link>
@@ -244,32 +245,23 @@ export default function Pricing() {
         className="mt-12 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100"
       >
         <h3 className="text-lg font-bold mb-4 text-center">مقارنة سريعة بين الباقات</h3>
-        
+
         <div className="grid grid-cols-4 gap-4 text-sm">
           <div className="font-medium text-gray-600">الميزة</div>
-          {p.items.map(pkg => (
-            <div key={pkg.name} className="font-bold text-center">{pkg.name}</div>
+          {(p.items ?? []).map((pkg) => (
+            <div key={pkg.name} className="font-bold text-center">
+              {pkg.name}
+            </div>
           ))}
 
-          {[
-            "عدد الصفحات",
-            "تصميم متجاوب",
-            "SEO أساسي",
-            "دعم فني",
-            "تدريب",
-            "تحديثات",
-          ].map((feature, idx) => (
+          {["عدد الصفحات", "تصميم متجاوب", "SEO أساسي", "دعم فني", "تدريب", "تحديثات"].map((feature, idx) => (
             <div key={idx} className="contents">
               <div className="text-gray-600 py-2">{feature}</div>
-              {p.items.map((pkg, pidx) => {
-                const hasFeature = idx < pkg.features.length;
+              {(p.items ?? []).map((pkg, pidx) => {
+                const hasFeature = idx < (pkg.features ?? []).length;
                 return (
                   <div key={pidx} className="text-center py-2">
-                    {hasFeature ? (
-                      <CheckCircle2 className="w-5 h-5 text-green-500 mx-auto" />
-                    ) : (
-                      <span className="text-gray-300">—</span>
-                    )}
+                    {hasFeature ? <CheckCircle2 className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-300">—</span>}
                   </div>
                 );
               })}
