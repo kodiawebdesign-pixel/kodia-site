@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { 
-  Building2, 
-  ShoppingBag, 
-  Smartphone, 
-  PenTool, 
-  TrendingUp, 
+import {
+  Building2,
+  ShoppingBag,
+  Smartphone,
+  PenTool,
+  TrendingUp,
   Settings,
   FileText,
   Shield,
@@ -15,7 +15,7 @@ import {
   Sparkles,
   Zap,
   Star,
-  Heart
+  Heart,
 } from "lucide-react";
 import Section from "./Section";
 import { siteData } from "@/lib/siteData";
@@ -85,51 +85,55 @@ export default function Services() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.9 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       scale: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const, // ✅ Fix
         stiffness: 100,
         damping: 15,
-      }
+      },
     },
   };
 
+  const safeServices = services ?? [];
+
   return (
-    <Section 
-      title={servicesIntro.title} 
-      subtitle={servicesIntro.subtitle}
+    <Section
+      title={servicesIntro?.title ?? ""}
+      subtitle={servicesIntro?.subtitle ?? ""}
       badge="جميع الحلول الرقمية"
     >
       {/* شبكة الخدمات */}
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-50px" }}
         className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
-        {services.map((service, index) => {
+        {safeServices.map((service, index) => {
           const IconComponent = iconMap[service.title] || Sparkles;
           const gradientClass = gradientColors[index % gradientColors.length];
           const cardGradient = cardGradients[index % cardGradients.length];
           const badge = serviceBadges[service.title] || "خدمة مميزة";
-          const slug = service.slug || `/services/${service.title.toLowerCase().replace(/\s+/g, '-')}`;
+          const slug = service.slug || `/services/${service.title.toLowerCase().replace(/\s+/g, "-")}`;
 
           return (
             <motion.div
               key={service.title}
               variants={itemVariants}
-              whileHover={{ 
+              whileHover={{
                 y: -8,
-                transition: { type: "spring", stiffness: 400, damping: 17 }
+                transition: { type: "spring" as const, stiffness: 400, damping: 17 }, // ✅ Fix
               }}
               className="group relative"
             >
               {/* بطاقة الخدمة */}
-              <div className={`relative h-full bg-white rounded-2xl border border-gray-200/50 p-6 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden ${cardGradient}`}>
+              <div
+                className={`relative h-full bg-white rounded-2xl border border-gray-200/50 p-6 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden ${cardGradient}`}
+              >
                 {/* خلفية متحركة */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-white via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -158,7 +162,7 @@ export default function Services() {
                   className={`relative w-16 h-16 mb-4 rounded-xl bg-gradient-to-br ${gradientClass} p-4 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}
                 >
                   <IconComponent className="w-full h-full" />
-                  
+
                   {/* تأثير نبض حول الأيقونة */}
                   <motion.div
                     animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
@@ -173,23 +177,17 @@ export default function Services() {
                 </h3>
 
                 {/* وصف الخدمة */}
-                <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                  {service.desc}
-                </p>
+                <p className="text-sm text-gray-600 leading-relaxed mb-4">{service.desc}</p>
 
                 {/* قائمة مميزات سريعة */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, height: 0 }}
-                  whileHover={{ opacity: 1, height: 'auto' }}
+                  whileHover={{ opacity: 1, height: "auto" }}
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden mb-4"
                 >
                   <div className="space-y-2 pt-2">
-                    {[
-                      "⚡ تنفيذ احترافي",
-                      "🎨 تصميم جذاب",
-                      "📱 متجاوب بالكامل",
-                    ].map((feature, idx) => (
+                    {["⚡ تنفيذ احترافي", "🎨 تصميم جذاب", "📱 متجاوب بالكامل"].map((feature, idx) => (
                       <motion.div
                         key={idx}
                         initial={{ x: -20, opacity: 0 }}
@@ -216,7 +214,7 @@ export default function Services() {
                 </Link>
 
                 {/* خط سفلي متحرك */}
-                <motion.div 
+                <motion.div
                   className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${gradientClass}`}
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
