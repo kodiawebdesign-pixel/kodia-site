@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  Zap, 
-  Smartphone, 
-  Search, 
+import {
+  Smartphone,
+  Search,
   Code2,
   Users,
   Heart,
@@ -14,7 +13,7 @@ import {
   Sparkles,
   CheckCircle2,
   Star,
-  Target
+  Target,
 } from "lucide-react";
 import Section from "./Section";
 import { siteData } from "@/lib/siteData";
@@ -52,6 +51,9 @@ const performanceIndicators = [
   { value: "١٠٠٪", label: "دعم", color: "text-rose-500" },
 ];
 
+// fallback آمن لمؤشر الأداء
+const fallbackIndicator = { value: "", label: "", color: "text-gray-700" };
+
 // شهادات الجودة
 const qualityBadges = [
   { icon: Award, label: "معتمد", color: "from-yellow-400 to-orange-400" },
@@ -60,14 +62,10 @@ const qualityBadges = [
 ];
 
 export default function Quality() {
-  const q = siteData.home.quality;
+  const q = siteData.home.quality ?? qualityData;
 
   return (
-    <Section 
-      title={q.title} 
-      subtitle={q.subtitle}
-      badge="معايير الجودة"
-    >
+    <Section title={q.title} subtitle={q.subtitle} badge="معايير الجودة">
       {/* شبكة معايير الجودة */}
       <motion.div
         initial="hidden"
@@ -77,32 +75,35 @@ export default function Quality() {
           hidden: { opacity: 0 },
           visible: {
             opacity: 1,
-            transition: {
-              staggerChildren: 0.1,
-            },
+            transition: { staggerChildren: 0.1 },
           },
         }}
         className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {q.items.map((item, idx) => {
+        {(q.items ?? []).map((item, idx) => {
           const IconComponent = iconMap[item.title as keyof typeof iconMap] || Target;
           const gradient = gradientColors[idx % gradientColors.length];
-          const indicator = performanceIndicators[idx % performanceIndicators.length];
+
+          // ✅ safe indicator (يحمي من undefined)
+          const indicator =
+            performanceIndicators.length > 0
+              ? performanceIndicators[idx % performanceIndicators.length] ?? fallbackIndicator
+              : fallbackIndicator;
 
           return (
             <motion.div
               key={item.title}
               variants={{
                 hidden: { opacity: 0, y: 30, scale: 0.9 },
-                visible: { 
-                  opacity: 1, 
-                  y: 0, 
+                visible: {
+                  opacity: 1,
+                  y: 0,
                   scale: 1,
                   transition: {
-                    type: "spring",
+                    type: "spring" as const,
                     stiffness: 100,
                     damping: 15,
-                  }
+                  },
                 },
               }}
               whileHover={{ y: -8, scale: 1.02 }}
@@ -112,15 +113,15 @@ export default function Quality() {
                 {/* خلفية متدرجة متحركة */}
                 <motion.div
                   className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                  animate={{
-                    scale: [1, 1.1, 1],
-                  }}
+                  animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 3, repeat: Infinity }}
                 />
 
                 {/* شارة الجودة */}
                 <div className="absolute top-3 right-3">
-                  <span className={`inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r ${gradient} text-white text-xs font-bold rounded-full shadow-lg`}>
+                  <span
+                    className={`inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r ${gradient} text-white text-xs font-bold rounded-full shadow-lg`}
+                  >
                     <Sparkles className="w-3 h-3" />
                     معيار {idx + 1}
                   </span>
@@ -135,7 +136,7 @@ export default function Quality() {
                     className={`relative w-16 h-16 mb-4 rounded-xl bg-gradient-to-br ${gradient} p-4 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}
                   >
                     <IconComponent className="w-full h-full" />
-                    
+
                     {/* تأثير نبض */}
                     <motion.div
                       animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
@@ -150,24 +151,20 @@ export default function Quality() {
                   </h3>
 
                   {/* وصف المعيار */}
-                  <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                    {item.desc}
-                  </p>
+                  <p className="text-sm text-gray-600 leading-relaxed mb-4">{item.desc}</p>
 
                   {/* مؤشر الأداء */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">معدل الأداء</span>
-                      <span className={`text-sm font-bold ${indicator.color}`}>
-                        {indicator.value}
-                      </span>
+                      <span className={`text-sm font-bold ${indicator.color}`}>{indicator.value}</span>
                     </div>
 
                     {/* شريط التقدم */}
                     <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
-                        whileInView={{ width: indicator.value }}
+                        whileInView={{ width: indicator.value || "0%" }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.5 + idx * 0.1, duration: 1 }}
                         className={`h-full bg-gradient-to-r ${gradient} rounded-full`}
@@ -177,18 +174,15 @@ export default function Quality() {
                     {/* نقاط إضافية تظهر عند الهوفر */}
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
-                      whileHover={{ opacity: 1, height: 'auto' }}
+                      whileHover={{ opacity: 1, height: "auto" }}
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
                       <div className="pt-3 border-t border-gray-100 space-y-2">
-                        {[
-                          "✓ اختبارات أداء",
-                          "✓ معايير عالمية",
-                          "✓ ضمان الجودة",
-                        ].map((point, pidx) => (
+                        {["✓ اختبارات أداء", "✓ معايير عالمية", "✓ ضمان الجودة"].map((point, pidx) => (
                           <div key={pidx} className="flex items-center gap-2 text-xs text-gray-600">
-<CheckCircle2 className="w-3 h-3 text-blue-600" />                            {point}
+                            <CheckCircle2 className="w-3 h-3 text-blue-600" />
+                            {point}
                           </div>
                         ))}
                       </div>
@@ -197,7 +191,7 @@ export default function Quality() {
                 </div>
 
                 {/* خط سفلي متدرج */}
-                <motion.div 
+                <motion.div
                   className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient}`}
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
@@ -225,10 +219,7 @@ export default function Quality() {
           >
             {/* خلفية متحركة */}
             <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 5, -5, 0],
-              }}
+              animate={{ scale: [1, 1.2, 1], rotate: [0, 5, -5, 0] }}
               transition={{ duration: 5, repeat: Infinity }}
               className="absolute inset-0 bg-white/10"
             />
@@ -257,11 +248,7 @@ export default function Quality() {
             { icon: Search, label: "SEO", value: "٩٥٪", desc: "تحسين متقدم" },
             { icon: Users, label: "رضا العملاء", value: "٩٨٪", desc: "تقييمات إيجابية" },
           ].map((stat, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ y: -4 }}
-              className="text-center"
-            >
+            <motion.div key={idx} whileHover={{ y: -4 }} className="text-center">
               <stat.icon className="w-8 h-8 text-blue-600 mx-auto mb-3" />
               <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
               <div className="text-sm font-medium text-gray-700 mb-1">{stat.label}</div>
@@ -295,7 +282,7 @@ export default function Quality() {
         className="text-center mt-8"
       >
         <button
-          onClick={() => window.location.href = "/quote"}
+          onClick={() => (window.location.href = "/quote")}
           className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gray-900 to-gray-700 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300"
         >
           <Sparkles className="w-5 h-5" />
