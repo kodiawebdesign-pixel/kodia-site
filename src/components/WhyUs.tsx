@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  PenTool, 
-  Zap, 
-  Search, 
-  Heart, 
-  MessageCircle, 
+import {
+  PenTool,
+  Zap,
+  Search,
+  Heart,
+  MessageCircle,
   Shield,
   Star,
   Award,
@@ -17,7 +17,7 @@ import {
   CheckCircle2,
   Sparkles,
   ThumbsUp,
-  Globe
+  Globe,
 } from "lucide-react";
 import Section from "./Section";
 import { siteData } from "@/lib/siteData";
@@ -53,22 +53,30 @@ const gradientColors = [
 ];
 
 // إحصائيات إضافية لكل ميزة
-const featureStats = [
-  { value: "٩٨٪", label: "نسبة رضا" },
-  { value: "١٠٠٪", label: "توافق" },
-  { value: "٩٥٪", label: "تحسين" },
-  { value: "٢٤/٧", label: "دعم" },
-  { value: "٩٩٪", label: "جودة" },
-  { value: "٩٧٪", label: "سرعة" },
-  { value: "٩٦٪", label: "شفافية" },
-  { value: "١٠٠٪", label: "ضمان" },
+// ملاحظة: value للعرض (أرقام عربية) و percent للاستخدام في الـ width
+const featureStats: Array<{ value: string; label: string; percent: number }> = [
+  { value: "٩٨٪", label: "نسبة رضا", percent: 98 },
+  { value: "١٠٠٪", label: "توافق", percent: 100 },
+  { value: "٩٥٪", label: "تحسين", percent: 95 },
+  { value: "٢٤/٧", label: "دعم", percent: 90 }, // دعم: نخليه رقم تقريبي للـ progress
+  { value: "٩٩٪", label: "جودة", percent: 99 },
+  { value: "٩٧٪", label: "سرعة", percent: 97 },
+  { value: "٩٦٪", label: "شفافية", percent: 96 },
+  { value: "١٠٠٪", label: "ضمان", percent: 100 },
 ];
+
+const DEFAULT_STAT = { value: "—", label: "", percent: 0 };
+const DEFAULT_GRADIENT = "from-blue-500 to-cyan-500";
 
 export default function WhyUs() {
   const { why } = siteData.home;
 
+  // حماية إضافية: لو arrays فاضية لأي سبب
+  const safeGradients = gradientColors.length ? gradientColors : [DEFAULT_GRADIENT];
+  const safeStats = featureStats.length ? featureStats : [DEFAULT_STAT];
+
   return (
-    <Section 
+    <Section
       title={why.title}
       subtitle="اكتشف لماذا آلاف العملاء يثقون في خدماتنا"
       badge="مميزاتنا"
@@ -91,28 +99,32 @@ export default function WhyUs() {
       >
         {why.items.map((feature, idx) => {
           // التأكد من أن feature هو نص
-          const featureText = typeof feature === 'string' 
-            ? feature 
-            : (feature as any).title || (feature as any).text || JSON.stringify(feature);
-          
+          const featureText =
+            typeof feature === "string"
+              ? feature
+              : (feature as any).title || (feature as any).text || JSON.stringify(feature);
+
           const IconComponent = iconMap[featureText] || Star;
-          const gradient = gradientColors[idx % gradientColors.length];
-          const stat = featureStats[idx % featureStats.length];
+
+          const gradient = safeGradients[idx % safeGradients.length] ?? DEFAULT_GRADIENT;
+
+          // ✅ الإصلاح الأساسي: stat لن تكون undefined
+          const stat = safeStats[idx % safeStats.length] ?? DEFAULT_STAT;
 
           return (
             <motion.div
               key={`feature-${idx}-${featureText.substring(0, 20)}`}
               variants={{
                 hidden: { opacity: 0, y: 30, scale: 0.9 },
-                visible: { 
-                  opacity: 1, 
-                  y: 0, 
+                visible: {
+                  opacity: 1,
+                  y: 0,
                   scale: 1,
                   transition: {
                     type: "spring",
                     stiffness: 100,
                     damping: 15,
-                  }
+                  },
                 },
               }}
               whileHover={{ y: -8, scale: 1.02 }}
@@ -130,7 +142,9 @@ export default function WhyUs() {
 
                 {/* شارة الميزة */}
                 <div className="absolute top-3 right-3">
-                  <span className={`inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r ${gradient} text-white text-xs font-bold rounded-full shadow-lg`}>
+                  <span
+                    className={`inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r ${gradient} text-white text-xs font-bold rounded-full shadow-lg`}
+                  >
                     <Sparkles className="w-3 h-3" />
                     ميزة {idx + 1}
                   </span>
@@ -153,7 +167,7 @@ export default function WhyUs() {
                     className={`relative w-16 h-16 mb-4 rounded-xl bg-gradient-to-br ${gradient} p-4 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}
                   >
                     <IconComponent className="w-full h-full" />
-                    
+
                     {/* تأثير نبض */}
                     <motion.div
                       animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
@@ -171,14 +185,17 @@ export default function WhyUs() {
                   <div className="space-y-2 mb-3">
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">معدل الأداء</span>
-                      <span className={`text-xs font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
+                      <span
+                        className={`text-xs font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}
+                      >
                         {stat.value}
                       </span>
                     </div>
                     <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
-                        whileInView={{ width: stat.value }}
+                        // ✅ width الآن قيمة CSS صحيحة
+                        whileInView={{ width: `${Math.max(0, Math.min(100, stat.percent))}%` }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.5 + idx * 0.1, duration: 1 }}
                         className={`h-full bg-gradient-to-r ${gradient} rounded-full`}
@@ -189,18 +206,18 @@ export default function WhyUs() {
                   {/* نقاط إضافية - تظهر عند الهوفر */}
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
-                    whileHover={{ opacity: 1, height: 'auto' }}
+                    whileHover={{ opacity: 1, height: "auto" }}
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
                     <div className="pt-3 border-t border-gray-100 space-y-2">
-                      {[
-                        "✓ ضمان الجودة",
-                        "✓ دعم فني مستمر",
-                        "✓ نتائج مضمونة",
-                      ].map((point, pidx) => (
-                        <div key={`point-${idx}-${pidx}`} className="flex items-center gap-2 text-xs text-gray-600">
-<CheckCircle2 className="w-3 h-3 text-blue-600" />                          {point}
+                      {["✓ ضمان الجودة", "✓ دعم فني مستمر", "✓ نتائج مضمونة"].map((point, pidx) => (
+                        <div
+                          key={`point-${idx}-${pidx}`}
+                          className="flex items-center gap-2 text-xs text-gray-600"
+                        >
+                          <CheckCircle2 className="w-3 h-3 text-blue-600" />
+                          {point}
                         </div>
                       ))}
                     </div>
@@ -208,7 +225,7 @@ export default function WhyUs() {
                 </div>
 
                 {/* خط سفلي متدرج */}
-                <motion.div 
+                <motion.div
                   className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient}`}
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
@@ -267,7 +284,8 @@ export default function WhyUs() {
 
         <h3 className="text-lg font-bold mb-2">لماذا تختار Kodia؟</h3>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          لأننا نؤمن أن التصميم الجيد هو استثمار، وليس تكلفة. نساعدك على بناء هوية رقمية قوية تحقق أهدافك وتنمي أعمالك.
+          لأننا نؤمن أن التصميم الجيد هو استثمار، وليس تكلفة. نساعدك على بناء هوية رقمية قوية تحقق
+          أهدافك وتنمي أعمالك.
         </p>
 
         <div className="flex flex-wrap justify-center gap-4 mt-4">
@@ -276,7 +294,10 @@ export default function WhyUs() {
             { icon: Rocket, text: "تقنيات حديثة" },
             { icon: Heart, text: "دائمًا معك" },
           ].map((item, idx) => (
-            <div key={`badge-${idx}`} className="flex items-center gap-2 px-3 py-1 bg-white rounded-full shadow-sm">
+            <div
+              key={`badge-${idx}`}
+              className="flex items-center gap-2 px-3 py-1 bg-white rounded-full shadow-sm"
+            >
               <item.icon className="w-4 h-4 text-blue-600" />
               <span className="text-xs text-gray-600">{item.text}</span>
             </div>
@@ -295,7 +316,7 @@ export default function WhyUs() {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => window.location.href = "/quote"}
+          onClick={() => (window.location.href = "/quote")}
           className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
         >
           <Rocket className="w-5 h-5" />
