@@ -26,7 +26,7 @@ import { siteData } from "@/lib/siteData";
 type StatFromData = {
   label: string;
   value: string;
-  icon?: string; // جاي من siteData كـ string
+  icon?: string;
 };
 
 // قاموس تحويل الاسم النصي -> أيقونة
@@ -135,16 +135,12 @@ export default function Stats() {
       badge="إحصائيات"
     >
       <div ref={statsRef} className="space-y-8">
-        {/* شبكة الإحصائيات الرئيسية */}
         <motion.div
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={{
             hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { staggerChildren: 0.15 },
-            },
+            visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
           }}
           className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
@@ -152,8 +148,9 @@ export default function Stats() {
             const n = parseNumber(s.value);
             const suffix = getSuffix(s.value);
 
-            const IconComponent: LucideIcon =
-              (s.icon && ICONS[s.icon]) ? ICONS[s.icon] : Sparkles;
+            // ✅ هنا الإصلاح: مفيش type annotation، وfallback مضمون
+            const IconComponent =
+              (s.icon ? ICONS[s.icon] : undefined) ?? Sparkles;
 
             const gradient = gradientColors[idx % gradientColors.length];
             const bgColor = bgColors[idx % bgColors.length];
@@ -178,20 +175,17 @@ export default function Stats() {
                 className="group relative"
               >
                 <div className="relative bg-white rounded-2xl border border-gray-200/50 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                  {/* خلفية متدرجة متحركة */}
                   <motion.div
                     className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   />
 
-                  {/* أيقونة كبيرة في الخلفية */}
                   <div className="absolute -bottom-4 -left-4 opacity-5">
                     <IconComponent className="w-24 h-24" />
                   </div>
 
                   <div className="relative p-6 text-center">
-                    {/* أيقونة مع تأثيرات */}
                     <motion.div
                       whileHover={{ rotate: 360, scale: 1.1 }}
                       transition={{ duration: 0.5 }}
@@ -199,7 +193,6 @@ export default function Stats() {
                     >
                       <IconComponent className="w-full h-full" />
 
-                      {/* تأثير نبض */}
                       <motion.div
                         animate={{
                           scale: [1, 1.2, 1],
@@ -210,7 +203,6 @@ export default function Stats() {
                       />
                     </motion.div>
 
-                    {/* العداد */}
                     <div className="text-4xl font-extrabold mb-2 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                       {mounted && isInView ? (
                         <CountUp
@@ -225,12 +217,10 @@ export default function Stats() {
                       {suffix}
                     </div>
 
-                    {/* التسمية */}
                     <div className="text-sm text-gray-600 font-medium">
                       {s.label}
                     </div>
 
-                    {/* شارة صغيرة (ديكور) */}
                     <div className="mt-4 flex justify-center">
                       <div
                         className={`w-12 h-12 rounded-full ${bgColor} flex items-center justify-center`}
@@ -243,7 +233,6 @@ export default function Stats() {
                     </div>
                   </div>
 
-                  {/* خط سفلي متدرج */}
                   <motion.div
                     className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient}`}
                     initial={{ scaleX: 0 }}
@@ -257,7 +246,6 @@ export default function Stats() {
           })}
         </motion.div>
 
-        {/* ملاحظة */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
