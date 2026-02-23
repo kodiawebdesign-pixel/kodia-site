@@ -17,7 +17,7 @@ import {
 import Section from "./Section";
 import { siteData } from "@/lib/siteData";
 
-// توسيع بيانات الشهادات
+// توسيع بيانات الشهادات (يمكن استبدالها من siteData)
 const testimonialsData = siteData.home.testimonials;
 
 // بيانات ثابتة بدلاً من الأرقام العشوائية
@@ -70,14 +70,20 @@ export default function Testimonials() {
   };
 
   const handleNext = () => {
+    if (!enhancedTestimonials.length) return;
     setActiveIndex((prev) => (prev + 1) % enhancedTestimonials.length);
   };
 
   const handlePrev = () => {
+    if (!enhancedTestimonials.length) return;
     setActiveIndex((prev) =>
       prev === 0 ? enhancedTestimonials.length - 1 : prev - 1
     );
   };
+
+  // ✅ حل خطأ "Object is possibly undefined"
+  const active = enhancedTestimonials[activeIndex] ?? enhancedTestimonials[0];
+  if (!active) return null;
 
   return (
     <Section
@@ -92,10 +98,7 @@ export default function Testimonials() {
         viewport={{ once: true, margin: "-50px" }}
         variants={{
           hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.1 },
-          },
+          visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
         }}
         className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
@@ -103,7 +106,6 @@ export default function Testimonials() {
           const isLiked = likedTestimonials.includes(idx);
           const isExpanded = expandedQuote === idx;
 
-          // ✅ fallback مضمون
           const likes = testimonial.likes ?? 0;
           const comments = testimonial.comments ?? 0;
 
@@ -116,11 +118,7 @@ export default function Testimonials() {
                   opacity: 1,
                   y: 0,
                   scale: 1,
-                  transition: {
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 15,
-                  },
+                  transition: { type: "spring", stiffness: 100, damping: 15 },
                 },
               }}
               whileHover={{ y: -8 }}
@@ -167,7 +165,9 @@ export default function Testimonials() {
                       <h3 className="font-bold text-lg">{testimonial.name}</h3>
                       <p className="text-sm text-gray-500">{testimonial.role}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-gray-400">{testimonial.date}</span>
+                        <span className="text-xs text-gray-400">
+                          {testimonial.date}
+                        </span>
                         <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-600 rounded-full">
                           {testimonial.project}
                         </span>
@@ -229,10 +229,14 @@ export default function Testimonials() {
                     <button
                       onClick={(e) => handleLike(idx, e)}
                       className={`flex items-center gap-1.5 text-xs transition-all ${
-                        isLiked ? "text-blue-600" : "text-gray-500 hover:text-blue-600"
+                        isLiked
+                          ? "text-blue-600"
+                          : "text-gray-500 hover:text-blue-600"
                       }`}
                     >
-                      <ThumbsUp className={`w-4 h-4 ${isLiked ? "fill-blue-600" : ""}`} />
+                      <ThumbsUp
+                        className={`w-4 h-4 ${isLiked ? "fill-blue-600" : ""}`}
+                      />
                       <span>{mounted ? likes + (isLiked ? 1 : 0) : likes}</span>
                     </button>
 
@@ -281,6 +285,7 @@ export default function Testimonials() {
         className="relative mt-12"
       >
         <div className="relative bg-gradient-to-r from-gray-50 to-white rounded-2xl border border-gray-200 p-8">
+          {/* السابقة */}
           <button
             onClick={handlePrev}
             className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors z-10"
@@ -288,6 +293,7 @@ export default function Testimonials() {
             <ChevronRight className="w-5 h-5" />
           </button>
 
+          {/* التالية */}
           <button
             onClick={handleNext}
             className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors z-10"
@@ -295,6 +301,7 @@ export default function Testimonials() {
             <ChevronLeft className="w-5 h-5" />
           </button>
 
+          {/* الشهادة المركزية */}
           <AnimatePresence mode="wait">
             <motion.div
               key={`active-${activeIndex}`}
@@ -308,10 +315,10 @@ export default function Testimonials() {
                 <div className="relative">
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-1">
                     <div className="w-full h-full rounded-full bg-white overflow-hidden">
-                      {enhancedTestimonials[activeIndex]?.avatar ? (
+                      {active.avatar ? (
                         <img
-                          src={enhancedTestimonials[activeIndex].avatar}
-                          alt={enhancedTestimonials[activeIndex].name}
+                          src={active.avatar}
+                          alt={active.name}
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -328,7 +335,7 @@ export default function Testimonials() {
                   <Star
                     key={`active-star-${i}`}
                     className={`w-5 h-5 ${
-                      i < enhancedTestimonials[activeIndex].rating
+                      i < active.rating
                         ? "text-yellow-400 fill-yellow-400"
                         : "text-gray-300"
                     }`}
@@ -337,19 +344,14 @@ export default function Testimonials() {
               </div>
 
               <p className="text-xl text-gray-700 leading-relaxed mb-4">
-                “{enhancedTestimonials[activeIndex].quote}”
+                “{active.quote}”
               </p>
 
-              <h4 className="font-bold text-lg">
-                {enhancedTestimonials[activeIndex].name}
-              </h4>
-              <p className="text-gray-500 text-sm mb-2">
-                {enhancedTestimonials[activeIndex].role}
-              </p>
-              <p className="text-xs text-gray-400">
-                {enhancedTestimonials[activeIndex].date}
-              </p>
+              <h4 className="font-bold text-lg">{active.name}</h4>
+              <p className="text-gray-500 text-sm mb-2">{active.role}</p>
+              <p className="text-xs text-gray-400">{active.date}</p>
 
+              {/* نقاط التنقل */}
               <div className="flex justify-center gap-2 mt-6">
                 {enhancedTestimonials.map((_, idx) => (
                   <button
