@@ -23,10 +23,10 @@ import {
 import Section from "./Section";
 import { siteData } from "@/lib/siteData";
 
-// توسيع بيانات التقنيات مع أيقونات وتفاصيل إضافية
+// توسيع بيانات التقنيات
 const techData = siteData.home.techStack;
 
-// خريطة الأيقونات لكل تقنية (Typed بدل any)
+// خريطة الأيقونات لكل تقنية
 const iconMap: Record<string, LucideIcon> = {
   "Next.js 14": Globe,
   React: Code2,
@@ -56,8 +56,10 @@ const gradientColors = [
   "from-sky-500 to-indigo-500",
 ];
 
+type Expertise = { level: string; percentage: number; icon: LucideIcon };
+
 // مستويات الخبرة لكل تقنية
-const expertiseLevels: Array<{ level: string; percentage: number; icon: LucideIcon }> = [
+const expertiseLevels: Expertise[] = [
   { level: "متقدم", percentage: 95, icon: Award },
   { level: "خبير", percentage: 90, icon: Star },
   { level: "متقدم", percentage: 92, icon: Award },
@@ -90,6 +92,9 @@ const techFeatures = [
   ["deployment", "serverless", "edge"],
 ];
 
+// fallback مضمون
+const DEFAULT_EXPERTISE: Expertise = { level: "متوسط", percentage: 75, icon: Sparkles };
+
 export default function TechStack() {
   const t = siteData.home.techStack;
 
@@ -109,10 +114,18 @@ export default function TechStack() {
         {t.items.map((tech, idx) => {
           const IconComponent = iconMap[tech.title] ?? Code2;
           const gradient = gradientColors[idx % gradientColors.length];
-          const expertise = expertiseLevels[idx % expertiseLevels.length];
-          const ExpertiseIcon = expertise.icon; // ✅ مهم: PascalCase
-          const experience = experienceYears[idx % experienceYears.length];
-          const features = techFeatures[idx % techFeatures.length];
+
+          // ✅ إصلاح: fallback صريح يمنع undefined
+          const expertise =
+            expertiseLevels[idx % expertiseLevels.length] ?? DEFAULT_EXPERTISE;
+
+          const ExpertiseIcon = expertise.icon;
+
+          const experience =
+            experienceYears[idx % experienceYears.length] ?? "—";
+
+          const features =
+            techFeatures[idx % techFeatures.length] ?? [];
 
           return (
             <motion.div
@@ -156,15 +169,13 @@ export default function TechStack() {
 
                 {/* محتوى البطاقة */}
                 <div className="p-6">
-                  {/* أيقونة التقنية مع تأثيرات */}
+                  {/* أيقونة التقنية */}
                   <motion.div
                     whileHover={{ rotate: 360, scale: 1.1 }}
                     transition={{ duration: 0.5 }}
                     className={`relative w-16 h-16 mb-4 rounded-xl bg-gradient-to-br ${gradient} p-4 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}
                   >
                     <IconComponent className="w-full h-full" />
-
-                    {/* تأثير نبض */}
                     <motion.div
                       animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
                       transition={{ duration: 2, repeat: Infinity }}
@@ -172,15 +183,14 @@ export default function TechStack() {
                     />
                   </motion.div>
 
-                  {/* عنوان التقنية */}
                   <h3 className="text-lg font-bold mb-2 group-hover:text-gray-900 transition-colors">
                     {tech.title}
                   </h3>
 
-                  {/* وصف التقنية */}
-                  <p className="text-sm text-gray-600 leading-relaxed mb-4">{tech.desc}</p>
+                  <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                    {tech.desc}
+                  </p>
 
-                  {/* مؤشر الخبرة */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">مستوى الخبرة</span>
@@ -191,7 +201,6 @@ export default function TechStack() {
                       </span>
                     </div>
 
-                    {/* شريط التقدم */}
                     <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
@@ -202,7 +211,6 @@ export default function TechStack() {
                       />
                     </div>
 
-                    {/* مميزات التقنية - تظهر عند الهوفر */}
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       whileHover={{ opacity: 1, height: "auto" }}
@@ -225,7 +233,6 @@ export default function TechStack() {
                   </div>
                 </div>
 
-                {/* خط سفلي متدرج */}
                 <motion.div
                   className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient}`}
                   initial={{ scaleX: 0 }}
@@ -280,7 +287,8 @@ export default function TechStack() {
 
         <div className="space-y-4">
           {t.items.slice(0, 5).map((tech, idx) => {
-            const expertise = expertiseLevels[idx % expertiseLevels.length];
+            const expertise =
+              expertiseLevels[idx % expertiseLevels.length] ?? DEFAULT_EXPERTISE;
             const gradient = gradientColors[idx % gradientColors.length];
 
             return (
