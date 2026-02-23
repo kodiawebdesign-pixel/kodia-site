@@ -141,19 +141,19 @@ const story = {
 export default function AboutPage() {
   // متغيرات الحركة المتطورة
   const fadeInUp = {
-    initial: { opacity: 0, y: 40 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 }
   };
 
   const fadeInScale = {
-    initial: { opacity: 0, scale: 0.9 },
-    animate: { opacity: 1, scale: 1 },
-    transition: { duration: 0.6, ease: "easeOut" }
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1 }
   };
 
   const staggerContainer = {
-    animate: {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
       transition: {
         staggerChildren: 0.12,
         delayChildren: 0.2,
@@ -171,6 +171,21 @@ export default function AboutPage() {
         ease: "easeOut" 
       }
     }
+  };
+
+  const statItemVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.8 },
+    visible: { opacity: 1, y: 0, scale: 1 }
+  };
+
+  const valueItemVariants = {
+    hidden: { opacity: 0, y: 40, scale: 0.9 },
+    visible: { opacity: 1, y: 0, scale: 1 }
+  };
+
+  const teamItemVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 }
   };
 
   return (
@@ -201,8 +216,8 @@ export default function AboutPage() {
 
         <Container>
           <motion.div
-            initial="initial"
-            animate="animate"
+            initial="hidden"
+            animate="visible"
             variants={staggerContainer}
             className="text-center max-w-5xl mx-auto"
           >
@@ -304,22 +319,10 @@ export default function AboutPage() {
               return (
                 <motion.div
                   key={idx}
-                  variants={{
-                    hidden: { opacity: 0, y: 30, scale: 0.8 },
-                    visible: { opacity: 1, y: 0, scale: 1 }
-                <motion.div
-  key={idx}
-  variants={{
-    hidden: { opacity: 0, y: 30, scale: 0.8 },
-    visible: { opacity: 1, y: 0, scale: 1 }
-  }}
-  whileHover={{ scale: 1.02, y: -4 }}
-  className="group relative bg-white rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
->
-  {/* الخلفية المتدرجة عند الهوفر */}
-  <motion.div
-    className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-  />
+                  variants={statItemVariants}
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  className="group relative bg-white rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
+                >
                   {/* الخلفية المتدرجة عند الهوفر */}
                   <motion.div
                     className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
@@ -531,13 +534,8 @@ export default function AboutPage() {
               return (
                 <motion.div
                   key={idx}
-                  variants={{
-                    hidden: { opacity: 0, y: 40, scale: 0.9 },
-                    visible: { opacity: 1, y: 0, scale: 1 }
-                  }}
-                  whileHover="hover"
-                  initial="rest"
-                  variants={{ hover: cardHover }}
+                  variants={valueItemVariants}
+                  whileHover={{ scale: 1.02, y: -6 }}
                   className="group relative bg-white rounded-3xl border border-slate-200 p-8 shadow-xl hover:shadow-2xl transition-all duration-500"
                 >
                   {/* الخلفية المتدرجة */}
@@ -602,10 +600,7 @@ export default function AboutPage() {
             {teamMembers.map((member, idx) => (
               <motion.div
                 key={idx}
-                variants={{
-                  hidden: { opacity: 0, y: 40 },
-                  visible: { opacity: 1, y: 0 }
-                }}
+                variants={teamItemVariants}
                 whileHover={{ y: -8 }}
                 className="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500"
               >
