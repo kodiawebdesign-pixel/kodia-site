@@ -2,40 +2,55 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { 
-  Star, 
-  Quote, 
-  ChevronLeft, 
+import {
+  Star,
+  Quote,
+  ChevronLeft,
   ChevronRight,
   MessageCircle,
   ThumbsUp,
   Share2,
   User,
   Award,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
 import Section from "./Section";
 import { siteData } from "@/lib/siteData";
 
-// توسيع بيانات الشهادات (يمكن استبدالها من siteData)
+// توسيع بيانات الشهادات
 const testimonialsData = siteData.home.testimonials;
 
 // بيانات ثابتة بدلاً من الأرقام العشوائية
 const dates = ["منذ يومين", "منذ أسبوع", "منذ ٣ أيام", "منذ شهر", "منذ أسبوعين"];
 const projects = ["موقع شركة", "متجر إلكتروني", "تطبيق موبايل", "UI/UX", "SEO"];
-const likesCounts = [32, 28, 45, 23, 38, 41, 29, 33, 47, 52]; // أرقام ثابتة
-const commentsCounts = [5, 3, 8, 4, 6, 7, 3, 5, 9, 4]; // أرقام ثابتة
+const likesCounts = [32, 28, 45, 23, 38, 41, 29, 33, 47, 52];
+const commentsCounts = [5, 3, 8, 4, 6, 7, 3, 5, 9, 4];
+
+// نوع الشهادة بعد الإضافة (عشان TS ما يقول undefined)
+type EnhancedTestimonial = {
+  name: string;
+  role: string;
+  quote: string;
+  rating: number;
+  date: string;
+  avatar?: string;
+  likes: number;
+  comments: number;
+  project: string;
+};
 
 // إضافة أيقونات وتفاصيل إضافية للشهادات - بأرقام ثابتة
-const enhancedTestimonials = testimonialsData.items.map((item, index) => ({
-  ...item,
-  rating: 5,
-  date: dates[index % dates.length],
-  avatar: `/images/avatars/avatar-${index + 1}.jpg`,
-  likes: likesCounts[index % likesCounts.length],
-  comments: commentsCounts[index % commentsCounts.length],
-  project: projects[index % projects.length],
-}));
+const enhancedTestimonials: EnhancedTestimonial[] = testimonialsData.items.map(
+  (item: any, index: number) => ({
+    ...item,
+    rating: 5,
+    date: dates[index % dates.length],
+    avatar: `/images/avatars/avatar-${index + 1}.jpg`,
+    likes: likesCounts[index % likesCounts.length] ?? 0,
+    comments: commentsCounts[index % commentsCounts.length] ?? 0,
+    project: projects[index % projects.length],
+  })
+);
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -43,15 +58,14 @@ export default function Testimonials() {
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
 
-  // التأكد من أن الكود يعمل فقط بعد التحميل على العميل
   useEffect(() => {
     setMounted(true);
   }, []);
 
   const handleLike = (idx: number, e: React.MouseEvent) => {
     e.stopPropagation();
-    setLikedTestimonials(prev => 
-      prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]
+    setLikedTestimonials((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
     );
   };
 
@@ -60,14 +74,14 @@ export default function Testimonials() {
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) => 
+    setActiveIndex((prev) =>
       prev === 0 ? enhancedTestimonials.length - 1 : prev - 1
     );
   };
 
   return (
-    <Section 
-      title={testimonialsData.title} 
+    <Section
+      title={testimonialsData.title}
       subtitle={testimonialsData.subtitle}
       badge="آراء حقيقية"
     >
@@ -80,9 +94,7 @@ export default function Testimonials() {
           hidden: { opacity: 0 },
           visible: {
             opacity: 1,
-            transition: {
-              staggerChildren: 0.1,
-            },
+            transition: { staggerChildren: 0.1 },
           },
         }}
         className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
@@ -91,20 +103,24 @@ export default function Testimonials() {
           const isLiked = likedTestimonials.includes(idx);
           const isExpanded = expandedQuote === idx;
 
+          // ✅ fallback مضمون
+          const likes = testimonial.likes ?? 0;
+          const comments = testimonial.comments ?? 0;
+
           return (
             <motion.div
               key={`testimonial-${idx}`}
               variants={{
                 hidden: { opacity: 0, y: 30, scale: 0.9 },
-                visible: { 
-                  opacity: 1, 
-                  y: 0, 
+                visible: {
+                  opacity: 1,
+                  y: 0,
                   scale: 1,
                   transition: {
                     type: "spring",
                     stiffness: 100,
                     damping: 15,
-                  }
+                  },
                 },
               }}
               whileHover={{ y: -8 }}
@@ -186,7 +202,11 @@ export default function Testimonials() {
                     animate={{ height: isExpanded ? "auto" : "4.5rem" }}
                     className="overflow-hidden"
                   >
-                    <p className={`text-gray-600 leading-relaxed ${!isExpanded ? 'line-clamp-3' : ''}`}>
+                    <p
+                      className={`text-gray-600 leading-relaxed ${
+                        !isExpanded ? "line-clamp-3" : ""
+                      }`}
+                    >
                       “{testimonial.quote}”
                     </p>
                   </motion.div>
@@ -209,18 +229,11 @@ export default function Testimonials() {
                     <button
                       onClick={(e) => handleLike(idx, e)}
                       className={`flex items-center gap-1.5 text-xs transition-all ${
-                        isLiked 
-                          ? "text-blue-600" 
-                          : "text-gray-500 hover:text-blue-600"
+                        isLiked ? "text-blue-600" : "text-gray-500 hover:text-blue-600"
                       }`}
                     >
                       <ThumbsUp className={`w-4 h-4 ${isLiked ? "fill-blue-600" : ""}`} />
-                      <span>
-                        {mounted 
-                          ? testimonial.likes + (isLiked ? 1 : 0)
-                          : testimonial.likes
-                        }
-                      </span>
+                      <span>{mounted ? likes + (isLiked ? 1 : 0) : likes}</span>
                     </button>
 
                     <button
@@ -228,7 +241,7 @@ export default function Testimonials() {
                       className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-blue-600 transition-colors"
                     >
                       <MessageCircle className="w-4 h-4" />
-                      <span>{testimonial.comments}</span>
+                      <span>{comments}</span>
                     </button>
 
                     <button
@@ -251,6 +264,7 @@ export default function Testimonials() {
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
                   transition={{ duration: 0.3 }}
+                  style={{ transformOrigin: "left" }}
                 />
               </div>
             </motion.div>
@@ -267,7 +281,6 @@ export default function Testimonials() {
         className="relative mt-12"
       >
         <div className="relative bg-gradient-to-r from-gray-50 to-white rounded-2xl border border-gray-200 p-8">
-          {/* أيقونة التنقل السابقة */}
           <button
             onClick={handlePrev}
             className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors z-10"
@@ -275,7 +288,6 @@ export default function Testimonials() {
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* أيقونة التنقل التالية */}
           <button
             onClick={handleNext}
             className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors z-10"
@@ -283,7 +295,6 @@ export default function Testimonials() {
             <ChevronLeft className="w-5 h-5" />
           </button>
 
-          {/* الشهادة المركزية */}
           <AnimatePresence mode="wait">
             <motion.div
               key={`active-${activeIndex}`}
@@ -297,7 +308,7 @@ export default function Testimonials() {
                 <div className="relative">
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-1">
                     <div className="w-full h-full rounded-full bg-white overflow-hidden">
-                      {enhancedTestimonials[activeIndex].avatar ? (
+                      {enhancedTestimonials[activeIndex]?.avatar ? (
                         <img
                           src={enhancedTestimonials[activeIndex].avatar}
                           alt={enhancedTestimonials[activeIndex].name}
@@ -329,11 +340,16 @@ export default function Testimonials() {
                 “{enhancedTestimonials[activeIndex].quote}”
               </p>
 
-              <h4 className="font-bold text-lg">{enhancedTestimonials[activeIndex].name}</h4>
-              <p className="text-gray-500 text-sm mb-2">{enhancedTestimonials[activeIndex].role}</p>
-              <p className="text-xs text-gray-400">{enhancedTestimonials[activeIndex].date}</p>
+              <h4 className="font-bold text-lg">
+                {enhancedTestimonials[activeIndex].name}
+              </h4>
+              <p className="text-gray-500 text-sm mb-2">
+                {enhancedTestimonials[activeIndex].role}
+              </p>
+              <p className="text-xs text-gray-400">
+                {enhancedTestimonials[activeIndex].date}
+              </p>
 
-              {/* نقاط التنقل */}
               <div className="flex justify-center gap-2 mt-6">
                 {enhancedTestimonials.map((_, idx) => (
                   <button
@@ -365,17 +381,20 @@ export default function Testimonials() {
           { icon: MessageCircle, label: "شهادة", value: "١٠+" },
           { icon: ThumbsUp, label: "نسبة رضا", value: "٩٨٪" },
           { icon: Award, label: "موثوقية", value: "١٠٠٪" },
-        ].map((stat, index) => (
-          <motion.div
-            key={`stat-${index}`}
-            whileHover={{ y: -4 }}
-            className="text-center p-4 bg-gradient-to-b from-white to-gray-50 rounded-xl border border-gray-100"
-          >
-            <stat.icon className="w-5 h-5 text-blue-600 mx-auto mb-2" />
-            <div className="text-lg font-bold text-gray-900">{stat.value}</div>
-            <div className="text-xs text-gray-500">{stat.label}</div>
-          </motion.div>
-        ))}
+        ].map((stat, index) => {
+          const StatIcon = stat.icon;
+          return (
+            <motion.div
+              key={`stat-${index}`}
+              whileHover={{ y: -4 }}
+              className="text-center p-4 bg-gradient-to-b from-white to-gray-50 rounded-xl border border-gray-100"
+            >
+              <StatIcon className="w-5 h-5 text-blue-600 mx-auto mb-2" />
+              <div className="text-lg font-bold text-gray-900">{stat.value}</div>
+              <div className="text-xs text-gray-500">{stat.label}</div>
+            </motion.div>
+          );
+        })}
       </motion.div>
 
       {/* زر إضافة تقييم */}
@@ -387,7 +406,7 @@ export default function Testimonials() {
         className="text-center mt-8"
       >
         <button
-          onClick={() => window.location.href = "/testimonials/new"}
+          onClick={() => (window.location.href = "/testimonials/new")}
           className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
         >
           <Sparkles className="w-5 h-5" />
