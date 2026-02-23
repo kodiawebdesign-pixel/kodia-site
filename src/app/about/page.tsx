@@ -85,12 +85,12 @@ const teamMembers = [
 
 // إحصائيات دقيقة
 const stats = [
-  { label: "سنوات الخبرة", value: "٨+", icon: Calendar, color: "from-blue-500 to-cyan-500" },
-  { label: "مشاريع ناجحة", value: "٤٥+", icon: Briefcase, color: "from-purple-500 to-pink-500" },
-  { label: "عملاء سعداء", value: "٣٢+", icon: Heart, color: "from-red-500 to-orange-500" },
-  { label: "خبراء متفرغين", value: "١٢+", icon: Users, color: "from-green-500 to-emerald-500" },
-  { label: "سنوات معدل الخبرة", value: "٦.٥", icon: Award, color: "from-yellow-500 to-amber-500" },
-  { label: "معدل رضا", value: "٩٨٪", icon: Star, color: "from-indigo-500 to-purple-500" },
+  { label: "سنوات الخبرة", value: "4+", icon: Calendar, color: "from-blue-500 to-cyan-500" },
+  { label: "مشاريع ناجحة", value: "860+", icon: Briefcase, color: "from-purple-500 to-pink-500" },
+  { label: "عملاء سعداء", value: "540+", icon: Heart, color: "from-red-500 to-orange-500" },
+  { label: "خبراء متفرغين", value: "12+", icon: Users, color: "from-green-500 to-emerald-500" },
+  { label: "سنوات معدل الخبرة", value: "5", icon: Award, color: "from-yellow-500 to-amber-500" },
+  { label: "معدل رضا", value: "98٪", icon: Star, color: "from-indigo-500 to-purple-500" },
 ];
 
 // قيم الشركة
@@ -132,7 +132,7 @@ const testimonials = [
 const story = {
   title: "من شغف بسيط إلى شركة رقمية رائدة",
   paragraphs: [
-    "بدأت قصة Kodia في ٢٠٢٢ بفكرة بسيطة: نقدم تصاميم راقية بأسعار مناسبة. اليوم، بعد ٣ سنوات من العمل الجاد، نفخر بفريق متكامل من ١٢ خبيراً في مختلف المجالات التقنية.",
+    "بدأت قصة Kodia في ٢٠٢٢ بفكرة بسيطة: نقدم تصاميم راقية بأسعار مناسبة. اليوم، بعد سنوات من العمل الجاد، نفخر بفريق متكامل من ١٢ خبيراً في مختلف المجالات التقنية.",
     "ما يميزنا هو نظرتنا الشاملة للمشروع. لا نصمم فقط، بل ندرس السوق والجمهور والمنافسين لنقدم لك موقعاً أو تطبيقاً يحقق أهدافك التجارية.",
     "نؤمن أن كل عميل هو شريك نجاح، ونسعى دائماً لبناء علاقات طويلة المدى مبنية على الثقة والنتائج الملموسة."
   ]
@@ -739,94 +739,99 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* قسم التواصل الفاخر */}
-      <section className="py-24 relative overflow-hidden">
-        {/* خلفية متدرجة */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-600 via-fuchsia-600 to-amber-600" />
-          <motion.div
-            animate={{ 
-              scale: [1, 1.5, 1],
-              rotate: [0, 360, 0],
-              opacity: [0.1, 0.2, 0.1]
-            }}
-            transition={{ duration: 20, repeat: Infinity }}
-            className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-white/10 to-transparent"
-          />
+{/* قسم التواصل الفاخر - نسخة محسنة */}
+<section className="py-24 relative overflow-hidden">
+  {/* خلفية متدرجة أغمق */}
+  <div className="absolute inset-0 -z-10">
+    <div className="absolute inset-0 bg-gradient-to-br from-violet-700 via-fuchsia-700 to-amber-700" />
+    {/* طبقة تعتيم إضافية */}
+    <div className="absolute inset-0 bg-black/10" />
+    <motion.div
+      animate={{ 
+        scale: [1, 1.5, 1],
+        rotate: [0, 360, 0],
+        opacity: [0.1, 0.15, 0.1]
+      }}
+      transition={{ duration: 20, repeat: Infinity }}
+      className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-white/5 to-transparent"
+    />
+  </div>
+
+  <Container>
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="text-center max-w-4xl mx-auto text-white"
+    >
+      {/* أيقونة متحركة */}
+      <motion.div
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="inline-block mb-8"
+      >
+        <div className="w-20 h-20 mx-auto rounded-3xl bg-white/20 backdrop-blur p-5 shadow-2xl">
+          <MessageCircle className="w-full h-full" />
         </div>
+      </motion.div>
 
-        <Container>
+      {/* عناوين مع ظل للنص */}
+      <h2 className="text-4xl lg:text-6xl font-bold mb-6 drop-shadow-2xl">
+        دعنا نحول فكرتك إلى واقع
+      </h2>
+      <p className="text-xl text-white/95 mb-10 max-w-2xl mx-auto drop-shadow-xl">
+        فريقنا جاهز لمناقشة مشروعك وتقديم استشارة مجانية
+      </p>
+
+      {/* أزرار محسنة */}
+      <div className="flex flex-wrap justify-center gap-6">
+        <motion.a
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          href={siteData.brand.whatsappLink}
+          target="_blank"
+          rel="noreferrer"
+          className="group relative px-10 py-5 bg-white text-slate-900 rounded-2xl font-semibold text-lg shadow-2xl overflow-hidden"
+        >
+          <span className="relative z-10 flex items-center gap-3">
+            <MessageCircle className="w-6 h-6 text-green-600" />
+            تواصل عبر واتساب
+          </span>
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center max-w-4xl mx-auto text-white"
-          >
-            <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="inline-block mb-8"
-            >
-              <div className="w-20 h-20 mx-auto rounded-3xl bg-white/20 backdrop-blur p-5">
-                <MessageCircle className="w-full h-full" />
-              </div>
-            </motion.div>
+            className="absolute inset-0 bg-gradient-to-r from-slate-100 to-white"
+            initial={{ x: "100%" }}
+            whileHover={{ x: 0 }}
+            transition={{ duration: 0.4 }}
+          />
+        </motion.a>
 
-            <h2 className="text-4xl lg:text-6xl font-bold mb-6">
-              دعنا نحول فكرتك إلى واقع
-            </h2>
-            <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
-              فريقنا جاهز لمناقشة مشروعك وتقديم استشارة مجانية
-            </p>
+        <motion.a
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          href={`tel:${siteData.brand.phoneE164}`}
+          className="px-10 py-5 bg-transparent border-2 border-white/40 text-white rounded-2xl font-semibold text-lg hover:bg-white/10 transition-all backdrop-blur"
+        >
+          <span className="flex items-center gap-3">
+            <Phone className="w-6 h-6" />
+            اتصال مباشر
+          </span>
+        </motion.a>
+      </div>
 
-            <div className="flex flex-wrap justify-center gap-6">
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                href={siteData.brand.whatsappLink}
-                target="_blank"
-                rel="noreferrer"
-                className="group relative px-10 py-5 bg-white text-slate-900 rounded-2xl font-semibold text-lg shadow-2xl overflow-hidden"
-              >
-                <span className="relative z-10 flex items-center gap-3">
-                  <MessageCircle className="w-6 h-6 text-green-600" />
-                  تواصل عبر واتساب
-                </span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-slate-100 to-white"
-                  initial={{ x: "100%" }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.4 }}
-                />
-              </motion.a>
-
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                href={`tel:${siteData.brand.phoneE164}`}
-                className="px-10 py-5 bg-transparent border-2 border-white/30 text-white rounded-2xl font-semibold text-lg hover:bg-white/10 transition-all backdrop-blur"
-              >
-                <span className="flex items-center gap-3">
-                  <Phone className="w-6 h-6" />
-                  اتصال مباشر
-                </span>
-              </motion.a>
-            </div>
-
-            {/* روابط إضافية */}
-            <div className="flex justify-center gap-8 mt-12 text-white/80">
-              <motion.a
-                whileHover={{ scale: 1.1 }}
-                href={`mailto:${siteData.brand.email}`}
-                className="flex items-center gap-2 hover:text-white transition-colors"
-              >
-                <Mail className="w-5 h-5" />
-                {siteData.brand.email}
-              </motion.a>
-            </div>
-          </motion.div>
-        </Container>
-      </section>
+      {/* رابط البريد الإلكتروني */}
+      <div className="flex justify-center gap-8 mt-12">
+        <motion.a
+          whileHover={{ scale: 1.1 }}
+          href={`mailto:${siteData.brand.email}`}
+          className="flex items-center gap-2 text-white/90 hover:text-white transition-colors drop-shadow-md"
+        >
+          <Mail className="w-5 h-5" />
+          {siteData.brand.email}
+        </motion.a>
+      </div>
+    </motion.div>
+  </Container>
+</section>
     </div>
   );
 }
