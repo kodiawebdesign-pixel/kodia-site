@@ -3,35 +3,49 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import CountUp from "react-countup";
-import { 
-  Briefcase, 
-  Users, 
-  Heart, 
-  Calendar, 
-  Star, 
+import type { LucideIcon } from "lucide-react";
+import {
+  Briefcase,
+  Users,
+  Heart,
+  Calendar,
+  Star,
   Award,
   Zap,
   Clock,
   Sparkles,
   TrendingUp,
   Target,
-  Rocket
+  Rocket,
+  Layers,
+  Headphones,
 } from "lucide-react";
 import Section from "./Section";
 import { siteData } from "@/lib/siteData";
 
-// توسيع بيانات الإحصائيات مع أيقونات
-const statsData = siteData.home.stats;
+type StatFromData = {
+  label: string;
+  value: string;
+  icon?: string; // جاي من siteData كـ string
+};
 
-// خريطة الأيقونات لكل إحصائية
-const iconMap = [
-  Calendar,    // سنوات خبرة
-  Briefcase,   // مشاريع تحت التنفيذ
-  Heart,       // عملاء سعداء
-  Award,       // مشروعات منتهية
-  TrendingUp,  // إحصائية إضافية
-  Star,        // إحصائية إضافية
-];
+// قاموس تحويل الاسم النصي -> أيقونة
+const ICONS: Record<string, LucideIcon> = {
+  Calendar,
+  Briefcase,
+  Users,
+  Layers,
+  Heart,
+  Headphones,
+  Star,
+  Award,
+  Zap,
+  Clock,
+  Sparkles,
+  TrendingUp,
+  Target,
+  Rocket,
+};
 
 // ألوان متدرجة لكل إحصائية
 const gradientColors = [
@@ -53,28 +67,69 @@ const bgColors = [
   "bg-rose-50",
 ];
 
+// تحويل الأرقام العربية/الفارسية لأرقام إنجليزية
+function toEnglishDigits(input: string) {
+  const map: Record<string, string> = {
+    "٠": "0",
+    "١": "1",
+    "٢": "2",
+    "٣": "3",
+    "٤": "4",
+    "٥": "5",
+    "٦": "6",
+    "٧": "7",
+    "٨": "8",
+    "٩": "9",
+    "۰": "0",
+    "۱": "1",
+    "۲": "2",
+    "۳": "3",
+    "۴": "4",
+    "۵": "5",
+    "۶": "6",
+    "۷": "7",
+    "۸": "8",
+    "۹": "9",
+  };
+
+  return input.replace(/[٠-٩۰-۹]/g, (d) => map[d] ?? d);
+}
+
+// استخراج رقم مناسب للعدّاد من أي قيمة (100% / 24/7 / ٢+ / ٧ أيام ...)
+function parseNumber(val: string) {
+  const v = toEnglishDigits(String(val)).trim();
+
+  // حالة 24/7 أو 4.9/5: نأخذ الرقم الأول
+  if (v.includes("/")) {
+    const first = v.split("/")[0]?.replace(/[^\d.]/g, "");
+    const n = Number(first);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  // أي شيء آخر: نجمع الأرقام فقط
+  const cleaned = v.replace(/[^\d.]/g, "");
+  const n = Number(cleaned);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function getSuffix(originalValue: string) {
+  const v = toEnglishDigits(String(originalValue));
+  if (v.includes("+")) return "+";
+  if (v.includes("%")) return "%";
+  return "";
+}
+
 export default function Stats() {
-  const { stats } = siteData.home;
+  const stats = (siteData.home.stats as StatFromData[]) ?? [];
+
   const [mounted, setMounted] = useState(false);
-  const statsRef = useRef(null);
+  const statsRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(statsRef, { once: true, margin: "-100px" });
 
   useEffect(() => setMounted(true), []);
 
-  function parseNumber(val: string) {
-    const n = Number(String(val).replace(/[^\d]/g, ""));
-    return Number.isFinite(n) ? n : 0;
-  }
-
-  // إضافة إحصائيات إضافية
-  const extendedStats = [
-    ...stats,
-    { label: "رضا العملاء", value: "٩٨٪", icon: Heart },
-    { label: "سرعة التنفيذ", value: "٧ أيام", icon: Zap },
-  ];
-
   return (
-    <Section 
+    <Section
       title="أرقام تتحدث عنا"
       subtitle="إحصائيات تعكس خبرتنا والتزامنا بالجودة"
       badge="إحصائيات"
@@ -88,34 +143,35 @@ export default function Stats() {
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: {
-                staggerChildren: 0.15,
-              },
+              transition: { staggerChildren: 0.15 },
             },
           }}
           className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
           {stats.map((s, idx) => {
             const n = parseNumber(s.value);
-            const suffix = String(s.value).includes("+") ? "+" : "";
-            const IconComponent = iconMap[idx % iconMap.length];
+            const suffix = getSuffix(s.value);
+
+            const IconComponent: LucideIcon =
+              (s.icon && ICONS[s.icon]) ? ICONS[s.icon] : Sparkles;
+
             const gradient = gradientColors[idx % gradientColors.length];
             const bgColor = bgColors[idx % bgColors.length];
 
             return (
               <motion.div
-                key={s.label}
+                key={`${s.label}-${idx}`}
                 variants={{
                   hidden: { opacity: 0, y: 30, scale: 0.9 },
-                  visible: { 
-                    opacity: 1, 
-                    y: 0, 
+                  visible: {
+                    opacity: 1,
+                    y: 0,
                     scale: 1,
                     transition: {
                       type: "spring",
                       stiffness: 100,
                       damping: 15,
-                    }
+                    },
                   },
                 }}
                 whileHover={{ y: -8, scale: 1.02 }}
@@ -125,9 +181,7 @@ export default function Stats() {
                   {/* خلفية متدرجة متحركة */}
                   <motion.div
                     className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                    animate={{
-                      scale: [1, 1.1, 1],
-                    }}
+                    animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   />
 
@@ -141,13 +195,16 @@ export default function Stats() {
                     <motion.div
                       whileHover={{ rotate: 360, scale: 1.1 }}
                       transition={{ duration: 0.5 }}
-                      className={`w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br ${gradient} p-4 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}
+                      className={`relative w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br ${gradient} p-4 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}
                     >
                       <IconComponent className="w-full h-full" />
-                      
+
                       {/* تأثير نبض */}
                       <motion.div
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          opacity: [0.3, 0.1, 0.3],
+                        }}
                         transition={{ duration: 2, repeat: Infinity }}
                         className={`absolute inset-0 rounded-xl bg-gradient-to-br ${gradient} -z-10 blur-md`}
                       />
@@ -156,13 +213,15 @@ export default function Stats() {
                     {/* العداد */}
                     <div className="text-4xl font-extrabold mb-2 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                       {mounted && isInView ? (
-                        <CountUp 
-                          end={n} 
+                        <CountUp
+                          end={n}
                           duration={2.5}
-                          delay={0.3 + idx * 0.1}
+                          delay={0.3 + idx * 0.08}
                           separator=","
                         />
-                      ) : n}
+                      ) : (
+                        n
+                      )}
                       {suffix}
                     </div>
 
@@ -171,22 +230,26 @@ export default function Stats() {
                       {s.label}
                     </div>
 
-                    {/* شريط تقدم دائري */}
+                    {/* شارة صغيرة (ديكور) */}
                     <div className="mt-4 flex justify-center">
-                      <div className={`w-12 h-12 rounded-full ${bgColor} flex items-center justify-center`}>
+                      <div
+                        className={`w-12 h-12 rounded-full ${bgColor} flex items-center justify-center`}
+                        title="عنصر زخرفي"
+                      >
                         <span className="text-xs font-bold text-gray-700">
-                          {n}%
+                          {Math.min(Math.max(n, 0), 100)}
                         </span>
                       </div>
                     </div>
                   </div>
 
                   {/* خط سفلي متدرج */}
-                  <motion.div 
+                  <motion.div
                     className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient}`}
                     initial={{ scaleX: 0 }}
                     whileHover={{ scaleX: 1 }}
                     transition={{ duration: 0.3 }}
+                    style={{ transformOrigin: "left" }}
                   />
                 </div>
               </motion.div>
@@ -194,62 +257,11 @@ export default function Stats() {
           })}
         </motion.div>
 
-        {/* إحصائيات إضافية بتصميم مختلف */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
-        >
-          {[
-            { label: "معدل النجاح", value: "٩٨٪", icon: Target },
-            { label: "مشاريع متكررة", value: "٧٥٪", icon: TrendingUp },
-            { label: "تقييم العملاء", value: "٤.٩/٥", icon: Star },
-            { label: "دعم فني", value: "٢٤/٧", icon: Clock },
-          ].map((stat, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ y: -4 }}
-              className="text-center p-4 bg-gradient-to-b from-white to-gray-50 rounded-xl border border-gray-100 shadow-sm"
-            >
-              <stat.icon className="w-5 h-5 text-blue-600 mx-auto mb-2" />
-              <div className="text-lg font-bold text-gray-900">{stat.value}</div>
-              <div className="text-xs text-gray-500">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* شريط التقدم الإجمالي */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold">نسبة الإنجاز الإجمالية</h3>
-            <span className="text-sm text-gray-600">٨٥٪</span>
-          </div>
-          <div className="h-3 bg-white rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={isInView ? { width: "85%" } : {}}
-              transition={{ delay: 1, duration: 1.5 }}
-              className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-            />
-          </div>
-          <div className="flex justify-between mt-2 text-xs text-gray-500">
-            <span>مشاريع ناجحة</span>
-            <span>عملاء سعداء</span>
-            <span>توصيات</span>
-          </div>
-        </motion.div>
-
         {/* ملاحظة */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 0.8 }}
           className="text-center text-xs text-gray-400 bg-white p-3 rounded-xl border border-gray-100"
         >
           <Sparkles className="w-3 h-3 inline-block ml-1 text-blue-500" />
