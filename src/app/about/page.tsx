@@ -303,16 +303,17 @@ export default function AboutPage() {
               const Icon = stat.icon;
               return (
                 <motion.div
-                  key={idx}
-                  variants={{
-                    hidden: { opacity: 0, y: 30, scale: 0.8 },
-                    visible: { opacity: 1, y: 0, scale: 1 }
-                  }}
-                  whileHover="hover"
-                  initial="rest"
-                  variants={{ hover: cardHover }}
-                  className="group relative bg-white rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
-                >
+  key={idx}
+  variants={{
+    hidden: { opacity: 0, y: 30, scale: 0.8 },
+    visible: { opacity: 1, y: 0, scale: 1 },
+    hover: cardHover,
+  }}
+  initial="hidden"
+  animate="visible"
+  whileHover="hover"
+  className="group relative bg-white rounded-2xl border border-slate-200 p-6 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
+>
                   {/* الخلفية المتدرجة عند الهوفر */}
                   <motion.div
                     className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
