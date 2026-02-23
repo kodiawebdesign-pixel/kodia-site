@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, Monitor, Sparkles } from "lucide-react";
+import { Moon, Sun, Monitor } from "lucide-react";
 
 type Theme = "light" | "dark" | "system";
 
@@ -11,72 +11,73 @@ export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
-  // تحديث الثيم عند التحميل
+  const getSystemTheme = (): "light" | "dark" => {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  };
+
+  const applyTheme = (newTheme: Theme) => {
+    const resolved = newTheme === "system" ? getSystemTheme() : newTheme;
+
+    if (resolved === "dark") document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
+  };
+
   useEffect(() => {
     setMounted(true);
-    const saved = localStorage.getItem("theme") as Theme | null;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
+
+    const savedRaw = localStorage.getItem("theme");
+    const saved: Theme | null =
+      savedRaw === "light" || savedRaw === "dark" || savedRaw === "system"
+        ? savedRaw
+        : null;
+
     if (saved) {
       setTheme(saved);
       applyTheme(saved);
     } else {
-      const systemTheme = prefersDark ? "dark" : "light";
       setTheme("system");
-      applyTheme(systemTheme);
+      applyTheme("system");
     }
   }, []);
 
-  // متابعة تغيير ثيم النظام
+  // ✅ متابعة تغيير ثيم النظام (بدون addListener/removeListener)
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = (e: MediaQueryListEvent) => {
-      if (theme === "system") {
-        applyTheme(e.matches ? "dark" : "light");
-      }
+
+    const handler = () => {
+      if (theme === "system") applyTheme("system");
     };
-    
+
     mediaQuery.addEventListener("change", handler);
     return () => mediaQuery.removeEventListener("change", handler);
   }, [theme]);
 
-  const applyTheme = (newTheme: "light" | "dark") => {
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
-
   const changeTheme = (newTheme: Theme) => {
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
-    
-    if (newTheme === "system") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      applyTheme(prefersDark ? "dark" : "light");
-    } else {
-      applyTheme(newTheme);
-    }
-    
+    applyTheme(newTheme);
     setShowOptions(false);
   };
 
-  // الحصول على الأيقونة المناسبة
   const getThemeIcon = () => {
     switch (theme) {
-      case "light": return <Sun className="w-5 h-5" />;
-      case "dark": return <Moon className="w-5 h-5" />;
-      case "system": return <Monitor className="w-5 h-5" />;
+      case "light":
+        return <Sun className="w-5 h-5" />;
+      case "dark":
+        return <Moon className="w-5 h-5" />;
+      case "system":
+        return <Monitor className="w-5 h-5" />;
     }
   };
 
-  // الحصول على نص الوضع الحالي
   const getThemeLabel = () => {
     switch (theme) {
-      case "light": return "فاتح";
-      case "dark": return "داكن";
-      case "system": return "تلقائي";
+      case "light":
+        return "فاتح";
+      case "dark":
+        return "داكن";
+      case "system":
+        return "تلقائي";
     }
   };
 
@@ -84,7 +85,6 @@ export default function ThemeToggle() {
 
   return (
     <div className="relative">
-      {/* الزر الرئيسي */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -92,34 +92,25 @@ export default function ThemeToggle() {
         className="relative group flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 transition-all"
         aria-label="تغيير الثيم"
       >
-        {/* أيقونة متحركة */}
         <motion.div
-          animate={{
-            rotate: theme === "dark" ? 360 : 0,
-          }}
+          animate={{ rotate: theme === "dark" ? 360 : 0 }}
           transition={{ duration: 0.5 }}
         >
           {getThemeIcon()}
         </motion.div>
 
-        {/* النص (يظهر على الشاشات المتوسطة فأكبر) */}
         <span className="hidden sm:inline text-sm">{getThemeLabel()}</span>
 
-        {/* تأثير توهج خلفي */}
         <motion.div
           className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-10 transition-opacity"
-          animate={{
-            scale: [1, 1.02, 1],
-          }}
+          animate={{ scale: [1, 1.02, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
         />
       </motion.button>
 
-      {/* قائمة الخيارات */}
       <AnimatePresence>
         {showOptions && (
           <>
-            {/* طبقة خلفية تغلق القائمة عند النقر خارجها */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -128,7 +119,6 @@ export default function ThemeToggle() {
               onClick={() => setShowOptions(false)}
             />
 
-            {/* القائمة المنسدلة */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -136,7 +126,6 @@ export default function ThemeToggle() {
               transition={{ duration: 0.2 }}
               className="absolute left-0 mt-2 w-40 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden z-50 dark:bg-gray-800 dark:border-gray-700"
             >
-              {/* خيار فاتح */}
               <button
                 onClick={() => changeTheme("light")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
@@ -156,7 +145,6 @@ export default function ThemeToggle() {
                 )}
               </button>
 
-              {/* خيار داكن */}
               <button
                 onClick={() => changeTheme("dark")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
@@ -176,7 +164,6 @@ export default function ThemeToggle() {
                 )}
               </button>
 
-              {/* خيار تلقائي */}
               <button
                 onClick={() => changeTheme("system")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
