@@ -108,12 +108,6 @@ home: {
     },
 
     // إضافة قسم الفيديو التوضيحي
-    showreel: {
-      title: "شاهد كيف نصنع الفرق",
-      subtitle: "فيديو تعريفي بخدماتنا وأعمالنا",
-      videoUrl: "https://www.youtube.com/embed/placeholder", // استبدل برابط الفيديو الخاص بك
-      posterImage: "/images/video-poster.jpg",
-    },
 
     serviceLandings: [
       {
