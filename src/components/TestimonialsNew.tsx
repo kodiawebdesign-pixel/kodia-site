@@ -9,7 +9,6 @@ import {
   ChevronRight,
   MessageCircle,
   ThumbsUp,
-  User,
   Award,
   Sparkles,
   CheckCircle,
@@ -48,14 +47,19 @@ type EnhancedTestimonial = {
   project: string;
 };
 
-// تحسين بيانات الشهادات
+// صورة افتراضية في حالة عدم توفر avatar
+const FALLBACK_AVATAR = "/images/avatar-placeholder.png";
+
+// تحسين بيانات الشهادات (مع fallback لتفادي undefined)
 const enhancedTestimonials: EnhancedTestimonial[] = testimonialsData.items.map(
   (item: any, index: number) => ({
     ...item,
     rating: 5,
-    date: dates[index % dates.length],
-    avatar: avatarImages[index % avatarImages.length],
-    project: ["موقع شركة", "متجر إلكتروني", "تطبيق موبايل", "UI/UX", "SEO"][index % 5],
+    date: dates[index % dates.length] ?? "منذ فترة",
+    avatar: avatarImages[index % avatarImages.length] ?? FALLBACK_AVATAR,
+    project:
+      ["موقع شركة", "متجر إلكتروني", "تطبيق موبايل", "UI/UX", "SEO"][index % 5] ??
+      "مشروع",
   })
 );
 
@@ -73,7 +77,6 @@ export default function Testimonials() {
     );
   };
 
-  // ✅ الحل النهائي لمشكلة 'active is possibly undefined'
   if (!enhancedTestimonials.length) return null;
   const active = enhancedTestimonials[activeIndex];
 
@@ -126,13 +129,14 @@ export default function Testimonials() {
                       <div className="w-14 h-14 rounded-full bg-gradient-to-br from-violet-600 to-fuchsia-600 p-0.5">
                         <div className="w-full h-full rounded-full bg-white overflow-hidden relative">
                           <Image
-                            src={testimonial.avatar}
+                            src={testimonial.avatar ?? FALLBACK_AVATAR}
                             alt={testimonial.name}
                             fill
                             className="object-cover"
                           />
                         </div>
                       </div>
+
                       {/* علامة التحقق */}
                       <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
                         <CheckCircle className="w-3 h-3 text-white" />
@@ -140,7 +144,9 @@ export default function Testimonials() {
                     </div>
 
                     <div className="flex-1">
-                      <h3 className="font-bold text-gray-900">{testimonial.name}</h3>
+                      <h3 className="font-bold text-gray-900">
+                        {testimonial.name}
+                      </h3>
                       <p className="text-sm text-gray-500">{testimonial.role}</p>
                       <div className="flex items-center gap-2 mt-1">
                         <span className="text-xs text-gray-400">
@@ -248,7 +254,7 @@ export default function Testimonials() {
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-violet-600 to-fuchsia-600 p-1">
                     <div className="w-full h-full rounded-full bg-white overflow-hidden relative">
                       <Image
-                        src={active.avatar}
+                        src={active.avatar ?? FALLBACK_AVATAR}
                         alt={active.name}
                         fill
                         className="object-cover"
@@ -308,10 +314,30 @@ export default function Testimonials() {
         className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
       >
         {[
-          { icon: Star, label: "تقييم عام", value: "٤.٩/٥", color: "from-amber-500 to-yellow-500" },
-          { icon: MessageCircle, label: "شهادة موثقة", value: "٢٤+", color: "from-blue-500 to-cyan-500" },
-          { icon: ThumbsUp, label: "نسبة رضا", value: "٩٨٪", color: "from-green-500 to-emerald-500" },
-          { icon: Award, label: "عملاء دائمون", value: "٨٥٪", color: "from-violet-600 to-fuchsia-600" },
+          {
+            icon: Star,
+            label: "تقييم عام",
+            value: "٤.٩/٥",
+            color: "from-amber-500 to-yellow-500",
+          },
+          {
+            icon: MessageCircle,
+            label: "شهادة موثقة",
+            value: "٢٤+",
+            color: "from-blue-500 to-cyan-500",
+          },
+          {
+            icon: ThumbsUp,
+            label: "نسبة رضا",
+            value: "٩٨٪",
+            color: "from-green-500 to-emerald-500",
+          },
+          {
+            icon: Award,
+            label: "عملاء دائمون",
+            value: "٨٥٪",
+            color: "from-violet-600 to-fuchsia-600",
+          },
         ].map((stat, index) => {
           const StatIcon = stat.icon;
           return (
@@ -320,7 +346,9 @@ export default function Testimonials() {
               whileHover={{ y: -4 }}
               className="text-center p-5 bg-white rounded-xl border border-gray-100 shadow-md hover:shadow-lg transition-all"
             >
-              <div className={`w-10 h-10 mx-auto mb-2 rounded-lg bg-gradient-to-br ${stat.color} p-2 text-white`}>
+              <div
+                className={`w-10 h-10 mx-auto mb-2 rounded-lg bg-gradient-to-br ${stat.color} p-2 text-white`}
+              >
                 <StatIcon className="w-full h-full" />
               </div>
               <div className="text-xl font-bold text-gray-900">{stat.value}</div>
@@ -348,9 +376,7 @@ export default function Testimonials() {
             <span>أضف تقييمك</span>
           </motion.button>
         </Link>
-        <p className="text-xs text-gray-400 mt-3">
-          * آرائكم تساعدنا في تطوير خدماتنا
-        </p>
+        <p className="text-xs text-gray-400 mt-3">* آرائكم تساعدنا في تطوير خدماتنا</p>
       </motion.div>
     </Section>
   );
