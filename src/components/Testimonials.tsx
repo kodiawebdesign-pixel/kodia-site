@@ -27,14 +27,14 @@ const dates = ["منذ يومين", "منذ أسبوع", "منذ ٣ أيام", "
 
 // صور حقيقية من Unsplash
 const avatarImages = [
-  "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop", // رجل أعمال
-  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop", // سيدة محامية
-  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop", // شاب
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop", // فتاة
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop", // رجل
-  "https://images.unsplash.com/photo-1494790108777-8f9c9f12b1b6?w=200&h=200&fit=crop", // سيدة
-  "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop", // رجل
-  "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop", // سيدة
+  "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1494790108777-8f9c9f12b1b6?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop",
 ];
 
 // نوع الشهادة
@@ -73,6 +73,8 @@ export default function Testimonials() {
     );
   };
 
+  // ✅ الحل النهائي لمشكلة 'active is possibly undefined'
+  if (!enhancedTestimonials.length) return null;
   const active = enhancedTestimonials[activeIndex];
 
   return (
