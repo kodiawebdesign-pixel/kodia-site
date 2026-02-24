@@ -91,10 +91,10 @@ const clientCompanies = [
 
 // إحصائيات سريعة
 const stats = [
-  { label: "قطاع نخدمها", value: "١٠", icon: Building2 },
-  { label: "مشاريع منجزة", value: "٤٥+", icon: Award },
-  { label: "عملاء حاليون", value: "٣٢+", icon: Heart },
-  { label: "نسبة رضا", value: "٩٨٪", icon: Star },
+  { label: "قطاع نخدمها", value: "30", icon: Building2 },
+  { label: "مشاريع منجزة", value: "860+", icon: Award },
+  { label: "عملاء حاليون", value: "580+", icon: Heart },
+  { label: "نسبة رضا", value: "98٪", icon: Star },
 ];
 
 type SectorItem = string;
