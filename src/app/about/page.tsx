@@ -739,77 +739,59 @@ export default function AboutPage() {
         </Container>
       </section>
 
-{/* قسم التواصل الفاخر - نسخة محسنة */}
-<section className="py-24 relative overflow-hidden">
-  {/* خلفية متدرجة أغمق */}
-  <div className="absolute inset-0 -z-10">
-    <div className="absolute inset-0 bg-gradient-to-br from-violet-700 via-fuchsia-700 to-amber-700" />
-    {/* طبقة تعتيم إضافية */}
-    <div className="absolute inset-0 bg-black/10" />
-    <motion.div
-      animate={{ 
-        scale: [1, 1.5, 1],
-        rotate: [0, 360, 0],
-        opacity: [0.1, 0.15, 0.1]
-      }}
-      transition={{ duration: 20, repeat: Infinity }}
-      className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-white/5 to-transparent"
-    />
-  </div>
-
+{/* قسم التواصل */}
+<section className="py-24 bg-gradient-to-br from-violet-100 via-fuchsia-100 to-amber-100">
   <Container>
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="text-center max-w-4xl mx-auto text-white"
+      className="text-center max-w-4xl mx-auto"
     >
-      {/* أيقونة متحركة */}
+      {/* أيقونة */}
       <motion.div
         animate={{ scale: [1, 1.1, 1] }}
         transition={{ duration: 2, repeat: Infinity }}
         className="inline-block mb-8"
       >
-        <div className="w-20 h-20 mx-auto rounded-3xl bg-white/20 backdrop-blur p-5 shadow-2xl">
+        <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-br from-violet-600 to-fuchsia-600 p-5 text-white shadow-xl">
           <MessageCircle className="w-full h-full" />
         </div>
       </motion.div>
 
-      {/* عناوين مع ظل للنص */}
-      <h2 className="text-4xl lg:text-6xl font-bold mb-6 drop-shadow-2xl">
+      {/* العنوان - لون غامق جداً */}
+      <h2 className="text-4xl lg:text-6xl font-bold mb-6 text-gray-900">
         دعنا نحول فكرتك إلى واقع
       </h2>
-      <p className="text-xl text-white/95 mb-10 max-w-2xl mx-auto drop-shadow-xl">
+      
+      {/* الوصف - لون غامق */}
+      <p className="text-xl text-gray-700 mb-10 max-w-2xl mx-auto">
         فريقنا جاهز لمناقشة مشروعك وتقديم استشارة مجانية
       </p>
 
-      {/* أزرار محسنة */}
+      {/* الأزرار */}
       <div className="flex flex-wrap justify-center gap-6">
+        {/* زر واتساب - خلفية غامقة ونص أبيض */}
         <motion.a
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
           href={siteData.brand.whatsappLink}
           target="_blank"
           rel="noreferrer"
-          className="group relative px-10 py-5 bg-white text-slate-900 rounded-2xl font-semibold text-lg shadow-2xl overflow-hidden"
+          className="px-10 py-5 bg-green-600 text-white rounded-2xl font-semibold text-lg shadow-xl hover:bg-green-700 transition-all"
         >
-          <span className="relative z-10 flex items-center gap-3">
-            <MessageCircle className="w-6 h-6 text-green-600" />
+          <span className="flex items-center gap-3">
+            <MessageCircle className="w-6 h-6" />
             تواصل عبر واتساب
           </span>
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-slate-100 to-white"
-            initial={{ x: "100%" }}
-            whileHover={{ x: 0 }}
-            transition={{ duration: 0.4 }}
-          />
         </motion.a>
 
+        {/* زر اتصال - خلفية غامقة ونص أبيض */}
         <motion.a
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
           href={`tel:${siteData.brand.phoneE164}`}
-          className="px-10 py-5 bg-transparent border-2 border-white/40 text-white rounded-2xl font-semibold text-lg hover:bg-white/10 transition-all backdrop-blur"
+          className="px-10 py-5 bg-blue-600 text-white rounded-2xl font-semibold text-lg shadow-xl hover:bg-blue-700 transition-all"
         >
           <span className="flex items-center gap-3">
             <Phone className="w-6 h-6" />
@@ -818,12 +800,12 @@ export default function AboutPage() {
         </motion.a>
       </div>
 
-      {/* رابط البريد الإلكتروني */}
+      {/* البريد الإلكتروني - لون غامق */}
       <div className="flex justify-center gap-8 mt-12">
         <motion.a
           whileHover={{ scale: 1.1 }}
           href={`mailto:${siteData.brand.email}`}
-          className="flex items-center gap-2 text-white/90 hover:text-white transition-colors drop-shadow-md"
+          className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors font-medium"
         >
           <Mail className="w-5 h-5" />
           {siteData.brand.email}
@@ -831,7 +813,7 @@ export default function AboutPage() {
       </div>
     </motion.div>
   </Container>
-</section>
+</section>  
     </div>
   );
 }
