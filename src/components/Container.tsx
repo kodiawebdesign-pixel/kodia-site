@@ -4,9 +4,11 @@ import { twMerge } from "tailwind-merge";
 interface ContainerProps {
   children: ReactNode;
   className?: string;
-  as?: React.ElementType; // ✅ Fix: بدل JSX.IntrinsicElements
-  size?: "sm" | "md" | "lg" | "xl" | "full";
+  as?: React.ElementType;
+  size?: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
   noPadding?: boolean;
+  centered?: boolean;
+  id?: string;
 }
 
 export default function Container({
@@ -15,6 +17,8 @@ export default function Container({
   as: Component = "div",
   size = "lg",
   noPadding = false,
+  centered = true,
+  id,
 }: ContainerProps) {
   // تحديد الحجم الأقصى بناءً على الخاصية size
   const maxWidthClasses: Record<NonNullable<ContainerProps["size"]>, string> = {
@@ -22,15 +26,26 @@ export default function Container({
     md: "max-w-4xl",
     lg: "max-w-6xl",
     xl: "max-w-7xl",
+    "2xl": "max-w-screen-2xl",
     full: "max-w-full",
   };
 
   // تحديد padding بناءً على noPadding
   const paddingClasses = noPadding ? "" : "px-4 sm:px-6 lg:px-8";
 
+  // تحديد التمركز
+  const marginClasses = centered ? "mx-auto" : "";
+
   return (
     <Component
-      className={twMerge("mx-auto w-full", maxWidthClasses[size], paddingClasses, className)}
+      id={id}
+      className={twMerge(
+        "w-full",
+        maxWidthClasses[size],
+        paddingClasses,
+        marginClasses,
+        className
+      )}
     >
       {children}
     </Component>
