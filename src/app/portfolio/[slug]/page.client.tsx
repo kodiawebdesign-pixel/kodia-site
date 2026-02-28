@@ -52,16 +52,16 @@ export default function PortfolioItemClient({ params }: { params: { slug: string
 
   if (!item) return notFound();
 
-  // تجهيز قائمة الصور (إذا كانت موجودة في البيانات، أو استخدام الصور الافتراضية)
+  // تجهيز قائمة الصور - استخدام صور حقيقية من Unsplash
   const images = item.images || [
-    `/images/demos/${item.slug}-1.svg`,
-    `/images/demos/${item.slug}-2.svg`,
-    `/images/demos/${item.slug}-3.svg`,
+    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1556742212-5b321f3c261b?w=800&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=800&h=600&fit=crop",
   ];
 
   const imageLabels = ["الصفحة الرئيسية", "صفحة الخدمات", "صفحة الاتصال"];
 
-  // مشاريع مشابهة (للعرض في الأسفل)
+  // مشاريع مشابهة
   const similarProjects = all
     .filter((p) => p.slug !== item.slug)
     .slice(0, 3);
@@ -84,8 +84,8 @@ export default function PortfolioItemClient({ params }: { params: { slug: string
 
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white">
-      {/* رأس الصفحة مع خلفية متدرجة */}
-      <section className="relative py-16 overflow-hidden bg-gradient-to-br from-blue-600 to-purple-600">
+      {/* رأس الصفحة مع خلفية متدرجة - ألوان بنفسجي */}
+      <section className="relative py-16 overflow-hidden bg-gradient-to-br from-violet-600 to-fuchsia-600">
         {/* خلفية متحركة */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
@@ -99,10 +99,10 @@ export default function PortfolioItemClient({ params }: { params: { slug: string
             variants={staggerChildren}
             className="relative z-10 text-white"
           >
-            {/* رابط الرجوع */}
+            {/* رابط الرجوع - يودي على 404 مؤقتاً */}
             <motion.div variants={fadeInUp}>
               <Link 
-                href="/portfolio" 
+                href="/404" 
                 className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors mb-6 group"
               >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -160,7 +160,7 @@ export default function PortfolioItemClient({ params }: { params: { slug: string
                 href={siteData.brand.whatsappLink}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-violet-600 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
               >
                 <MessageCircle className="w-5 h-5" />
                 اطلب نسخة مشابهة
@@ -222,14 +222,14 @@ export default function PortfolioItemClient({ params }: { params: { slug: string
             ))}
           </div>
 
-          {/* ملاحظة عن الصور التجريبية */}
+          {/* ملاحظة عن الصور */}
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             className="mt-4 text-xs text-gray-400 text-center"
           >
-            * هذه نماذج تجريبية لعرض أسلوب التصميم والتنفيذ.
+            * هذه نماذج توضيحية لعرض أسلوب التصميم والتنفيذ.
           </motion.p>
         </Container>
       </section>
@@ -246,7 +246,7 @@ export default function PortfolioItemClient({ params }: { params: { slug: string
               className="bg-white rounded-3xl border border-gray-200 p-8 shadow-xl"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 p-2 text-white">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 p-2 text-white">
                   <Award className="w-full h-full" />
                 </div>
                 <h2 className="text-2xl font-bold">مخرجات المشروع</h2>
@@ -277,7 +277,7 @@ export default function PortfolioItemClient({ params }: { params: { slug: string
                   { icon: Star, label: "تقييم العميل", value: "٥/٥" },
                 ].map((stat, idx) => (
                   <div key={`stat-${idx}`} className="text-center p-3 bg-gray-50 rounded-xl">
-                    <stat.icon className="w-4 h-4 text-blue-600 mx-auto mb-1" />
+                    <stat.icon className="w-4 h-4 text-violet-600 mx-auto mb-1" />
                     <div className="text-xs text-gray-500">{stat.label}</div>
                     <div className="text-sm font-bold">{stat.value}</div>
                   </div>
@@ -293,7 +293,7 @@ export default function PortfolioItemClient({ params }: { params: { slug: string
               className="space-y-6"
             >
               {/* بطاقة طلب مشروع مشابه */}
-              <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl p-8 text-white shadow-xl">
+              <div className="bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-3xl p-8 text-white shadow-xl">
                 <Sparkles className="w-10 h-10 mb-4 text-yellow-300" />
                 <h3 className="text-xl font-bold mb-2">يعجبك هذا المشروع؟</h3>
                 <p className="text-white/90 mb-6 text-sm">
@@ -304,7 +304,7 @@ export default function PortfolioItemClient({ params }: { params: { slug: string
                     href={siteData.brand.whatsappLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-white text-blue-600 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-white text-violet-600 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all"
                   >
                     <MessageCircle className="w-4 h-4" />
                     واتساب
@@ -375,7 +375,7 @@ export default function PortfolioItemClient({ params }: { params: { slug: string
                   transition={{ delay: idx * 0.1 }}
                   whileHover={{ y: -8 }}
                 >
-                  <Link href={`/portfolio/${project.slug}`}>
+                  <Link href="/404">
                     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-lg hover:shadow-xl transition-all">
                       <div className="relative h-48 overflow-hidden">
                         <img
