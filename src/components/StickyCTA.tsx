@@ -14,7 +14,11 @@ import {
   CheckCircle2,
   ChevronUp,
   ChevronDown,
-  Gift
+  Gift,
+  Zap,
+  Shield,
+  Star,
+  Heart
 } from "lucide-react";
 
 export default function StickyCTA() {
@@ -70,7 +74,7 @@ export default function StickyCTA() {
           {/* شريط CTA الرئيسي */}
           <motion.div
             animate={{ height: minimized ? "auto" : "auto" }}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-2xl"
+            className="bg-gradient-to-r from-violet-600 via-fuchsia-600 to-amber-600 text-white shadow-2xl"
           >
             <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
               <div className="flex flex-col gap-3">
@@ -81,40 +85,49 @@ export default function StickyCTA() {
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                      className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
                     >
-                      <Sparkles className="w-5 h-5 text-yellow-300" />
+                      <Sparkles className="w-4 h-4 text-yellow-300" />
                     </motion.div>
 
                     <div className="text-sm font-medium">
                       <span className="hidden sm:inline">جاهز تبدأ؟ </span>
-                      ابعت تفاصيل مشروعك الآن وسأرد عليك بسرعة.
+                      <span className="font-bold">ابعت تفاصيل مشروعك الآن</span> وسأرد عليك بسرعة.
                     </div>
 
                     {/* مؤقت العرض */}
                     <div className="hidden md:flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs">
                       <Clock className="w-3 h-3" />
-                      <span>{String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>
+                      <span className="font-mono">
+                        {String(timeLeft.hours).padStart(2, '0')}:
+                        {String(timeLeft.minutes).padStart(2, '0')}:
+                        {String(timeLeft.seconds).padStart(2, '0')}
+                      </span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
                     {/* زر التصغير/التوسيع */}
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                       onClick={() => setMinimized(!minimized)}
                       className="p-1.5 rounded-lg hover:bg-white/20 transition-colors"
                       aria-label={minimized ? "توسيع" : "تصغير"}
                     >
                       {minimized ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </button>
+                    </motion.button>
 
                     {/* زر الإخفاء */}
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                       onClick={handleHide}
                       className="p-1.5 rounded-lg hover:bg-white/20 transition-colors"
                       aria-label="إخفاء الشريط"
                     >
                       <X className="w-4 h-4" />
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
 
@@ -129,17 +142,21 @@ export default function StickyCTA() {
                     >
                       {/* معلومات إضافية */}
                       <div className="flex flex-wrap items-center gap-3 text-xs text-white/80">
-                        <div className="flex items-center gap-1">
-                          <CheckCircle2 className="w-3 h-3" />
+                        <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-full">
+                          <Zap className="w-3 h-3 text-yellow-300" />
                           <span>رد خلال ساعة</span>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Gift className="w-3 h-3" />
+                        <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-full">
+                          <Gift className="w-3 h-3 text-yellow-300" />
                           <span>استشارة مجانية</span>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Rocket className="w-3 h-3" />
+                        <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-full">
+                          <Rocket className="w-3 h-3 text-yellow-300" />
                           <span>بدء فوري</span>
+                        </div>
+                        <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-full">
+                          <Shield className="w-3 h-3 text-yellow-300" />
+                          <span>ضمان الجودة</span>
                         </div>
                       </div>
 
@@ -151,7 +168,7 @@ export default function StickyCTA() {
                           href={whatsappLink}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-white text-green-600 rounded-lg font-semibold text-sm shadow-lg hover:shadow-xl transition-all"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-semibold text-sm shadow-lg hover:shadow-xl transition-all"
                         >
                           <MessageCircle className="w-4 h-4" />
                           <span className="hidden sm:inline">واتساب</span>
@@ -189,9 +206,26 @@ export default function StickyCTA() {
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full shadow-lg"
+              className="absolute -top-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1"
             >
+              <Sparkles className="w-3 h-3" />
               عرض خاص
+            </motion.div>
+          )}
+
+          {/* شارة المتبقي (تظهر عند التصغير) */}
+          {minimized && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1"
+            >
+              <Clock className="w-3 h-3" />
+              <span>
+                {String(timeLeft.hours).padStart(2, '0')}:
+                {String(timeLeft.minutes).padStart(2, '0')}
+              </span>
             </motion.div>
           )}
         </div>
