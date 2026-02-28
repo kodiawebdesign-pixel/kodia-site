@@ -12,6 +12,17 @@ export default {
     extend: {
       // ألوان مخصصة للعلامة التجارية - هوية بنفسجية فاخرة
       colors: {
+        /**
+         * ✅ Brand tokens from CSS variables
+         * تدعم: bg-brand/5, border-brand/30, hover:border-brand/30 ... إلخ
+         */
+        brand: "rgb(var(--brand) / <alpha-value>)",
+        "brand-light": "rgb(var(--brand-light) / <alpha-value>)",
+        "brand-dark": "rgb(var(--brand-dark) / <alpha-value>)",
+
+        // (اختياري) لو حابب تستخدمها كـ primary token ديناميكي مع الثيم
+        // primary: "rgb(var(--brand) / <alpha-value>)",
+
         primary: {
           DEFAULT: "#8b5cf6", // بنفسجي فاتح (أساسي)
           50: "#f5f3ff",
@@ -182,20 +193,20 @@ export default {
 
       // أحجام خطوط مخصصة
       fontSize: {
-        xxs: "0.625rem", // 10px
-        xs: "0.75rem", // 12px
-        sm: "0.875rem", // 14px
-        base: "1rem", // 16px
-        lg: "1.125rem", // 18px
-        xl: "1.25rem", // 20px
-        "2xl": "1.5rem", // 24px
-        "3xl": "1.875rem", // 30px
-        "4xl": "2.25rem", // 36px
-        "5xl": "3rem", // 48px
-        "6xl": "3.75rem", // 60px
-        "7xl": "4.5rem", // 72px
-        "8xl": "6rem", // 96px
-        "9xl": "8rem", // 128px
+        xxs: "0.625rem",
+        xs: "0.75rem",
+        sm: "0.875rem",
+        base: "1rem",
+        lg: "1.125rem",
+        xl: "1.25rem",
+        "2xl": "1.5rem",
+        "3xl": "1.875rem",
+        "4xl": "2.25rem",
+        "5xl": "3rem",
+        "6xl": "3.75rem",
+        "7xl": "4.5rem",
+        "8xl": "6rem",
+        "9xl": "8rem",
       },
 
       // مسافات مخصصة
@@ -362,7 +373,7 @@ export default {
       gridTemplateColumns: {
         "auto-fit": "repeat(auto-fit, minmax(200px, 1fr))",
         "auto-fill": "repeat(auto-fill, minmax(200px, 1fr))",
-        "gallery": "repeat(auto-fill, minmax(280px, 1fr))",
+        gallery: "repeat(auto-fill, minmax(280px, 1fr))",
       },
 
       // زمن الانتقال
