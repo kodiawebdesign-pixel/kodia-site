@@ -6,7 +6,8 @@
       "dom", 
       "dom.iterable", 
       "esnext",
-      "ES2022"
+      "ES2022",
+      "ES2023"
     ],
     
     // إعدادات الوحدة
@@ -19,14 +20,14 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve", // تم التغيير من react-jsx إلى preserve
     "incremental": true,
     
     // إعدادات إضافية لتحسين تجربة التطوير
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": false, // يمكن تغييرها إلى true للتحقق من المتغيرات غير المستخدمة
-    "noUnusedParameters": false, // يمكن تغييرها إلى true للتحقق من المعاملات غير المستخدمة
+    "noUnusedLocals": true, // تم التغيير إلى true
+    "noUnusedParameters": true, // تم التغيير إلى true
     "noImplicitReturns": true,
     "noImplicitOverride": true,
     "allowUnreachableCode": false,
@@ -45,7 +46,10 @@
       "@app/*": ["./src/app/*"],
       "@public/*": ["./public/*"],
       "@images/*": ["./public/images/*"],
-      "@styles/*": ["./src/styles/*"]
+      "@styles/*": ["./src/styles/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@types/*": ["./src/types/*"]
     },
     
     // إعدادات متقدمة
@@ -59,6 +63,15 @@
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": false,
+    
+    // إعدادات ديكورية
+    "experimentalDecorators": false,
+    "emitDecoratorMetadata": false,
+    
+    // إعدادات إضافية
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "importHelpers": true,
     
     // إعدادات Next.js
     "plugins": [
@@ -77,7 +90,11 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.mjs",
+    "**/*.cjs"
   ],
   
   // الملفات المستثناة
@@ -88,7 +105,16 @@
     "dist",
     "build",
     "**/*.test.ts",
+    "**/*.test.tsx",
     "**/*.spec.ts",
-    "coverage"
+    "**/*.spec.tsx",
+    "coverage",
+    "public",
+    "*.config.js",
+    "*.config.ts",
+    "postcss.config.js",
+    "tailwind.config.ts",
+    "next.config.ts",
+    "eslint.config.js"
   ]
 }
