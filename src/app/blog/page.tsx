@@ -51,7 +51,7 @@ const blogImages = [
 const blogWithImages = blogData.items.map((item, index) => ({
   ...item,
   image: blogImages[index % blogImages.length],
-  date: ["١٥ مارس ٢٠٢٤", "١٠ مارس ٢٠٢٤", "٥ مارس ٢٠٢٤", "١ مارس ٢٠٢٤", "٢٥ فبراير ٢٠٢٤"][index % 5],
+  date: ["١٥ مارس 2026", "١٠ مارس 2026", "٥ مارس 2026", "١ مارس 2026", "٢٥ فبراير 2026"][index % 5],
   readTime: ["٥ دقائق", "٧ دقائق", "٤ دقائق", "٦ دقائق", "٨ دقائق"][index % 5],
   views: viewCounts[index % viewCounts.length],
   likes: likesCounts[index % likesCounts.length],
@@ -64,7 +64,7 @@ const blogWithImages = blogData.items.map((item, index) => ({
     "١٠ خطوات أساسية لتحسين ظهور موقعك في نتائج البحث وجذب زوار مجانيين بكثافة.",
     "احذر هذه الأخطاء الشائعة في تصميم التطبيقات التي تجعل المستخدمين يحذفون تطبيقك.",
     "٥ أسباب تجعل المتجر الإلكتروني ضرورة حتمية لأي نشاط تجاري اليوم.",
-    "أحدث اتجاهات تصميم المواقع في ٢٠٢٤ وكيف تطبقها في مشروعك.",
+    "أحدث اتجاهات تصميم المواقع في 2026 وكيف تطبقها في مشروعك.",
   ][index % 6],
   featured: index === 0,
 }));
