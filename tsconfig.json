@@ -3,13 +3,12 @@
     // هدف الترجمة والمكتبات
     "target": "ES2022",
     "lib": [
-      "dom", 
-      "dom.iterable", 
+      "dom",
+      "dom.iterable",
       "esnext",
       "ES2022",
       "ES2023"
     ],
-    
     // إعدادات الوحدة
     "allowJs": true,
     "skipLibCheck": true,
@@ -20,9 +19,8 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve", // تم التغيير من react-jsx إلى preserve
+    "jsx": "react-jsx", // تم التغيير من react-jsx إلى preserve
     "incremental": true,
-    
     // إعدادات إضافية لتحسين تجربة التطوير
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -31,27 +29,44 @@
     "noImplicitReturns": true,
     "noImplicitOverride": true,
     "allowUnreachableCode": false,
-    
     // تحسين الأداء
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
     "pretty": true,
-    
     // إعدادات المسارات
     "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@app/*": ["./src/app/*"],
-      "@public/*": ["./public/*"],
-      "@images/*": ["./public/images/*"],
-      "@styles/*": ["./src/styles/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@types/*": ["./src/types/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@lib/*": [
+        "./src/lib/*"
+      ],
+      "@app/*": [
+        "./src/app/*"
+      ],
+      "@public/*": [
+        "./public/*"
+      ],
+      "@images/*": [
+        "./public/images/*"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@types/*": [
+        "./src/types/*"
+      ]
     },
-    
     // إعدادات متقدمة
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -63,16 +78,13 @@
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": false,
-    
     // إعدادات ديكورية
     "experimentalDecorators": false,
     "emitDecoratorMetadata": false,
-    
     // إعدادات إضافية
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "importHelpers": true,
-    
     // إعدادات Next.js
     "plugins": [
       {
@@ -80,7 +92,6 @@
       }
     ]
   },
-  
   // الملفات المشمولة
   "include": [
     "next-env.d.ts",
@@ -96,7 +107,6 @@
     "**/*.mjs",
     "**/*.cjs"
   ],
-  
   // الملفات المستثناة
   "exclude": [
     "node_modules",

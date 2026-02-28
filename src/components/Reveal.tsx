@@ -14,7 +14,6 @@ type RevealProps = {
   className?: string;
   blur?: boolean;
   scale?: boolean;
-  threshold?: number;
   rotate?: boolean;
   rotateAmount?: number;
   bounce?: boolean;
@@ -35,10 +34,10 @@ export default function Reveal({
   rotate = false,
   rotateAmount = 5,
   bounce = false,
-  customEase = [0.25, 0.1, 0.25, 1], // cubic-bezier محسّن
+  customEase = [0.25, 0.1, 0.25, 1],
 }: RevealProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once, amount: threshold || amount });
+  const isInView = useInView(ref, { once, amount });
 
   // تحديد الحركة حسب الاتجاه
   const getInitialPosition = () => {
@@ -199,18 +198,4 @@ export const RevealStagger = ({
       )) : children}
     </motion.div>
   );
-};
-
-// أمثلة للاستخدام السريع
-export const examples = {
-  basic: `<Reveal>المحتوى</Reveal>`,
-  up: `<RevealUp delay={0.2}>المحتوى</RevealUp>`,
-  blur: `<RevealBlur>المحتوى</RevealBlur>`,
-  stagger: `
-<RevealStagger staggerDelay={0.1}>
-  <div>العنصر 1</div>
-  <div>العنصر 2</div>
-  <div>العنصر 3</div>
-</RevealStagger>
-  `,
 };

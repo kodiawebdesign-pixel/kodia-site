@@ -21,7 +21,7 @@ export default async function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "Cairo, Arial, sans-serif",
+          fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
           position: "relative",
           overflow: "hidden",
         }}
@@ -164,16 +164,6 @@ export default async function Image() {
     ),
     {
       ...size,
-      fonts: [
-        {
-          name: "Cairo",
-          data: await fetch(
-            new URL("../../public/fonts/Cairo-Bold.ttf", import.meta.url)
-          ).then((res) => res.arrayBuffer()),
-          weight: 700,
-          style: "normal",
-        },
-      ],
     }
   );
 }

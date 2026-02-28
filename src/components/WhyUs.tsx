@@ -36,26 +36,43 @@ import { siteData } from "@/lib/siteData";
 import Link from "next/link";
 
 // توسيع بيانات المميزات مع أيقونات وتفاصيل إضافية
-const whyData = siteData.home.why;
+const whyData = siteData.home?.why;
 
-// خريطة الأيقونات لكل ميزة - محدثة
-const iconMap: Record<string, any> = {
-  "تصميم UI/UX احترافي يركز على التحويل": Palette,
-  "موقع سريع ومتجاوب على كل الأجهزة": Smartphone,
-  "تهيئة أساسية لمحركات البحث": TrendingUp,
-  "تسليم منظم + دعم فني بعد الإطلاق": Headphones,
-  "نحن لا نصنع مواقع فقط، بل نبني أدوات نجاح حقيقية": Rocket,
-  "تصميم UI/UX احترافي": Palette,
-  "سرعة وأداء عالي": Gauge,
-  "تحسين محركات البحث": Search,
-  "دعم مستمر": Heart,
-  "تواصل شفاف": MessageCircle,
-  "ضمان الجودة": Shield,
-  "خبرة متنوعة": Award,
-  "تسليم سريع": Zap,
+// بيانات افتراضية في حالة عدم وجود بيانات
+const defaultWhy = {
+  title: "لماذا نحن الخيار الأمثل؟",
+  subtitle: "نحن لا نصنع مواقع فقط، بل نبني أدوات نجاح حقيقية",
+  items: [
+    { title: "تصميم UI/UX احترافي", desc: "نصمم مع التركيز على تحويل الزوار لعملاء", icon: "PenTool" },
+    { title: "سرعة وأداء عالي", desc: "أوقات تحميل قياسية وتحسينات متقدمة", icon: "Zap" },
+    { title: "تحسين محركات البحث", desc: "ظهور متقدم في جوجل يجلب زوار مجانيين", icon: "Search" },
+    { title: "دعم مستمر", desc: "نبقى معك حتى بعد الإطلاق لضمان نجاحك", icon: "Heart" },
+    { title: "تواصل شفاف", desc: "نبقيك على اطلاع بكل خطوة في المشروع", icon: "MessageCircle" },
+    { title: "ضمان الجودة", desc: "نلتزم بالمواصفات ونضمن رضاك التام", icon: "Shield" },
+  ]
 };
 
-// ألوان متدرجة لكل ميزة - محدثة بالبنفسجي
+// خريطة الأيقونات لكل ميزة
+const iconMap: Record<string, any> = {
+  "PenTool": PenTool,
+  "Zap": Zap,
+  "Search": Search,
+  "Heart": Heart,
+  "MessageCircle": MessageCircle,
+  "Shield": Shield,
+  "Palette": Palette,
+  "Smartphone": Smartphone,
+  "TrendingUp": TrendingUp,
+  "Headphones": Headphones,
+  "Rocket": Rocket,
+  "Gauge": Gauge,
+  "Award": Award,
+  "Clock": Clock,
+  "Target": Target,
+  "Sparkles": Sparkles,
+};
+
+// ألوان متدرجة لكل ميزة
 const gradientColors = [
   "from-violet-600 to-fuchsia-600",
   "from-blue-600 to-cyan-600",
@@ -67,7 +84,7 @@ const gradientColors = [
   "from-green-600 to-emerald-600",
 ];
 
-// إحصائيات إضافية لكل ميزة - محدثة
+// إحصائيات إضافية لكل ميزة
 const featureStats: Array<{ value: string; label: string; percent: number }> = [
   { value: "٩٨٪", label: "نسبة رضا", percent: 98 },
   { value: "١٠٠٪", label: "توافق", percent: 100 },
@@ -81,7 +98,7 @@ const featureStats: Array<{ value: string; label: string; percent: number }> = [
   { value: "٩٨٪", label: "موثوقية", percent: 98 },
 ];
 
-// إحصائيات عامة - محدثة
+// إحصائيات عامة
 const generalStats = [
   { icon: Users, label: "عميل سعيد", value: "٢٠+", color: "from-violet-600 to-fuchsia-600" },
   { icon: Clock, label: "سنوات خبرة", value: "٢+", color: "from-blue-600 to-cyan-600" },
@@ -103,7 +120,11 @@ const DEFAULT_STAT = { value: "—", label: "", percent: 0 };
 const DEFAULT_GRADIENT = "from-violet-600 to-fuchsia-600";
 
 export default function WhyUs() {
-  const { why } = siteData.home;
+  // استخدام البيانات من siteData مع fallback للبيانات الافتراضية
+  const why = siteData.home?.why || defaultWhy;
+  
+  // التأكد من أن items موجودة
+  const items = why?.items || defaultWhy.items;
 
   // حماية إضافية
   const safeGradients = gradientColors.length ? gradientColors : [DEFAULT_GRADIENT];
@@ -132,13 +153,14 @@ export default function WhyUs() {
         }}
         className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
-        {why.items.map((feature, idx) => {
-          const featureText =
-            typeof feature === "string"
-              ? feature
-              : (feature as any).title || (feature as any).text || JSON.stringify(feature);
+        {items.map((feature: any, idx: number) => {
+          // التأكد من أن feature هو نص أو كائن
+          const featureText = typeof feature === "string"
+            ? feature
+            : feature?.title || feature?.text || JSON.stringify(feature);
 
-          const IconComponent = iconMap[featureText] || Star;
+          // الحصول على الأيقونة المناسبة
+          const IconComponent = (feature?.icon && iconMap[feature.icon]) || Star;
           const gradient = safeGradients[idx % safeGradients.length] ?? DEFAULT_GRADIENT;
           const stat = safeStats[idx % safeStats.length] ?? DEFAULT_STAT;
 
