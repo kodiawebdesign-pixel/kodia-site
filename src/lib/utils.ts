@@ -1,5 +1,6 @@
 /**
  * دوال مساعدة للمشروع - Kodia Web Design
+ * نسخة محسنة مع دعم كامل للغة العربية والهوية البنفسجية
  */
 
 /**
@@ -25,10 +26,15 @@ export function safeText(v?: string): string {
  * تنسيق الأرقام إلى عملة محلية
  * @param value الرقم المراد تنسيقه
  * @param currency العملة (EGP, USD, SAR, إلخ)
+ * @param locale اللغة (ar-EG افتراضياً)
  * @returns نص منسق مع العملة
  */
-export function formatCurrency(value: number, currency: string = "EGP"): string {
-  return new Intl.NumberFormat("ar-EG", {
+export function formatCurrency(
+  value: number, 
+  currency: string = "EGP", 
+  locale: string = "ar-EG"
+): string {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: currency,
     minimumFractionDigits: 0,
@@ -51,14 +57,19 @@ export function truncateText(text: string, maxLength: number = 100): string {
 /**
  * تحويل التاريخ إلى صيغة عربية
  * @param date التاريخ (string أو Date)
+ * @param options خيارات إضافية للتنسيق
  * @returns نص التاريخ بالعربية
  */
-export function formatArabicDate(date: string | Date): string {
+export function formatArabicDate(
+  date: string | Date, 
+  options?: Intl.DateTimeFormatOptions
+): string {
   const d = new Date(date);
   return d.toLocaleDateString("ar-EG", {
     year: "numeric",
     month: "long",
     day: "numeric",
+    ...options,
   });
 }
 
@@ -72,7 +83,7 @@ export function timeAgo(date: string | Date): string {
   const past = new Date(date);
   const diffInSeconds = Math.floor((now.getTime() - past.getTime()) / 1000);
 
-  const intervals = {
+  const intervals: Record<string, number> = {
     سنة: 31536000,
     شهر: 2592000,
     أسبوع: 604800,
@@ -84,7 +95,15 @@ export function timeAgo(date: string | Date): string {
   for (const [unit, seconds] of Object.entries(intervals)) {
     const interval = Math.floor(diffInSeconds / seconds);
     if (interval >= 1) {
-      return `منذ ${interval} ${unit}${interval > 1 ? "" : ""}`;
+      // التعامل مع الجمع في اللغة العربية
+      if (unit === "سنة" && interval === 2) return `منذ سنتين`;
+      if (unit === "شهر" && interval === 2) return `منذ شهرين`;
+      if (unit === "أسبوع" && interval === 2) return `منذ أسبوعين`;
+      if (unit === "يوم" && interval === 2) return `منذ يومين`;
+      if (interval > 2 && interval < 11) {
+        return `منذ ${interval} ${unit}اً`;
+      }
+      return `منذ ${interval} ${unit}${interval > 1 ? "اً" : ""}`;
     }
   }
   return "منذ لحظات";
@@ -107,6 +126,8 @@ export function shareLink(platform: string, url: string, title?: string): string
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}`,
     whatsapp: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
     telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`,
+    pinterest: `https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedTitle}`,
+    reddit: `https://reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`,
   };
 
   return platforms[platform] || url;
@@ -153,6 +174,16 @@ export function isValidEgyptianPhone(phone: string): boolean {
 }
 
 /**
+ * التحقق من صحة رقم الهاتف السعودي
+ * @param phone رقم الهاتف
+ * @returns boolean
+ */
+export function isValidSaudiPhone(phone: string): boolean {
+  const regex = /^(05[0-9]{8})$/;
+  return regex.test(phone.replace(/\D/g, ""));
+}
+
+/**
  * إخفاء جزء من النص (للبريد أو الهاتف)
  * @param text النص الأصلي
  * @param visible عدد الأحرف الظاهرة
@@ -183,6 +214,17 @@ export function randomStat(min: number, max: number): number {
  */
 export function waServiceLink(phone: string, service: string): string {
   const message = `السلام عليكم، أود الاستفسار عن خدمة ${service}`;
+  return waLink(phone, message);
+}
+
+/**
+ * إنشاء رابط واتساب لعرض سعر
+ * @param phone رقم الهاتف
+ * @param projectDetails تفاصيل المشروع
+ * @returns رابط واتساب جاهز
+ */
+export function waQuoteLink(phone: string, projectDetails: string): string {
+  const message = `السلام عليكم، أود الحصول على عرض سعر للمشروع التالي:\n\n${projectDetails}`;
   return waLink(phone, message);
 }
 
@@ -256,6 +298,33 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 }
 
 /**
+ * تحويل النص إلى slugs صديق لـ SEO
+ * @param text النص المراد تحويله
+ * @returns slug
+ */
+export function slugify(text: string): string {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // إزالة الأحرف الخاصة
+    .replace(/\s+/g, '-')     // استبدال المسافات بشرطة
+    .replace(/-+/g, '-');     // إزالة الشرطات المتكررة
+}
+
+/**
+ * استخراج الكلمات المفتاحية من نص
+ * @param text النص
+ * @returns مصفوفة من الكلمات المفتاحية
+ */
+export function extractKeywords(text: string): string[] {
+  return text
+    .split(/\s+/)
+    .filter(word => word.length > 2)
+    .map(word => word.toLowerCase())
+    .filter((word, index, self) => self.indexOf(word) === index);
+}
+
+/**
  * تصدير جميع الدوال في كائن واحد للاستخدام السهل
  */
 export const utils = {
@@ -270,13 +339,17 @@ export const utils = {
   seoDescription,
   isValidEmail,
   isValidEgyptianPhone,
+  isValidSaudiPhone,
   maskText,
   randomStat,
   waServiceLink,
+  waQuoteLink,
   toArabicNumber,
   formatPhoneNumber,
   calculateProgress,
   generateId,
   delay,
   copyToClipboard,
+  slugify,
+  extractKeywords,
 };

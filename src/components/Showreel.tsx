@@ -13,6 +13,11 @@ import {
   Film,
   Sparkles,
   Eye,
+  Heart,
+  Share2,
+  Download,
+  Star,
+  Award
 } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import { siteData } from "@/lib/siteData";
@@ -27,11 +32,12 @@ export default function Showreel() {
   const [showControls, setShowControls] = useState(true);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [volume, setVolume] = useState(50);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [showPlaybackMenu, setShowPlaybackMenu] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // ✅ Fix: لازم initial value + type مناسب للـ browser
   const controlsTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { showreel } = siteData.home;
@@ -42,7 +48,6 @@ export default function Showreel() {
     if (!video) return;
 
     const updateProgress = () => {
-      // حماية من NaN لو duration = 0
       const d = video.duration || 0;
       const pct = d > 0 ? (video.currentTime / d) * 100 : 0;
       setProgress(pct);
@@ -78,7 +83,6 @@ export default function Showreel() {
     };
 
     const handleMouseLeave = () => {
-      // لما يطلع الماوس، خلي التحكمات تظهر (أو سيبها كما هي)
       setShowControls(true);
       if (controlsTimeout.current) clearTimeout(controlsTimeout.current);
       controlsTimeout.current = null;
@@ -162,12 +166,23 @@ export default function Showreel() {
 
   const skipForward = () => {
     const video = videoRef.current;
-    if (video) video.currentTime = Math.min((video.duration || 0) || video.currentTime + 10, video.currentTime + 10);
+    if (video) {
+      video.currentTime = Math.min((video.duration || 0), video.currentTime + 10);
+    }
   };
 
   const skipBackward = () => {
     const video = videoRef.current;
     if (video) video.currentTime = Math.max(0, video.currentTime - 10);
+  };
+
+  const changePlaybackRate = (rate: number) => {
+    const video = videoRef.current;
+    if (video) {
+      video.playbackRate = rate;
+      setPlaybackRate(rate);
+    }
+    setShowPlaybackMenu(false);
   };
 
   const formatTime = (time: number) => {
@@ -182,7 +197,7 @@ export default function Showreel() {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
       className="relative rounded-2xl overflow-hidden shadow-2xl group bg-black"
     >
       {/* الفيديو */}
@@ -210,7 +225,9 @@ export default function Showreel() {
             <div className="absolute top-0 left-0 right-0 p-4 bg-gradient-to-b from-black/50 to-transparent">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Film className="w-5 h-5 text-white" />
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center">
+                    <Film className="w-4 h-4 text-white" />
+                  </div>
                   <h3 className="text-white font-bold">Kodia Showreel</h3>
                 </div>
                 <div className="flex items-center gap-2">
@@ -237,7 +254,7 @@ export default function Showreel() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={togglePlay}
-                className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center text-blue-600 hover:bg-white transition-colors shadow-xl"
+                className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center text-violet-600 hover:bg-white transition-colors shadow-xl"
                 aria-label={isPlaying ? "إيقاف" : "تشغيل"}
               >
                 {isPlaying ? <Pause size={32} /> : <Play size={32} />}
@@ -264,7 +281,7 @@ export default function Showreel() {
                   max="100"
                   value={progress}
                   onChange={handleSeek}
-                  className="w-full h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                  className="w-full h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-violet-500"
                 />
               </div>
 
@@ -307,7 +324,7 @@ export default function Showreel() {
                             max="100"
                             value={volume}
                             onChange={handleVolumeChange}
-                            className="w-20 h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                            className="w-20 h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-violet-500"
                             style={{ transform: "rotate(-90deg)" }}
                           />
                         </motion.div>
@@ -319,9 +336,62 @@ export default function Showreel() {
                   <span className="text-white text-xs">
                     {formatTime(currentTime)} / {formatTime(duration)}
                   </span>
+
+                  {/* سرعة التشغيل */}
+                  <div className="relative">
+                    <button
+                      onClick={() => setShowPlaybackMenu(!showPlaybackMenu)}
+                      className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded text-white text-xs hover:bg-white/30 transition-colors"
+                    >
+                      {playbackRate}x
+                    </button>
+
+                    <AnimatePresence>
+                      {showPlaybackMenu && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          className="absolute bottom-full left-0 mb-2 bg-black/80 backdrop-blur-sm rounded-lg p-1"
+                        >
+                          {[0.5, 0.75, 1, 1.25, 1.5, 2].map((rate) => (
+                            <button
+                              key={rate}
+                              onClick={() => changePlaybackRate(rate)}
+                              className={`block w-full px-3 py-1 text-xs rounded hover:bg-white/20 transition-colors ${
+                                playbackRate === rate ? 'text-violet-400' : 'text-white'
+                              }`}
+                            >
+                              {rate}x
+                            </button>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2">
+                  {/* زر الإعجاب */}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setIsLiked(!isLiked)}
+                    className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                  >
+                    <Heart className={`w-4 h-4 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} />
+                  </motion.button>
+
+                  {/* زر المشاركة */}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                  >
+                    <Share2 size={16} />
+                  </motion.button>
+
+                  {/* ملء الشاشة */}
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -339,6 +409,12 @@ export default function Showreel() {
             <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 text-white text-xs">
               <Eye size={12} />
               <span>١.٢k مشاهدة</span>
+            </div>
+
+            {/* شارة الجودة */}
+            <div className="absolute top-4 left-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 px-3 py-1 rounded-full flex items-center gap-1 text-white text-xs">
+              <Award size={12} />
+              <span>4K</span>
             </div>
           </motion.div>
         )}

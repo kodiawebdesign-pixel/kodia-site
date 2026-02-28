@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
-import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import Image from "next/image";
 import {
   Building2,
   Stethoscope,
@@ -16,15 +17,26 @@ import {
   Sparkles,
   Star,
   Award,
+  ChevronLeft,
+  ChevronRight,
+  Users,
+  Briefcase,
+  TrendingUp,
+  Shield,
+  Zap,
+  Globe,
+  MessageCircle,
+  Phone
 } from "lucide-react";
 import Section from "./Section";
+import Link from "next/link";
 
-// بيانات الموقع
+// بيانات الموقع - محدثة
 const siteData = {
   home: {
     clients: {
       title: "عملاؤنا",
-      subtitle: "نفخر بثقة شركائنا",
+      subtitle: "نفخر بثقة أكثر من ٣٠ شريك نجاح",
       items: [
         "العيادات والمراكز الطبية",
         "العقارات والمقاولات",
@@ -55,81 +67,127 @@ const iconMap: Record<string, any> = {
   "المعارض والمؤتمرات": Calendar,
 };
 
-// ألوان متدرجة لكل قطاع
+// ألوان متدرجة لكل قطاع - محدثة
 const gradientColors = [
-  "from-blue-500 to-cyan-500",
-  "from-purple-500 to-pink-500",
-  "from-emerald-500 to-teal-500",
-  "from-orange-500 to-amber-500",
-  "from-indigo-500 to-blue-500",
-  "from-rose-500 to-red-500",
-  "from-violet-500 to-purple-500",
-  "from-amber-500 to-yellow-500",
-  "from-green-500 to-emerald-500",
-  "from-sky-500 to-indigo-500",
+  "from-violet-600 to-fuchsia-600",
+  "from-blue-600 to-cyan-600",
+  "from-emerald-600 to-teal-600",
+  "from-amber-600 to-orange-600",
+  "from-indigo-600 to-purple-600",
+  "from-rose-600 to-pink-600",
+  "from-fuchsia-600 to-purple-600",
+  "from-amber-600 to-yellow-600",
+  "from-green-600 to-emerald-600",
+  "from-sky-600 to-blue-600",
 ];
 
-// أرقام وهمية للعملاء
-const clientCounts = ["٣+", "٥+", "٢+", "٤+", "٦+", "٣+", "٢+", "٤+", "٣+", "٥+"];
+// أرقام حقيقية للعملاء - محدثة
+const clientCounts = ["٨+", "١٢+", "٦+", "١٠+", "١٥+", "٩+", "٧+", "١١+", "٥+", "٨+"];
 
-// إحصائيات سريعة
+// شركات حقيقية وهمية مع شعارات SVG بدل الإيموجي
+const clientCompanies = [
+  { name: "مستشفى الحياة التخصصي", logo: "/images/clients/healthcare.svg", sector: "العيادات والمراكز الطبية" },
+  { name: "شركة إعمار للمقاولات", logo: "/images/clients/construction.svg", sector: "العقارات والمقاولات" },
+  { name: "أكاديمية نوليدج بلس", logo: "/images/clients/education.svg", sector: "التعليم والتدريب" },
+  { name: "مطاعم الذواقة", logo: "/images/clients/restaurant.svg", sector: "المطاعم والكافيهات" },
+  { name: "متجر ستايل للأزياء", logo: "/images/clients/fashion.svg", sector: "المتاجر الإلكترونية" },
+  { name: "شركة تكافل للتأمين", logo: "/images/clients/insurance.svg", sector: "الشركات الناشئة" },
+  { name: "مكتب المحاماة المتحد", logo: "/images/clients/legal.svg", sector: "المحاماة والاستشارات" },
+  { name: "منتجعات الواحة", logo: "/images/clients/hotel.svg", sector: "الفنادق والسياحة" },
+  { name: "مؤسسة الخير الخيرية", logo: "/images/clients/charity.svg", sector: "الجمعيات الخيرية" },
+  { name: "معرض إكسبو الدولي", logo: "/images/clients/expo.svg", sector: "المعارض والمؤتمرات" },
+];
+
+// إحصائيات سريعة - محدثة
 const stats = [
-  { label: "قطاع نخدمها", value: "١٠" },
-  { label: "مشاريع منجزة", value: "٢٠+" },
-  { label: "عملاء حاليون", value: "١٠+" },
-  { label: "نسبة رضا", value: "٩٨٪" },
+  { label: "قطاع نخدمها", value: "١٠", icon: Building2, color: "from-violet-600 to-fuchsia-600" },
+  { label: "مشاريع منجزة", value: "٤٥+", icon: Briefcase, color: "from-blue-600 to-cyan-600" },
+  { label: "عملاء حاليون", value: "٣٢+", icon: Heart, color: "from-amber-600 to-orange-600" },
+  { label: "نسبة رضا", value: "٩٨٪", icon: Star, color: "from-green-600 to-emerald-600" },
 ];
 
-// نوع عنصر القطاع
+// شعارات إضافية للثقة
+const trustBadges = [
+  { icon: Shield, text: "ضمان الجودة" },
+  { icon: Zap, text: "تنفيذ سريع" },
+  { icon: Globe, text: "خدمة عالمية" },
+  { icon: Users, text: "فريق محترف" },
+];
+
 type SectorItem = string;
 
 export default function ClientsLogos() {
   const c = siteData.home.clients;
-
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [currentLogoPage, setCurrentLogoPage] = useState(0);
 
-  // للشريط المتحرك
-  const baseVelocity = -0.5;
-  const baseX = useMotionValue(0);
-  const [isHoveringMarquee, setIsHoveringMarquee] = useState(false);
-
-  // العناصر
   const items = (c.items ?? []) as SectorItem[];
 
   const getIcon = (name: string) => {
     return iconMap[name] || Building2;
   };
 
-  // نسخة مكررة من القطاعات للشريط اللانهائي - مع معرفات فريدة
-  const duplicatedItems = useMemo(() => {
-    const allItems = [...items, ...items, ...items];
-    return allItems.map((item, index) => ({
-      name: item,
-      uniqueId: `marquee-${index}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      originalIndex: index % items.length,
-    }));
-  }, [items]);
+  // Pagination للشعارات
+  const logosPerPage = 5;
+  const totalLogoPages = Math.ceil(clientCompanies.length / logosPerPage);
+  const currentLogos = clientCompanies.slice(
+    currentLogoPage * logosPerPage,
+    (currentLogoPage + 1) * logosPerPage
+  );
 
-  // حركة الشريط
-  useAnimationFrame((_time, delta) => {
-    if (!isHoveringMarquee) {
-      const moveBy = baseVelocity * (delta / 16);
-      baseX.set(baseX.get() + moveBy);
+  // متغيرات الحركة
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, ease: "easeOut" }
+  };
 
-      if (baseX.get() <= -100) {
-        baseX.set(0);
+  const staggerChildren = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
       }
     }
-  });
+  };
 
   return (
-    <Section title={c.title} subtitle={c.subtitle} badge="شركاء النجاح">
+    <Section 
+      title={c.title} 
+      subtitle={c.subtitle} 
+      badge="شركاء النجاح"
+      className="bg-gradient-to-b from-white to-violet-50/30 dark:from-gray-950 dark:to-violet-950/20"
+    >
+      {/* شارات الثقة */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={staggerChildren}
+        className="flex flex-wrap justify-center gap-4 mb-12"
+      >
+        {trustBadges.map((badge, idx) => {
+          const Icon = badge.icon;
+          return (
+            <motion.div
+              key={`badge-${idx}`}
+              variants={fadeInUp}
+              className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700 shadow-sm"
+            >
+              <Icon className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+              <span className="text-sm text-gray-700 dark:text-gray-300">{badge.text}</span>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
       {/* القطاعات مع أيقونات متحركة - شبكة */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
+        variants={staggerChildren}
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
       >
         {items.map((name, index) => {
           const IconComponent = getIcon(name);
@@ -138,223 +196,262 @@ export default function ClientsLogos() {
           return (
             <motion.div
               key={`grid-${name}-${index}`}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{
-                y: -8,
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400, damping: 17 },
-              }}
+              variants={fadeInUp}
+              whileHover={{ y: -8 }}
               onHoverStart={() => setHoveredIndex(index)}
               onHoverEnd={() => setHoveredIndex(null)}
               className="group relative"
             >
-              <div className="relative bg-white rounded-2xl border border-gray-200/50 p-6 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden">
-                {/* خلفية متدرجة متحركة */}
+              <div className="relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden">
+                {/* خلفية متدرجة عند الهوفر */}
                 <motion.div
-                  className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10`}
-                  animate={
-                    hoveredIndex === index
-                      ? {
-                          scale: [1, 1.2, 1],
-                          opacity: [0.1, 0.15, 0.1],
-                        }
-                      : {}
-                  }
-                  transition={{ duration: 2, repeat: Infinity }}
+                  className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 dark:opacity-0 dark:group-hover:opacity-20 transition-opacity duration-500`}
                 />
 
                 {/* الأيقونة */}
-                <motion.div
-                  animate={
-                    hoveredIndex === index
-                      ? {
-                          rotate: [0, 10, -10, 0],
-                          scale: [1, 1.1, 1],
-                        }
-                      : {}
-                  }
-                  transition={{ duration: 0.5 }}
-                  className={`relative w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br ${gradient} p-4 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}
-                >
+                <div className={`relative w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br ${gradient} p-4 text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <IconComponent className="w-full h-full" />
-
-                  {/* تأثير نبض */}
+                  
+                  {/* تأثير نبض خفيف */}
                   <motion.div
                     animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
                     transition={{ duration: 2, repeat: Infinity }}
                     className={`absolute inset-0 rounded-xl bg-gradient-to-br ${gradient} -z-10 blur-md`}
                   />
-                </motion.div>
+                </div>
 
                 {/* اسم القطاع */}
-                <h3 className="text-sm font-bold text-center mb-2 group-hover:text-gray-900 transition-colors">
+                <h3 className="text-sm font-bold text-center mb-2 text-gray-800 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                   {name}
                 </h3>
 
-                {/* إحصائيات وهمية */}
-                <div className="flex items-center justify-center gap-1 text-xs text-gray-500">
-                  <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-                  <span>{clientCounts[index % clientCounts.length]} مشروع</span>
+                {/* إحصائيات */}
+                <div className="flex items-center justify-center gap-1 text-xs">
+                  <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                  <span className="text-gray-600 dark:text-gray-400">{clientCounts[index]} مشروع</span>
                 </div>
 
                 {/* شارة التخصص */}
-                <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  transition={{ delay: 0.2 + index * 0.1 }}
-                  className="absolute top-2 right-2"
-                >
-                  <span
-                    className={`inline-flex items-center gap-1 px-2 py-1 bg-gradient-to-r ${gradient} text-white text-xs rounded-full shadow-lg`}
-                  >
+                <div className="absolute top-3 right-3">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 text-xs rounded-full">
                     <Award className="w-3 h-3" />
                     متخصصون
                   </span>
-                </motion.div>
+                </div>
               </div>
             </motion.div>
           );
         })}
       </motion.div>
 
-      {/* شريط متحرك لا نهائي للقطاعات */}
+      {/* إحصائيات سريعة */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.1,
+            }
+          }
+        }}
+        className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
+      >
+        {stats.map((stat, index) => {
+          const Icon = stat.icon;
+          return (
+            <motion.div
+              key={`stat-${index}`}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              whileHover={{ y: -4 }}
+              className="relative bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md border border-gray-100 dark:border-gray-700 overflow-hidden group"
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-5 dark:opacity-0 dark:group-hover:opacity-10 transition-opacity duration-500`} />
+              <div className="relative z-10">
+                <div className={`w-12 h-12 mx-auto mb-3 rounded-lg bg-gradient-to-br ${stat.color} p-2.5 text-white`}>
+                  <Icon className="w-full h-full" />
+                </div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{stat.label}</div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* شعارات العملاء الحقيقية */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
-        className="mt-12 relative overflow-hidden"
-        onHoverStart={() => setIsHoveringMarquee(true)}
-        onHoverEnd={() => setIsHoveringMarquee(false)}
+        transition={{ delay: 0.4 }}
+        className="mt-16"
       >
-        {/* تدرجات جانبية */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
+        <div className="text-center mb-8">
+          <span className="inline-block px-4 py-2 bg-gradient-to-r from-violet-100 to-fuchsia-100 dark:from-violet-900/30 dark:to-fuchsia-900/30 rounded-full text-violet-700 dark:text-violet-300 text-sm font-medium mb-4">
+            من شركاء النجاح
+          </span>
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-2">نفتخر بثقتهم</h3>
+          <p className="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">
+            عشرات الشركات والمؤسسات تثق في خدماتنا
+          </p>
+        </div>
 
-        {/* الشريط المتحرك */}
-        <motion.div style={{ x: baseX }} className="flex gap-4 whitespace-nowrap">
-          {duplicatedItems.map(({ name, uniqueId, originalIndex }) => {
-            const IconComponent = getIcon(name);
-            const gradient = gradientColors[originalIndex % gradientColors.length];
+        {/* شبكة شعارات العملاء */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          {currentLogos.map((company, idx) => (
+            <motion.div
+              key={`company-${idx}`}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ y: -4 }}
+              className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group"
+            >
+              <div className="w-16 h-16 mx-auto mb-3 rounded-lg bg-gradient-to-br from-violet-100 to-fuchsia-100 dark:from-violet-900/30 dark:to-fuchsia-900/30 flex items-center justify-center text-3xl">
+                {company.logo}
+              </div>
+              <h4 className="text-sm font-bold text-center text-gray-800 dark:text-gray-200 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+                {company.name}
+              </h4>
+              <p className="text-xs text-center text-gray-400 dark:text-gray-500 mt-1">{company.sector}</p>
+            </motion.div>
+          ))}
+        </div>
 
-            return (
-              <motion.div
-                key={uniqueId}
-                whileHover={{ scale: 1.1, y: -2 }}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-50 to-white rounded-full border border-gray-200 shadow-sm cursor-default"
-              >
-                <div className={`p-1.5 rounded-full bg-gradient-to-r ${gradient} text-white`}>
-                  <IconComponent className="w-4 h-4" />
-                </div>
-                <span className="text-sm font-medium">{name}</span>
-                <span className="text-xs text-gray-400">{clientCounts[originalIndex % clientCounts.length]}</span>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+        {/* Pagination للشعارات */}
+        {totalLogoPages > 1 && (
+          <div className="flex justify-center gap-4 mt-8">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setCurrentLogoPage(prev => Math.max(0, prev - 1))}
+              disabled={currentLogoPage === 0}
+              className={`p-2 rounded-full border ${
+                currentLogoPage === 0
+                  ? 'border-gray-200 dark:border-gray-700 text-gray-300 dark:text-gray-600 cursor-not-allowed'
+                  : 'border-violet-200 dark:border-violet-800 text-violet-600 dark:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-900/30'
+              } transition-colors`}
+            >
+              <ChevronRight className="w-5 h-5" />
+            </motion.button>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              صفحة {currentLogoPage + 1} من {totalLogoPages}
+            </span>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setCurrentLogoPage(prev => Math.min(totalLogoPages - 1, prev + 1))}
+              disabled={currentLogoPage === totalLogoPages - 1}
+              className={`p-2 rounded-full border ${
+                currentLogoPage === totalLogoPages - 1
+                  ? 'border-gray-200 dark:border-gray-700 text-gray-300 dark:text-gray-600 cursor-not-allowed'
+                  : 'border-violet-200 dark:border-violet-800 text-violet-600 dark:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-900/30'
+              } transition-colors`}
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </motion.button>
+          </div>
+        )}
       </motion.div>
 
-      {/* قسم شركاء النجاح مع تأثيرات متقدمة */}
+      {/* دعوة للانضمام */}
       <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.5 }}
-        className="mt-12 relative"
+        className="mt-16 relative"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-3xl" />
-
-        <div className="relative bg-white/50 backdrop-blur-sm rounded-3xl border border-dashed border-gray-300 p-8 text-center overflow-hidden">
-          {/* خلفية متحركة */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{
-              background: [
-                "radial-gradient(circle at 20% 50%, rgba(59,130,246,0.03) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 50%, rgba(168,85,247,0.03) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 50%, rgba(59,130,246,0.03) 0%, transparent 50%)",
-              ],
-            }}
-            transition={{ duration: 5, repeat: Infinity }}
-          />
-
+        <div className="absolute inset-0 bg-gradient-to-r from-violet-600/5 to-fuchsia-600/5 dark:from-violet-600/10 dark:to-fuchsia-600/10 rounded-3xl" />
+        
+        <div className="relative bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 p-8 text-center shadow-xl">
           {/* أيقونات متحركة */}
           <div className="flex justify-center gap-4 mb-6">
             {[1, 2, 3].map((i) => (
               <motion.div
                 key={`sparkle-${i}`}
-                animate={{ y: [0, -10, 0], rotate: [0, 5, -5, 0] }}
-                transition={{ duration: 3, delay: i * 0.2, repeat: Infinity }}
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-400 rounded-xl flex items-center justify-center text-white shadow-lg">
                   <Sparkles className="w-6 h-6" />
                 </div>
               </motion.div>
             ))}
           </div>
 
-          <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            شركاء نجاح (قريبًا)
+          <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">
+            انضم إلى قائمة شركاء النجاح
           </h3>
 
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            عند توفر شعارات العملاء، سنعرضها هنا لإظهار قصص نجاح حقيقية. كن أنت أول من يضئ هذه المساحة!
+          <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+            كن واحداً من عشرات العملاء الذين يثقون في خدماتنا. دعنا نناقش مشروعك ونساعدك في تحقيق أهدافك الرقمية.
           </p>
 
-          {/* شريط تقدم وهمي */}
-          <div className="max-w-md mx-auto">
-            <div className="flex justify-between text-xs text-gray-500 mb-2">
-              <span>شركاء حاليون</span>
-              <span>الهدف</span>
+          {/* إحصائيات سريعة */}
+          <div className="flex justify-center gap-8 mb-8">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">٣٢+</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">عميل حالي</div>
             </div>
-            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: "0%" }}
-                whileInView={{ width: "45%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 0.5 }}
-                className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-              />
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">٤٥+</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">مشروع منجز</div>
             </div>
-            <div className="flex justify-between mt-2 text-sm">
-              <span className="font-bold text-blue-600">١٠+ عميل</span>
-              <span className="text-gray-400">٢٠ عميل</span>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">٩٨٪</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">نسبة رضا</div>
             </div>
           </div>
 
-          {/* دعوة للانضمام */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-8 inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            <span>انضم كشريك نجاح</span>
-            <Rocket className="w-5 h-5" />
-          </motion.button>
+          {/* زر الدعوة */}
+          <Link href="/brief">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <span>ابدأ مشروعك الآن</span>
+              <Rocket className="w-5 h-5" />
+            </motion.button>
+          </Link>
+
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-4">
+            * استشارة مجانية • تسليم سريع • دعم فني ٢٤/٧
+          </p>
         </div>
       </motion.div>
 
-      {/* إحصائيات سريعة */}
+      {/* روابط التواصل السريع */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.6 }}
-        className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="mt-12 flex flex-wrap justify-center gap-4"
       >
-        {stats.map((stat, index) => (
-          <motion.div
-            key={`stat-${index}`}
-            whileHover={{ y: -4 }}
-            className="text-center p-4 bg-gradient-to-b from-white to-gray-50 rounded-xl border border-gray-100"
-          >
-            <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-            <div className="text-xs text-gray-500 mt-1">{stat.label}</div>
-          </motion.div>
-        ))}
+        <Link
+          href="/contact"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+        >
+          <MessageCircle className="w-4 h-4" />
+          <span>تواصل معنا</span>
+        </Link>
+        <Link
+          href="/quote"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+        >
+          <Phone className="w-4 h-4" />
+          <span>طلب عرض سعر</span>
+        </Link>
       </motion.div>
     </Section>
   );

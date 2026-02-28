@@ -6,6 +6,7 @@
   "framework": "nextjs",
   "outputDirectory": ".next",
   "regions": ["fra1"],
+  
   "headers": [
     {
       "source": "/(.*)",
@@ -21,6 +22,18 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
         }
       ]
     },
@@ -38,11 +51,39 @@
       "headers": [
         {
           "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/_next/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.ico",
+      "headers": [
+        {
+          "key": "Cache-Control",
           "value": "public, max-age=86400"
         }
       ]
     }
   ],
+  
   "rewrites": [
     {
       "source": "/sitemap.xml",
@@ -51,6 +92,37 @@
     {
       "source": "/robots.txt",
       "destination": "/robots"
+    },
+    {
+      "source": "/manifest.json",
+      "destination": "/manifest"
     }
-  ]
+  ],
+  
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/old-blog/:path*",
+      "destination": "/blog/:path*",
+      "permanent": true
+    }
+  ],
+  
+  "env": {
+    "NEXT_PUBLIC_VERCEL_ENV": "${VERCEL_ENV}",
+    "NEXT_PUBLIC_VERCEL_URL": "${VERCEL_URL}"
+  },
+  
+  "functions": {
+    "api/**/*.ts": {
+      "maxDuration": 10
+    }
+  },
+  
+  "cleanUrls": true,
+  "trailingSlash": false
 }

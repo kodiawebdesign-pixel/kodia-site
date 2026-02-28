@@ -1,11 +1,9 @@
 // هذا ملف خادم - لا يوجد "use client" هنا
-import { siteData } from "@/lib/siteData";
-import ServiceSlugClient from "./ServiceSlugClient";
+import { redirect } from "next/navigation";
 
-export function generateStaticParams() {
-  return siteData.home.serviceLandings.map((s: any) => ({ slug: s.slug }));
+// إعادة توجيه أي صفحة ديناميكية إلى صفحة الخدمات الرئيسية
+export default function ServiceSlugPage() {
+  redirect("/services");
 }
 
-export default function ServiceSlugPage({ params }: { params: { slug: string } }) {
-  return <ServiceSlugClient slug={params.slug} />;
-}
+// هذا سيمنع 404 ويحول المستخدم تلقائياً

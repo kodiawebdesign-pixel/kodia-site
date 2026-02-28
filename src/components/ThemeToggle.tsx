@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, Monitor } from "lucide-react";
+import { Moon, Sun, Monitor, Sparkles } from "lucide-react";
 
 type Theme = "light" | "dark" | "system";
 
@@ -40,7 +40,7 @@ export default function ThemeToggle() {
     }
   }, []);
 
-  // ✅ متابعة تغيير ثيم النظام (بدون addListener/removeListener)
+  // متابعة تغيير ثيم النظام
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -93,24 +93,37 @@ export default function ThemeToggle() {
         aria-label="تغيير الثيم"
       >
         <motion.div
-          animate={{ rotate: theme === "dark" ? 360 : 0 }}
+          animate={{ 
+            rotate: theme === "dark" ? 360 : 0,
+            scale: [1, 1.1, 1]
+          }}
           transition={{ duration: 0.5 }}
+          className="text-violet-600 dark:text-violet-400"
         >
           {getThemeIcon()}
         </motion.div>
 
         <span className="hidden sm:inline text-sm">{getThemeLabel()}</span>
 
+        {/* خلفية متدرجة متحركة */}
         <motion.div
-          className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-10 transition-opacity"
+          className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 opacity-0 group-hover:opacity-10 dark:opacity-0 dark:group-hover:opacity-20 transition-opacity"
           animate={{ scale: [1, 1.02, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
+        />
+
+        {/* شارة صغيرة للتميز */}
+        <motion.div
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute -top-1 -right-1 w-2 h-2 bg-violet-600 rounded-full"
         />
       </motion.button>
 
       <AnimatePresence>
         {showOptions && (
           <>
+            {/* طبقة خلفية شفافة */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -119,69 +132,87 @@ export default function ThemeToggle() {
               onClick={() => setShowOptions(false)}
             />
 
+            {/* قائمة الخيارات */}
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="absolute left-0 mt-2 w-40 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden z-50 dark:bg-gray-800 dark:border-gray-700"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="absolute left-0 mt-2 w-40 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl overflow-hidden z-50"
             >
-              <button
+              {/* خيار فاتح */}
+              <motion.button
+                whileHover={{ x: 2 }}
                 onClick={() => changeTheme("light")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
                   theme === "light"
-                    ? "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
-                    : "hover:bg-gray-50 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-200"
+                    ? "bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700 dark:from-violet-900/30 dark:to-fuchsia-900/30 dark:text-violet-300"
+                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                 }`}
               >
-                <Sun className="w-4 h-4" />
+                <Sun className="w-4 h-4 text-amber-500" />
                 <span className="flex-1 text-right">فاتح</span>
                 {theme === "light" && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="w-1.5 h-1.5 rounded-full bg-blue-600"
+                    className="w-1.5 h-1.5 rounded-full bg-violet-600"
                   />
                 )}
-              </button>
+              </motion.button>
 
-              <button
+              {/* خيار داكن */}
+              <motion.button
+                whileHover={{ x: 2 }}
                 onClick={() => changeTheme("dark")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
                   theme === "dark"
-                    ? "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
-                    : "hover:bg-gray-50 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-200"
+                    ? "bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700 dark:from-violet-900/30 dark:to-fuchsia-900/30 dark:text-violet-300"
+                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                 }`}
               >
-                <Moon className="w-4 h-4" />
+                <Moon className="w-4 h-4 text-indigo-500" />
                 <span className="flex-1 text-right">داكن</span>
                 {theme === "dark" && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="w-1.5 h-1.5 rounded-full bg-blue-600"
+                    className="w-1.5 h-1.5 rounded-full bg-violet-600"
                   />
                 )}
-              </button>
+              </motion.button>
 
-              <button
+              {/* خيار تلقائي */}
+              <motion.button
+                whileHover={{ x: 2 }}
                 onClick={() => changeTheme("system")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
                   theme === "system"
-                    ? "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
-                    : "hover:bg-gray-50 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-200"
+                    ? "bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700 dark:from-violet-900/30 dark:to-fuchsia-900/30 dark:text-violet-300"
+                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                 }`}
               >
-                <Monitor className="w-4 h-4" />
+                <Monitor className="w-4 h-4 text-violet-600" />
                 <span className="flex-1 text-right">تلقائي</span>
                 {theme === "system" && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="w-1.5 h-1.5 rounded-full bg-blue-600"
+                    className="w-1.5 h-1.5 rounded-full bg-violet-600"
                   />
                 )}
-              </button>
+              </motion.button>
+
+              {/* تذييل القائمة مع تأثير متحرك */}
+              <div className="p-2 border-t border-gray-100 dark:border-gray-700">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="flex justify-center"
+                >
+                  <Sparkles className="w-3 h-3 text-amber-500" />
+                </motion.div>
+              </div>
             </motion.div>
           </>
         )}

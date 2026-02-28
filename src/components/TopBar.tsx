@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import Container from "./Container";
 import { siteData } from "@/lib/siteData";
 import SocialLinks from "@/components/SocialLinks";
-import { Phone, Mail, Clock, MapPin, ChevronDown, Sparkles } from "lucide-react";
+import { Phone, Mail, Clock, MapPin, ChevronDown, Sparkles, Gift, Zap, Heart } from "lucide-react";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function TopBar() {
   const { phoneDisplay, phoneE164, email, serviceArea } = siteData.brand;
@@ -54,7 +55,7 @@ export default function TopBar() {
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="border-b bg-gradient-to-r from-gray-50 to-white dark:from-gray-900 dark:to-gray-800"
+      className="border-b bg-gradient-to-r from-violet-50/50 to-fuchsia-50/50 dark:from-gray-900 dark:to-gray-800 dark:border-violet-800/30"
     >
       <Container>
         <div className="flex flex-col gap-2 py-2 text-xs sm:flex-row sm:items-center sm:justify-between">
@@ -65,7 +66,7 @@ export default function TopBar() {
               whileHover={{ scale: 1.05, x: 2 }}
               whileTap={{ scale: 0.95 }}
               href={`tel:${phoneE164}`}
-              className="inline-flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group"
+              className="inline-flex items-center gap-1.5 hover:text-violet-600 dark:hover:text-violet-400 transition-colors group"
               aria-label="اتصال"
             >
               <div className="relative">
@@ -87,7 +88,7 @@ export default function TopBar() {
               whileHover={{ scale: 1.05, x: 2 }}
               whileTap={{ scale: 0.95 }}
               href={`mailto:${email}`}
-              className="inline-flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="inline-flex items-center gap-1.5 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
               aria-label="البريد الإلكتروني"
             >
               <Mail className="w-4 h-4" />
@@ -114,7 +115,7 @@ export default function TopBar() {
             </motion.div>
           </div>
 
-          {/* القسم الأيمن - حالة العمل والسوشيال */}
+          {/* القسم الأيمن - حالة العمل والعروض والسوشيال */}
           <div className="flex flex-wrap items-center justify-between sm:justify-end gap-3">
             {/* حالة العمل */}
             <motion.div
@@ -137,13 +138,24 @@ export default function TopBar() {
                 </span>
               </div>
 
+              {/* رابط سريع للعروض */}
+              <Link href="/quote">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="hidden lg:flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-full text-xs shadow-md cursor-pointer"
+                >
+                  <Zap className="w-3 h-3" />
+                  <span>عروض خاصة</span>
+                </motion.div>
+              </Link>
+
               {/* رسالة ترحيب متغيرة */}
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={() => setShowMessage(!showMessage)}
-                className="relative hidden lg:flex items-center gap-1 px-2 py-1 bg-blue-50 dark:bg-blue-900/20 rounded-full text-blue-600 dark:text-blue-400 text-xs"
+                className="relative hidden lg:flex items-center gap-1 px-2 py-1 bg-violet-50 dark:bg-violet-900/20 rounded-full text-violet-600 dark:text-violet-400 text-xs"
               >
-                <Sparkles className="w-3 h-3" />
+                <Gift className="w-3 h-3" />
                 <span>عرض خاص</span>
                 <ChevronDown
                   className={`w-3 h-3 transition-transform ${
@@ -155,17 +167,34 @@ export default function TopBar() {
               {/* الرسالة المنبثقة */}
               {showMessage && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-8 left-0 z-50 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 text-xs border border-gray-200 dark:border-gray-700 whitespace-nowrap"
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  className="absolute top-8 left-0 z-50 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 text-xs border border-violet-100 dark:border-violet-800 whitespace-nowrap"
                 >
-                  <p className="font-bold text-gray-800 dark:text-gray-200 mb-1">
-                    🎉 خصم ٢٠٪ على أول مشروع
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white">
+                      <Heart className="w-3 h-3" />
+                    </div>
+                    <p className="font-bold text-gray-800 dark:text-gray-200">
+                      🎉 خصم ٢٠٪ على أول مشروع
+                    </p>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">
+                    استخدم الكود: 
+                    <span className="font-mono bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded mr-1 text-violet-600 dark:text-violet-400">
+                      KODIA20
+                    </span>
                   </p>
-                  <p className="text-gray-600 dark:text-gray-400">
-                    استخدم الكود: <span className="font-mono bg-gray-100 dark:bg-gray-700 px-1 py-0.5 rounded">KODIA20</span>
-                  </p>
+                  <Link href="/quote">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full mt-2 py-1.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-lg text-xs font-medium"
+                    >
+                      استفد الآن
+                    </motion.button>
+                  </Link>
                 </motion.div>
               )}
             </motion.div>

@@ -17,7 +17,14 @@ import {
   Star,
   Sparkles,
   ChevronLeft,
-  HelpCircle
+  HelpCircle,
+  Zap,
+  Globe,
+  Users,
+  Target,
+  Rocket,
+  Gem,
+  Scale
 } from "lucide-react";
 import Link from "next/link";
 
@@ -33,12 +40,12 @@ export default function PoliciesClient() {
         "معاينة قبل التسليم النهائي للتأكد من رضاك",
         "تسليم منظم للملفات/الصفحات مع توثيق كامل",
         "مراحل متعددة للتسليم لمشاريع التطوير الكبيرة",
-        "إشعارات دورية عن تقدم العمل"
+        "إشعارات دورية عن تقدم العمل عبر البريد أو واتساب"
       ],
-      gradient: "from-blue-500 to-cyan-500",
-      bgLight: "bg-blue-50",
-      textLight: "text-blue-700",
-      borderLight: "border-blue-200"
+      gradient: "from-violet-600 to-fuchsia-600",
+      bgLight: "bg-violet-50 dark:bg-violet-900/20",
+      textLight: "text-violet-700 dark:text-violet-300",
+      borderLight: "border-violet-200 dark:border-violet-800"
     },
     {
       icon: RefreshCw,
@@ -51,10 +58,10 @@ export default function PoliciesClient() {
         "فترة تعديلات مجانية (حسب حجم المشروع)",
         "المراجعات النهائية قبل الإطلاق"
       ],
-      gradient: "from-purple-500 to-pink-500",
-      bgLight: "bg-purple-50",
-      textLight: "text-purple-700",
-      borderLight: "border-purple-200"
+      gradient: "from-fuchsia-600 to-pink-600",
+      bgLight: "bg-fuchsia-50 dark:bg-fuchsia-900/20",
+      textLight: "text-fuchsia-700 dark:text-fuchsia-300",
+      borderLight: "border-fuchsia-200 dark:border-fuchsia-800"
     },
     {
       icon: CreditCard,
@@ -67,10 +74,10 @@ export default function PoliciesClient() {
         "خيارات دفع متعددة (تحويل بنكي، محافظ إلكترونية)",
         "إيصالات رسمية لكل دفعة"
       ],
-      gradient: "from-amber-500 to-orange-500",
-      bgLight: "bg-amber-50",
-      textLight: "text-amber-700",
-      borderLight: "border-amber-200"
+      gradient: "from-amber-600 to-orange-600",
+      bgLight: "bg-amber-50 dark:bg-amber-900/20",
+      textLight: "text-amber-700 dark:text-amber-300",
+      borderLight: "border-amber-200 dark:border-amber-800"
     }
   ];
 
@@ -79,32 +86,50 @@ export default function PoliciesClient() {
     {
       icon: Award,
       title: "ضمان الجودة",
-      description: "نضمن أن العمل المقدم يطابق المواصفات المتفق عليها"
+      description: "نضمن أن العمل المقدم يطابق المواصفات المتفق عليها",
+      gradient: "from-violet-600 to-fuchsia-600"
     },
     {
       icon: Headphones,
       title: "دعم فني",
-      description: "دعم فني لمدة شهر بعد التسليم لحل أي مشكلة"
+      description: "دعم فني لمدة شهر بعد التسليم لحل أي مشكلة",
+      gradient: "from-blue-600 to-cyan-600"
     },
     {
       icon: Lock,
       title: "سرية المعلومات",
-      description: "نحافظ على سرية بيانات مشروعك وأفكارك"
+      description: "نحافظ على سرية بيانات مشروعك وأفكارك",
+      gradient: "from-emerald-600 to-teal-600"
     },
     {
       icon: Heart,
       title: "رضا العملاء",
-      description: "نعمل حتى ترى راضياً تماماً عن النتيجة النهائية"
+      description: "نعمل حتى ترى راضياً تماماً عن النتيجة النهائية",
+      gradient: "from-rose-600 to-red-600"
     },
     {
       icon: FileText,
       title: "توثيق كامل",
-      description: "نوثق كل مراحل المشروع بالاتفاقيات والفواتير"
+      description: "نوثق كل مراحل المشروع بالاتفاقيات والفواتير",
+      gradient: "from-indigo-600 to-violet-600"
     },
     {
       icon: Shield,
       title: "ضمان استعادة الحقوق",
-      description: "إذا لم نلتزم بالمواصفات، نضمن استرداد أموالك"
+      description: "إذا لم نلتزم بالمواصفات، نضمن استرداد أموالك",
+      gradient: "from-amber-600 to-orange-600"
+    },
+    {
+      icon: Zap,
+      title: "سرعة التنفيذ",
+      description: "نلتزم بالمواعيد المتفق عليها ونسلم قبل الموعد إن أمكن",
+      gradient: "from-yellow-600 to-amber-600"
+    },
+    {
+      icon: Scale,
+      title: "توازن وعدالة",
+      description: "عقود متوازنة تراعي حقوق الطرفين",
+      gradient: "from-purple-600 to-pink-600"
     }
   ];
 
@@ -132,11 +157,41 @@ export default function PoliciesClient() {
     }
   ];
 
+  // مميزات إضافية
+  const features = [
+    {
+      icon: Globe,
+      title: "نعمل مع عملاء حول العالم",
+      desc: "خدماتنا متاحة لعملاء في جميع الدول العربية"
+    },
+    {
+      icon: Users,
+      title: "فريق متخصص",
+      desc: "فريق من الخبراء في مختلف المجالات التقنية"
+    },
+    {
+      icon: Target,
+      title: "دقة في التنفيذ",
+      desc: "نلتزم بالمواصفات ونسعى لتجاوز التوقعات"
+    },
+    {
+      icon: Rocket,
+      title: "تطوير مستمر",
+      desc: "نواكب أحدث التقنيات والحلول في السوق"
+    }
+  ];
+
   // متغيرات الحركة
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }
+  };
+
+  const fadeInScale = {
+    initial: { opacity: 0, scale: 0.9 },
+    animate: { opacity: 1, scale: 1 },
+    transition: { duration: 0.5, ease: "easeOut" }
   };
 
   const staggerChildren = {
@@ -149,13 +204,37 @@ export default function PoliciesClient() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-white via-violet-50/10 to-white dark:from-gray-950 dark:via-violet-950/10 dark:to-gray-950">
       {/* قسم الهيرو */}
-      <section className="relative py-20 overflow-hidden">
-        {/* خلفية متحركة */}
+      <section className="relative py-24 overflow-hidden">
+        {/* خلفية متحركة فاخرة */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" />
-          <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style={{ animationDelay: "2s" }} />
+          <motion.div
+            animate={{ 
+              y: [0, -20, 0],
+              x: [0, 10, 0],
+              opacity: [0.2, 0.3, 0.2]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-violet-200/30 to-fuchsia-200/30 dark:from-violet-800/20 dark:to-fuchsia-800/20 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{ 
+              y: [0, 20, 0],
+              x: [0, -10, 0],
+              opacity: [0.2, 0.3, 0.2]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-amber-200/20 to-violet-200/20 dark:from-amber-800/10 dark:to-violet-800/10 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.2, 0.1]
+            }}
+            transition={{ duration: 15, repeat: Infinity }}
+            className="absolute top-40 left-1/2 w-64 h-64 bg-gradient-to-br from-fuchsia-200/20 to-pink-200/20 dark:from-fuchsia-800/10 dark:to-pink-800/10 rounded-full blur-3xl"
+          />
         </div>
 
         <Container>
@@ -167,9 +246,10 @@ export default function PoliciesClient() {
           >
             {/* شارة الصفحة */}
             <motion.div variants={fadeInUp} className="inline-block mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-full border border-blue-200/50">
-                <Shield className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-medium text-gray-700">السياسات والضمانات</span>
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600/10 to-fuchsia-600/10 dark:from-violet-600/20 dark:to-fuchsia-600/20 rounded-full border border-violet-200/50 dark:border-violet-700/50 backdrop-blur-sm">
+                <Shield className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">السياسات والضمانات</span>
+                <Sparkles className="w-3 h-3 text-amber-500" />
               </span>
             </motion.div>
 
@@ -179,7 +259,7 @@ export default function PoliciesClient() {
               className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
             >
               سياسات واضحة
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mx-2">
+              <span className="bg-gradient-to-r from-violet-600 via-fuchsia-600 to-amber-600 bg-clip-text text-transparent mx-2">
                 وضمانات موثوقة
               </span>
             </motion.h1>
@@ -187,10 +267,26 @@ export default function PoliciesClient() {
             {/* الوصف */}
             <motion.p 
               variants={fadeInUp}
-              className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto"
+              className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto"
             >
               نوضح لك سياسات العمل والضمانات التي نقدمها لضمان تجربة شفافة وموثوقة. نؤمن بأن الوضوح هو أساس الثقة.
             </motion.p>
+
+            {/* إحصائيات سريعة */}
+            <motion.div variants={fadeInUp} className="flex justify-center gap-6 mt-8">
+              {[
+                { icon: Shield, label: "ضمان", value: "١٠٠٪" },
+                { icon: Clock, label: "تسليم", value: "في الموعد" },
+                { icon: Users, label: "عملاء", value: "موثوق" },
+              ].map((stat, idx) => (
+                <div key={idx} className="flex items-center gap-2 text-sm">
+                  <stat.icon className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+                  <span className="text-gray-600 dark:text-gray-400">
+                    <span className="font-bold text-gray-900 dark:text-white">{stat.value}</span> {stat.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
         </Container>
       </section>
@@ -211,20 +307,21 @@ export default function PoliciesClient() {
                   whileHover={{ y: -8 }}
                   className="group relative"
                 >
-                  <div className="bg-white rounded-3xl border border-gray-200 p-8 shadow-xl hover:shadow-2xl transition-all overflow-hidden">
+                  <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 p-8 shadow-xl hover:shadow-2xl transition-all overflow-hidden">
                     {/* خلفية متدرجة متحركة */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${policy.gradient} opacity-0 group-hover:opacity-5 transition-opacity`} />
 
                     {/* أيقونة كبيرة في الخلفية */}
-<Icon className="absolute -bottom-4 -left-4 w-32 h-32 text-blue-600 opacity-5" />
+                    <Icon className="absolute -bottom-4 -left-4 w-32 h-32 text-violet-600 dark:text-violet-700 opacity-5" />
+                    
                     {/* المحتوى */}
                     <div className="relative z-10">
                       <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${policy.gradient} p-3.5 text-white mb-6 shadow-lg`}>
                         <Icon className="w-full h-full" />
                       </div>
 
-                      <h2 className="text-2xl font-bold mb-3">{policy.title}</h2>
-                      <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+                      <h2 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">{policy.title}</h2>
+                      <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm leading-relaxed">
                         {policy.description}
                       </p>
 
@@ -236,9 +333,10 @@ export default function PoliciesClient() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 + iidx * 0.1 }}
-                            className="flex items-start gap-2 text-sm text-gray-700"
+                            className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300"
                           >
-<CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />                            {item}
+                            <CheckCircle2 className={`w-5 h-5 ${policy.gradient.replace('from-', 'text-').split(' ')[0]} flex-shrink-0 mt-0.5`} />
+                            {item}
                           </motion.li>
                         ))}
                       </ul>
@@ -266,13 +364,29 @@ export default function PoliciesClient() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 text-white text-center relative overflow-hidden"
+            className="bg-gradient-to-r from-violet-600 via-fuchsia-600 to-amber-600 rounded-3xl p-8 text-white text-center relative overflow-hidden"
           >
             {/* خلفية متحركة */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"
+            />
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"
+            />
             
             <div className="relative z-10">
-              <Shield className="w-16 h-16 mx-auto mb-4 text-yellow-300" />
+              <motion.div
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="inline-block mb-4"
+              >
+                <Shield className="w-16 h-16 text-yellow-300" />
+              </motion.div>
               <h2 className="text-2xl font-bold mb-4">ضمان استعادة الحقوق</h2>
               <p className="text-white/90 max-w-2xl mx-auto">
                 إذا لم نلتزم بالمواصفات المتفق عليها في العقد، نضمن لك استرداد أموالك كاملة. 
@@ -292,9 +406,12 @@ export default function PoliciesClient() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold mb-3">ضمانات إضافية</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              نقدم لك أكثر من مجرد خدمة، نقدم لك راحة البال
+            <span className="inline-block px-4 py-2 bg-gradient-to-r from-violet-100 to-fuchsia-100 dark:from-violet-900/30 dark:to-fuchsia-900/30 rounded-full text-violet-700 dark:text-violet-300 text-sm font-medium mb-4">
+              ضمانات إضافية
+            </span>
+            <h2 className="text-3xl font-bold mb-3 text-gray-900 dark:text-white">نقدم لك أكثر من مجرد خدمة</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              نضمن لك تجربة متكاملة وراحة بال من خلال مجموعة من الضمانات الإضافية
             </p>
           </motion.div>
 
@@ -311,7 +428,7 @@ export default function PoliciesClient() {
                 }
               }
             }}
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {guarantees.map((guarantee, idx) => {
               const Icon = guarantee.icon;
@@ -319,19 +436,19 @@ export default function PoliciesClient() {
                 <motion.div
                   key={`guarantee-${idx}`}
                   variants={{
-                    hidden: { opacity: 0, y: 30, scale: 0.9 },
-                    visible: { opacity: 1, y: 0, scale: 1 }
+                    hidden: { opacity: 0, y: 30 },
+                    visible: { opacity: 1, y: 0 }
                   }}
                   whileHover={{ y: -4 }}
-                  className="bg-white rounded-xl border border-gray-200 p-6 shadow-md hover:shadow-lg transition-all"
+                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-md hover:shadow-lg transition-all"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-500 p-2 text-white flex-shrink-0">
+                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${guarantee.gradient} p-2 text-white flex-shrink-0`}>
                       <Icon className="w-full h-full" />
                     </div>
                     <div>
-                      <h3 className="font-bold mb-1">{guarantee.title}</h3>
-                      <p className="text-sm text-gray-600">{guarantee.description}</p>
+                      <h3 className="font-bold mb-1 text-gray-900 dark:text-white">{guarantee.title}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{guarantee.description}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -341,8 +458,34 @@ export default function PoliciesClient() {
         </Container>
       </section>
 
+      {/* مميزات إضافية */}
+      <section className="py-12 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+        <Container>
+          <div className="grid md:grid-cols-4 gap-6">
+            {features.map((feature, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="flex items-center gap-3"
+              >
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 p-2 text-white flex-shrink-0">
+                  <feature.icon className="w-full h-full" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-gray-900 dark:text-white">{feature.title}</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{feature.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       {/* الأسئلة الشائعة */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900">
         <Container>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -351,8 +494,8 @@ export default function PoliciesClient() {
             className="max-w-3xl mx-auto"
           >
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-3">أسئلة شائعة عن السياسات</h2>
-              <p className="text-gray-600">إجابات واضحة لأهم استفساراتك</p>
+              <h2 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">أسئلة شائعة عن السياسات</h2>
+              <p className="text-gray-600 dark:text-gray-400">إجابات واضحة لأهم استفساراتك</p>
             </div>
 
             <div className="space-y-4">
@@ -363,13 +506,13 @@ export default function PoliciesClient() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
+                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm hover:shadow-md transition-all"
                 >
-                  <h3 className="font-bold mb-2 flex items-center gap-2">
-                    <HelpCircle className="w-4 h-4 text-blue-600" />
+                  <h3 className="font-bold mb-2 flex items-center gap-2 text-gray-900 dark:text-white">
+                    <HelpCircle className="w-4 h-4 text-violet-600 dark:text-violet-400" />
                     {faq.q}
                   </h3>
-                  <p className="text-sm text-gray-600 pr-6">{faq.a}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 pr-6">{faq.a}</p>
                 </motion.div>
               ))}
             </div>
@@ -386,8 +529,11 @@ export default function PoliciesClient() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-2xl font-bold mb-4">الشفافية أولاً</h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <span className="inline-block px-3 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full text-xs font-medium mb-4">
+                الشفافية أولاً
+              </span>
+              <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">نؤمن بالشفافية والوضوح</h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                 نؤمن بأن العلاقة الناجحة مع العملاء تبدأ بالشفافية والوضوح. لذلك نحرص على:
               </p>
               <ul className="space-y-3">
@@ -404,7 +550,7 @@ export default function PoliciesClient() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1 }}
-                    className="flex items-start gap-2 text-sm text-gray-700"
+                    className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300"
                   >
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     {item}
@@ -417,21 +563,33 @@ export default function PoliciesClient() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-500 to-purple-500 rounded-3xl p-8 text-white shadow-2xl"
+              className="bg-gradient-to-br from-violet-600 via-fuchsia-600 to-amber-600 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden"
             >
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="w-6 h-6 text-yellow-300" />
-                <span className="text-sm font-medium opacity-90">لماذا تثق بنا؟</span>
-              </div>
-              <h3 className="text-xl font-bold mb-4">نحن لا نقدم وعوداً فقط</h3>
-              <p className="text-white/90 text-sm leading-relaxed mb-6">
-                أكثر من ١٠ عملاء سعداء، و١٥+ مشروع منجز، ونسبة رضا ٩٨٪. ثقة عملائنا هي أكبر دليل على التزامنا بالجودة والشفافية.
-              </p>
-              <div className="flex items-center gap-1 text-yellow-300">
-                {[1,2,3,4,5].map((star) => (
-                  <Star key={`star-${star}`} className="w-5 h-5 fill-current" />
-                ))}
-                <span className="mr-2 text-white">٤.٩/٥</span>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"
+              />
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-2 mb-4">
+                  <Gem className="w-6 h-6 text-yellow-300" />
+                  <span className="text-sm font-medium opacity-90">لماذا تثق بنا؟</span>
+                </div>
+                <h3 className="text-xl font-bold mb-4">نحن لا نقدم وعوداً فقط</h3>
+                <p className="text-white/90 text-sm leading-relaxed mb-6">
+                  أكثر من ٢٠ عميل سعيد، و٢٥+ مشروع منجز، ونسبة رضا ٩٨٪. ثقة عملائنا هي أكبر دليل على التزامنا بالجودة والشفافية.
+                </p>
+                <div className="flex items-center gap-1 text-yellow-300">
+                  {[1,2,3,4,5].map((star) => (
+                    <Star key={`star-${star}`} className="w-5 h-5 fill-current" />
+                  ))}
+                  <span className="mr-2 text-white">٤.٩/٥</span>
+                </div>
+                <p className="text-xs text-white/70 mt-4">
+                  * بناءً على تقييمات العملاء الحقيقية
+                </p>
               </div>
             </motion.div>
           </div>
@@ -439,33 +597,49 @@ export default function PoliciesClient() {
       </section>
 
       {/* دعوة للتواصل */}
-      <section className="py-16">
+      <section className="py-20">
         <Container>
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="text-center"
+            transition={{ type: "spring", stiffness: 100 }}
+            className="text-center max-w-2xl mx-auto"
           >
-            <h2 className="text-2xl font-bold mb-4">لديك استفسار عن سياساتنا؟</h2>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="inline-block mb-6"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 p-4 text-white shadow-xl">
+                <HelpCircle className="w-full h-full" />
+              </div>
+            </motion.div>
+
+            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">لديك استفسار عن سياساتنا؟</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
               نحن هنا للإجابة على جميع أسئلتك وتوضيح أي نقطة تود الاستفسار عنها
             </p>
+            
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 تواصل معنا
                 <ChevronLeft className="w-4 h-4" />
               </Link>
               <Link
                 href="/faq"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gray-100 text-gray-700 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-200 dark:border-gray-700"
               >
                 الأسئلة الشائعة
               </Link>
             </div>
+
+            <p className="text-xs text-gray-400 dark:text-gray-500 mt-6">
+              * فريق الدعم متواجد للرد على استفساراتكم خلال ساعات العمل
+            </p>
           </motion.div>
         </Container>
       </section>

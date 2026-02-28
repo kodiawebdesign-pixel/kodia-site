@@ -9,36 +9,146 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # testing
 /coverage
+.nyc_output
+jest.config.js
+jest.setup.js
+test-results/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__/
+__mocks__/
 
 # next.js
 /.next/
 /out/
+.next-env.d.ts
+.next.config.js
+next.config.mjs
+next.config.ts
 
 # production
 /build
+/dist
+/.cache
 
 # misc
 .DS_Store
 *.pem
+*.p12
+*.key
+*.crt
+*.log
+*.bak
+*.swp
+*.swo
+*~
+Thumbs.db
+desktop.ini
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+debug.log
+lerna-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
 
 # vercel
 .vercel
+.vscode
+.idea
+*.sublime-*
+.project
+.classpath
+.settings/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.sublime-project
+.history/
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+tsconfig.tsbuildinfo
 
-.vercel
-.env*.local
+# database
+*.db
+*.sqlite
+*.sqlite3
+prisma/*.db
+prisma/*.db-journal
+
+# secrets
+**/secrets/
+**/secrets.*
+**/credentials/
+**/credentials.*
+*.pem
+*.key
+*.crt
+
+# logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# tmp
+.tmp
+.temp
+tmp
+temp
+
+# editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# backups
+*.bak
+*.backup
+*.old
+
+# coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# runtime data
+pids
+*.pid
+*.seed
+*.pid.lock

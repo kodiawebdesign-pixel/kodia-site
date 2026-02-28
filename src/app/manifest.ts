@@ -5,11 +5,11 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: siteData.brand.name,
     short_name: "Kodia",
-    description: "تصميم وتطوير مواقع وتطبيقات احترافية",
+    description: "تصميم وتطوير مواقع وتطبيقات احترافية - شريكك الرقمي الموثوق",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
-    theme_color: "#3b82f6",
+    theme_color: "#8b5cf6", // بنفسجي بدل الأزرق
     icons: [
       {
         src: "/icon-192x192.png",
@@ -33,6 +33,19 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
         purpose: "maskable",
       },
+      // إضافة أيقونة للـ Apple Touch
+      {
+        src: "/apple-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
     ],
+    // إضافة خصائص إضافية لتحسين تجربة PWA
+    categories: ["business", "design", "technology"],
+    dir: "rtl",
+    lang: "ar",
+    orientation: "portrait",
+    prefer_related_applications: false,
+    scope: "/",
   };
 }

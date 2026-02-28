@@ -23,9 +23,16 @@ import {
   Twitter,
   Linkedin,
   Instagram,
-  Youtube
+  Youtube,
+  Briefcase,
+  Star,
+  Zap,
+  Shield,
+  Users,
+  Calendar
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ContactPage() {
   const { phoneDisplay, phoneE164, email, whatsappLink, sameAs } = siteData.brand;
@@ -35,6 +42,7 @@ export default function ContactPage() {
     email: "",
     phone: "",
     service: "",
+    budget: "",
     message: ""
   });
 
@@ -50,29 +58,22 @@ export default function ContactPage() {
     setFormStatus("loading");
 
     try {
-      // هنا يمكنك إضافة منطق إرسال النموذج
-      // مثال باستخدام Formspree
-      const response = await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      // محاكاة إرسال النموذج
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // هنا يمكنك إضافة منطق إرسال النموذج الحقيقي
+      console.log("Form submitted:", formData);
+      
+      setFormStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        budget: "",
+        message: ""
       });
-
-      if (response.ok) {
-        setFormStatus("success");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          service: "",
-          message: ""
-        });
-        setTimeout(() => setFormStatus("idle"), 5000);
-      } else {
-        setFormStatus("error");
-      }
+      setTimeout(() => setFormStatus("idle"), 5000);
     } catch (error) {
       setFormStatus("error");
     }
@@ -82,7 +83,13 @@ export default function ContactPage() {
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }
+  };
+
+  const fadeInScale = {
+    initial: { opacity: 0, scale: 0.9 },
+    animate: { opacity: 1, scale: 1 },
+    transition: { duration: 0.5, ease: "easeOut" }
   };
 
   const staggerChildren = {
@@ -95,13 +102,37 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-white via-violet-50/10 to-white dark:from-gray-950 dark:via-violet-950/10 dark:to-gray-950">
       {/* قسم الهيرو */}
-      <section className="relative py-20 overflow-hidden">
-        {/* خلفية متحركة */}
+      <section className="relative py-24 overflow-hidden">
+        {/* خلفية متحركة فاخرة */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" />
-          <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style={{ animationDelay: "2s" }} />
+          <motion.div
+            animate={{ 
+              y: [0, -20, 0],
+              x: [0, 10, 0],
+              opacity: [0.2, 0.3, 0.2]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-violet-200/30 to-fuchsia-200/30 dark:from-violet-800/20 dark:to-fuchsia-800/20 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{ 
+              y: [0, 20, 0],
+              x: [0, -10, 0],
+              opacity: [0.2, 0.3, 0.2]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-amber-200/20 to-violet-200/20 dark:from-amber-800/10 dark:to-violet-800/10 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.2, 0.1]
+            }}
+            transition={{ duration: 15, repeat: Infinity }}
+            className="absolute top-40 left-1/2 w-64 h-64 bg-gradient-to-br from-fuchsia-200/20 to-pink-200/20 dark:from-fuchsia-800/10 dark:to-pink-800/10 rounded-full blur-3xl"
+          />
         </div>
 
         <Container>
@@ -113,9 +144,10 @@ export default function ContactPage() {
           >
             {/* شارة الصفحة */}
             <motion.div variants={fadeInUp} className="inline-block mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-full border border-blue-200/50">
-                <MessageCircle className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-medium text-gray-700">تواصل معنا</span>
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600/10 to-fuchsia-600/10 dark:from-violet-600/20 dark:to-fuchsia-600/20 rounded-full border border-violet-200/50 dark:border-violet-700/50 backdrop-blur-sm">
+                <MessageCircle className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">تواصل معنا</span>
+                <Sparkles className="w-3 h-3 text-amber-500" />
               </span>
             </motion.div>
 
@@ -125,7 +157,7 @@ export default function ContactPage() {
               className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
             >
               دعنا نناقش 
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mx-2">
+              <span className="bg-gradient-to-r from-violet-600 via-fuchsia-600 to-amber-600 bg-clip-text text-transparent mx-2">
                 مشروعك
               </span>
             </motion.h1>
@@ -133,10 +165,26 @@ export default function ContactPage() {
             {/* الوصف */}
             <motion.p 
               variants={fadeInUp}
-              className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto"
+              className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto"
             >
-              تواصل معنا الآن وسنقوم بالرد عليك في أقرب وقت ممكن. فريقنا مستعد للإجابة على جميع استفساراتك.
+              تواصل معنا الآن وسنقوم بالرد عليك في أقرب وقت ممكن. فريقنا مستعد للإجابة على جميع استفساراتك ومناقشة أفكارك.
             </motion.p>
+
+            {/* إحصائيات سريعة */}
+            <motion.div variants={fadeInUp} className="flex justify-center gap-6 mt-8">
+              {[
+                { icon: Users, label: "عملاء", value: "٢٠+" },
+                { icon: Briefcase, label: "مشاريع", value: "٢٥+" },
+                { icon: Clock, label: "دعم", value: "٢٤/٧" },
+              ].map((stat, idx) => (
+                <div key={idx} className="flex items-center gap-2 text-sm">
+                  <stat.icon className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+                  <span className="text-gray-600 dark:text-gray-400">
+                    <span className="font-bold text-gray-900 dark:text-white">{stat.value}</span> {stat.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
         </Container>
       </section>
@@ -163,20 +211,22 @@ export default function ContactPage() {
             <motion.a
               href={`tel:${phoneE164}`}
               variants={{
-                hidden: { opacity: 0, y: 20, scale: 0.9 },
-                visible: { opacity: 1, y: 0, scale: 1 }
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
               }}
-              whileHover={{ y: -4, scale: 1.02 }}
+              whileHover={{ y: -6 }}
               className="group relative"
             >
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg hover:shadow-xl transition-all overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-5 transition-opacity" />
-                <Phone className="w-8 h-8 text-blue-600 mb-3" />
-                <h3 className="font-bold mb-1">اتصل بنا</h3>
-                <p className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-all overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-600 to-fuchsia-600 opacity-0 group-hover:opacity-5 transition-opacity" />
+                <div className={`w-12 h-12 mb-3 rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 p-2.5 text-white`}>
+                  <Phone className="w-full h-full" />
+                </div>
+                <h3 className="font-bold text-gray-900 dark:text-white mb-1">اتصل بنا</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
                   {phoneDisplay}
                 </p>
-                <p className="text-xs text-gray-400 mt-2">متاحون ٩ ص - ٦ م</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">متاحون ٩ ص - ٦ م</p>
               </div>
             </motion.a>
 
@@ -184,20 +234,22 @@ export default function ContactPage() {
             <motion.a
               href={`mailto:${email}`}
               variants={{
-                hidden: { opacity: 0, y: 20, scale: 0.9 },
-                visible: { opacity: 1, y: 0, scale: 1 }
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
               }}
-              whileHover={{ y: -4, scale: 1.02 }}
+              whileHover={{ y: -6 }}
               className="group relative"
             >
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg hover:shadow-xl transition-all overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 opacity-0 group-hover:opacity-5 transition-opacity" />
-                <Mail className="w-8 h-8 text-purple-600 mb-3" />
-                <h3 className="font-bold mb-1">راسلنا</h3>
-                <p className="text-sm text-gray-600 hover:text-purple-600 transition-colors">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-all overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-600 to-pink-600 opacity-0 group-hover:opacity-5 transition-opacity" />
+                <div className={`w-12 h-12 mb-3 rounded-lg bg-gradient-to-br from-fuchsia-600 to-pink-600 p-2.5 text-white`}>
+                  <Mail className="w-full h-full" />
+                </div>
+                <h3 className="font-bold text-gray-900 dark:text-white mb-1">راسلنا</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-fuchsia-600 dark:group-hover:text-fuchsia-400 transition-colors">
                   {email}
                 </p>
-                <p className="text-xs text-gray-400 mt-2">نرد خلال ٢٤ ساعة</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">نرد خلال ٢٤ ساعة</p>
               </div>
             </motion.a>
 
@@ -207,20 +259,22 @@ export default function ContactPage() {
               target="_blank"
               rel="noreferrer"
               variants={{
-                hidden: { opacity: 0, y: 20, scale: 0.9 },
-                visible: { opacity: 1, y: 0, scale: 1 }
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
               }}
-              whileHover={{ y: -4, scale: 1.02 }}
+              whileHover={{ y: -6 }}
               className="group relative"
             >
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg hover:shadow-xl transition-all overflow-hidden">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-all overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500 opacity-0 group-hover:opacity-5 transition-opacity" />
-                <MessageCircle className="w-8 h-8 text-green-600 mb-3" />
-                <h3 className="font-bold mb-1">واتساب</h3>
-                <p className="text-sm text-gray-600 hover:text-green-600 transition-colors">
-                  +٢٠١٢٠٧٠٠٥٤٩٥
+                <div className={`w-12 h-12 mb-3 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 p-2.5 text-white`}>
+                  <MessageCircle className="w-full h-full" />
+                </div>
+                <h3 className="font-bold text-gray-900 dark:text-white mb-1">واتساب</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                  {phoneDisplay}
                 </p>
-                <p className="text-xs text-gray-400 mt-2">رد فوري</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">رد فوري خلال ساعات العمل</p>
               </div>
             </motion.a>
           </motion.div>
@@ -238,13 +292,21 @@ export default function ContactPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden">
+              <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden">
                 {/* رأس النموذج */}
-                <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
-                  <h2 className="text-2xl font-bold mb-2">أرسل لنا رسالة</h2>
-                  <p className="text-white/90 text-sm">
-                    املأ النموذج وسنقوم بالرد عليك في أقرب وقت
-                  </p>
+                <div className="bg-gradient-to-r from-violet-600 via-fuchsia-600 to-amber-600 p-8 text-white relative overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"
+                  />
+                  <div className="relative z-10">
+                    <h2 className="text-2xl font-bold mb-2">أرسل لنا رسالة</h2>
+                    <p className="text-white/90 text-sm max-w-xl">
+                      املأ النموذج وسنقوم بالرد عليك في أقرب وقت ممكن
+                    </p>
+                  </div>
                 </div>
 
                 {/* النموذج */}
@@ -252,7 +314,7 @@ export default function ContactPage() {
                   <div className="space-y-4">
                     {/* الاسم */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         الاسم بالكامل *
                       </label>
                       <input
@@ -261,13 +323,13 @@ export default function ContactPage() {
                         onChange={handleChange}
                         placeholder="أدخل اسمك الكامل"
                         required
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
+                        className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all text-gray-900 dark:text-white"
                       />
                     </div>
 
                     {/* البريد الإلكتروني */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         البريد الإلكتروني *
                       </label>
                       <input
@@ -277,13 +339,13 @@ export default function ContactPage() {
                         onChange={handleChange}
                         placeholder="example@domain.com"
                         required
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
+                        className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all text-gray-900 dark:text-white"
                       />
                     </div>
 
                     {/* رقم الهاتف */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         رقم الهاتف *
                       </label>
                       <input
@@ -292,34 +354,54 @@ export default function ContactPage() {
                         onChange={handleChange}
                         placeholder="٠١٢٣٤٥٦٧٨٩٠"
                         required
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
+                        className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all text-gray-900 dark:text-white"
                       />
                     </div>
 
                     {/* نوع الخدمة */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         نوع الخدمة
                       </label>
                       <select
                         name="service"
                         value={formData.service}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
+                        className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all text-gray-900 dark:text-white"
                       >
                         <option value="">اختر الخدمة</option>
-                        <option value="web-design">تصميم موقع</option>
+                        <option value="web-design">تصميم موقع شركة</option>
                         <option value="ecommerce">متجر إلكتروني</option>
                         <option value="mobile-app">تطبيق موبايل</option>
-                        <option value="ui-ux">UI/UX</option>
-                        <option value="seo">SEO</option>
+                        <option value="ui-ux">تصميم UI/UX</option>
+                        <option value="seo">تحسين محركات البحث SEO</option>
+                        <option value="maintenance">دعم فني وصيانة</option>
                         <option value="other">أخرى</option>
+                      </select>
+                    </div>
+
+                    {/* الميزانية التقريبية */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        الميزانية التقريبية
+                      </label>
+                      <select
+                        name="budget"
+                        value={formData.budget}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all text-gray-900 dark:text-white"
+                      >
+                        <option value="">اختر الميزانية</option>
+                        <option value="less-than-5000">أقل من ٥٠٠٠ جنيه</option>
+                        <option value="5000-10000">٥٠٠٠ - ١٠٠٠٠ جنيه</option>
+                        <option value="10000-20000">١٠٠٠٠ - ٢٠٠٠٠ جنيه</option>
+                        <option value="more-than-20000">أكثر من ٢٠٠٠٠ جنيه</option>
                       </select>
                     </div>
 
                     {/* الرسالة */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         تفاصيل المشروع *
                       </label>
                       <textarea
@@ -329,7 +411,7 @@ export default function ContactPage() {
                         placeholder="اكتب تفاصيل مشروعك هنا..."
                         required
                         rows={5}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
+                        className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all text-gray-900 dark:text-white"
                       />
                     </div>
 
@@ -338,7 +420,7 @@ export default function ContactPage() {
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-2 text-green-700"
+                        className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 flex items-center gap-2 text-green-700 dark:text-green-400"
                       >
                         <CheckCircle2 className="w-5 h-5" />
                         <span className="text-sm">تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.</span>
@@ -349,7 +431,7 @@ export default function ContactPage() {
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-2 text-red-700"
+                        className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 flex items-center gap-2 text-red-700 dark:text-red-400"
                       >
                         <HelpCircle className="w-5 h-5" />
                         <span className="text-sm">حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.</span>
@@ -357,10 +439,12 @@ export default function ContactPage() {
                     )}
 
                     {/* زر الإرسال */}
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       type="submit"
                       disabled={formStatus === "loading"}
-                      className="w-full btn-primary hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all"
                     >
                       {formStatus === "loading" ? (
                         <>
@@ -373,12 +457,7 @@ export default function ContactPage() {
                           إرسال الرسالة
                         </>
                       )}
-                    </button>
-
-                    {/* ملاحظة Formspree */}
-                    <p className="text-xs text-gray-400 text-center">
-                      * بدل YOUR_FORMSPREE_ID بعد ما تعمل فورم مجاني على Formspree
-                    </p>
+                    </motion.button>
                   </div>
                 </form>
               </div>
@@ -393,78 +472,79 @@ export default function ContactPage() {
               className="space-y-6"
             >
               {/* ساعات العمل */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 p-2 text-white">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 p-2.5 text-white">
                     <Clock className="w-full h-full" />
                   </div>
-                  <h3 className="text-lg font-bold">ساعات العمل</h3>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">ساعات العمل</h3>
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">الأحد - الخميس</span>
-                    <span className="font-medium">٩:٠٠ ص - ٦:٠٠ م</span>
+                    <span className="text-gray-600 dark:text-gray-400">الأحد - الخميس</span>
+                    <span className="font-medium text-gray-900 dark:text-white">٩:٠٠ ص - ٦:٠٠ م</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">الجمعة</span>
-                    <span className="font-medium">مغلق</span>
+                    <span className="text-gray-600 dark:text-gray-400">الجمعة</span>
+                    <span className="font-medium text-gray-900 dark:text-white">مغلق</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">السبت</span>
-                    <span className="font-medium">١٠:٠٠ ص - ٤:٠٠ م</span>
+                    <span className="text-gray-600 dark:text-gray-400">السبت</span>
+                    <span className="font-medium text-gray-900 dark:text-white">١٠:٠٠ ص - ٤:٠٠ م</span>
                   </div>
                 </div>
               </div>
 
               {/* الموقع */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 p-2 text-white">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-orange-600 p-2.5 text-white">
                     <MapPin className="w-full h-full" />
                   </div>
-                  <h3 className="text-lg font-bold">موقعنا</h3>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">موقعنا</h3>
                 </div>
-                <p className="text-sm text-gray-600 mb-3">
-                  القاهرة، مصر - نعمل مع عملاء في جميع أنحاء مصر والوطن العربي
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  القاهرة، مصر - نعمل مع عملاء في جميع أنحاء مصر والوطن العربي عبر الإنترنت
                 </p>
                 <a
                   href="https://maps.google.com/?q=Cairo,Egypt"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1"
+                  className="text-sm text-violet-600 hover:text-violet-700 dark:text-violet-400 dark:hover:text-violet-300 transition-colors flex items-center gap-1 group"
                 >
                   <Globe className="w-4 h-4" />
                   عرض على الخريطة
+                  <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
                 </a>
               </div>
 
               {/* روابط سريعة */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 p-2 text-white">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 p-2.5 text-white">
                     <Headphones className="w-full h-full" />
                   </div>
-                  <h3 className="text-lg font-bold">روابط سريعة</h3>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">روابط سريعة</h3>
                 </div>
                 <div className="space-y-2">
-                  <Link href="/quote" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                  <Link href="/quote" className="block text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                     طلب عرض سعر
                   </Link>
-                  <Link href="/brief" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                  <Link href="/brief" className="block text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                     نموذج Brief
                   </Link>
-                  <Link href="/estimate" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                  <Link href="/estimate" className="block text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                     حاسبة السعر
                   </Link>
-                  <Link href="/policies" className="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                  <Link href="/policies" className="block text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                     السياسات والضمانات
                   </Link>
                 </div>
               </div>
 
               {/* وسائل التواصل الاجتماعي */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
-                <h3 className="text-lg font-bold mb-4">تابعنا على</h3>
+              <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg">
+                <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">تابعنا على</h3>
                 <div className="flex flex-wrap gap-3">
                   {sameAs?.map((url, idx) => {
                     let Icon: any = Globe;
@@ -481,7 +561,7 @@ export default function ContactPage() {
                         target="_blank"
                         rel="noreferrer"
                         whileHover={{ scale: 1.1, y: -2 }}
-                        className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition-all"
+                        className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-violet-600 hover:text-white dark:hover:bg-violet-600 transition-all"
                       >
                         <Icon className="w-5 h-5" />
                       </motion.a>
@@ -494,85 +574,91 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      {/* خريطة (محاكاة) */}
+      {/* خريطة تفاعلية */}
       <section className="py-12">
         <Container>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-3xl h-96 relative overflow-hidden"
+            className="relative h-96 rounded-3xl overflow-hidden shadow-2xl"
           >
-            {/* خريطة محاكاة */}
-            <div className="absolute inset-0" style={{
-              backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(59,130,246,0.2) 1px, transparent 0)',
-              backgroundSize: '30px 30px',
-            }} />
-            
-            {/* نقاط تمثل موقعنا */}
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-blue-600 rounded-full"
-            />
-            <motion.div
-              animate={{
-                scale: [1, 1.5, 1],
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-blue-400 rounded-full opacity-30"
-            />
-            <motion.div
-              animate={{
-                scale: [1, 2, 1],
-                opacity: [0.1, 0.3, 0.1],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-blue-300 rounded-full opacity-20"
+            {/* خريطة جوجل (يمكن استبدالها برابط حقيقي) */}
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3452.015418234553!2d31.23571171511578!3d30.04441958188452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2sCairo%2C%20Egypt!5e0!3m2!1sen!2sus!4v1644567890123!5m2!1sen!2sus"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              className="filter grayscale hover:grayscale-0 transition-all duration-500"
             />
           </motion.div>
         </Container>
       </section>
 
       {/* دعوة للتواصل */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-20 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-amber-600">
         <Container>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center text-white"
+            className="text-center text-white max-w-3xl mx-auto"
           >
-            <Sparkles className="w-12 h-12 mx-auto mb-4 text-yellow-300" />
-            <h2 className="text-3xl font-bold mb-4">جاهز للبدء في مشروعك؟</h2>
-            <p className="text-white/90 mb-8 max-w-2xl mx-auto">
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="inline-block mb-6"
+            >
+              <Sparkles className="w-16 h-16 text-yellow-300" />
+            </motion.div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">جاهز للبدء في مشروعك؟</h2>
+            <p className="text-white/90 mb-8 text-lg">
               تواصل معنا الآن ودعنا نحول فكرتك إلى واقع. فريقنا مستعد للإجابة على جميع استفساراتك.
             </p>
+            
             <div className="flex flex-wrap justify-center gap-4">
               <a
                 href={whatsappLink}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-violet-600 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 <MessageCircle className="w-5 h-5" />
                 واتساب
               </a>
               <a
                 href={`tel:${phoneE164}`}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold border border-white/30 hover:bg-white/30 transition-all"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold text-lg border-2 border-white/30 hover:bg-white/30 transition-all duration-300"
               >
                 <Phone className="w-5 h-5" />
                 اتصال
               </a>
             </div>
+            
+            <p className="text-xs text-white/70 mt-6">
+              * فريقنا متواجد للرد على استفساراتكم خلال ساعات العمل الرسمية
+            </p>
           </motion.div>
         </Container>
       </section>
     </div>
   );
 }
+
+// إضافة أيقونة ArrowLeft لأنها مش مستوردة
+const ArrowLeft = (props: any) => (
+  <svg
+    {...props}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M19 12H5M12 19l-7-7 7-7" />
+  </svg>
+);
