@@ -5,29 +5,50 @@
   "description": "Kodia Web Design - موقع احترافي لتصميم وتطوير المواقع والتطبيقات",
   "author": "Kodia Web Design",
   "license": "MIT",
+  "homepage": "https://kodia-web-design.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/kodia-site"
+    "url": "https://github.com/kodiawebdesign-pixel/kodia-site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kodiawebdesign-pixel/kodia-site/issues"
+  },
+  "keywords": [
+    "web design",
+    "web development",
+    "react",
+    "next.js",
+    "tailwindcss",
+    "typescript",
+    "ui/ux",
+    "ecommerce",
+    "mobile apps"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
   },
   "scripts": {
-    "gen:demos": "node scripts/generate-demo-svgs.mjs",
     "dev": "next dev --turbopack",
-    "dev:secure": "next dev --experimental-https",
     "build": "next build",
-    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
-    "start:prod": "NODE_ENV=production next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\"",
-    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,md}\"",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf .next node_modules",
-    "clean:build": "rm -rf .next",
-    "preview": "next build && next start",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "prepare": "husky",
+    "pre-commit": "lint-staged",
     "analyze": "cross-env ANALYZE=true next build",
-    "postinstall": "echo '✅ تم تثبيت الحزم بنجاح'",
-    "prepare": "husky install"
+    "clean": "rm -rf .next out node_modules"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -81,40 +102,5 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4.2.0",
     "typescript": "^5"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "src/**/*.{css,md}": [
-      "prettier --write"
-    ]
-  },
-  "engines": {
-    "node": ">=20.0.0",
-    "npm": ">=10.0.0"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "keywords": [
-    "nextjs",
-    "react",
-    "tailwindcss",
-    "typescript",
-    "web-design",
-    "saudi-arabia",
-    "egypt",
-    "arabic"
-  ]
+  }
 }
