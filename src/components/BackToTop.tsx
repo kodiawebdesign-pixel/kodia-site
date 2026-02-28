@@ -85,7 +85,11 @@ export default function BackToTop() {
               transition={{
                 duration: 2,
                 repeat: Infinity,
+<<<<<<< HEAD
                  repeatType: "reverse"
+=======
+                ease: "easeInOut",
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
               }}
               className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 blur-md -z-10"
             />

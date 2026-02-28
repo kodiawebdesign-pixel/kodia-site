@@ -12,14 +12,23 @@ import {
   Headphones,
   Rocket,
   Sparkles,
+<<<<<<< HEAD
   Heart,
   Gauge,
   Target,
+=======
+  Gem,
+  Heart,
+  Star,
+  Target,
+  Gauge,
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
   Palette
 } from "lucide-react";
 import Container from "./Container";
 import { siteData } from "@/lib/siteData";
 
+<<<<<<< HEAD
 // بيانات ثابتة للثقة - بدون أي رموز تعبيرية
 const trustItems = [
   { text: "تصميم UI/UX احترافي", icon: Palette },
@@ -33,6 +42,25 @@ const trustItems = [
 ];
 
 // ألوان متدرجة لكل عنصر
+=======
+// أيقونات متنوعة لكل عنصر - محدثة
+const iconMap = {
+  "تصميم UI/UX احترافي": Palette,
+  "متجاوب على كل الأجهزة": Smartphone,
+  "تهيئة SEO أساسية": Zap,
+  "تسليم منظم + دعم": Headphones,
+  "ضمان استعادة الحقوق": Shield,
+  "✨ تصميم UI/UX احترافي": Palette,
+  "📱 متجاوب على كل الأجهزة": Smartphone,
+  "🚀 تهيئة SEO وسرعة": Rocket,
+  "🛠️ تسليم منظم + دعم": Headphones,
+  "💯 ضمان استعادة الحقوق": Shield,
+  "⚡ أداء عالي وسرعة فائقة": Gauge,
+  "🎯 تصميم يجذب العملاء": Target,
+} as const;
+
+// ألوان متدرجة لكل عنصر - محدثة بالبنفسجي
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
 const gradientColors = [
   "from-violet-600 to-fuchsia-600",
   "from-blue-600 to-cyan-600",
@@ -44,7 +72,11 @@ const gradientColors = [
   "from-green-600 to-emerald-600",
 ];
 
+<<<<<<< HEAD
 // خلفيات متدرجة
+=======
+// خلفيات متدرجة - محدثة
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
 const bgGradients = [
   "from-violet-100 to-fuchsia-100 dark:from-violet-900/30 dark:to-fuchsia-900/30",
   "from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30",
@@ -52,6 +84,7 @@ const bgGradients = [
   "from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30",
   "from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30",
   "from-indigo-100 to-violet-100 dark:from-indigo-900/30 dark:to-violet-900/30",
+<<<<<<< HEAD
   "from-rose-100 to-red-100 dark:from-rose-900/30 dark:to-red-900/30",
   "from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30",
 ];
@@ -60,6 +93,13 @@ export default function TrustBar() {
   // استخدام أول 8 عناصر من البيانات أو الرجوع للبيانات الثابتة
   const items = siteData?.home?.trustBar?.items?.slice(0, 8) || trustItems.map(item => item.text);
   
+=======
+];
+
+export default function TrustBar() {
+  const items = siteData.home.trustBar.items as string[];
+
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
   // Variants للحركة
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -80,6 +120,7 @@ export default function TrustBar() {
     },
   };
 
+<<<<<<< HEAD
   // دالة لاستخراج النص الأساسي بدون رموز
   const getBaseText = (text: string) => {
     // إزالة أي رموز تعبيرية أو أحرف خاصة
@@ -100,6 +141,11 @@ export default function TrustBar() {
     if (baseText.includes('أداء') || baseText.includes('فائقة')) return Gauge;
     if (baseText.includes('يجذب') || baseText.includes('عملاء')) return Target;
     return CheckCircle2;
+=======
+  // تنظيف النص من الإيموجي للاستخدام في الأيقونة
+  const getCleanText = (text: string) => {
+    return text.replace(/[✨📱🚀🛠️💯✅⚡🎯]/g, "").trim();
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
   };
 
   return (
@@ -116,11 +162,22 @@ export default function TrustBar() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
+<<<<<<< HEAD
           className="grid gap-4 py-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
           {items.map((item, index) => {
             const cleanText = getBaseText(item);
             const IconComponent = getIconForText(item);
+=======
+          className="grid gap-4 py-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
+        >
+          {items.map((item, index) => {
+            const cleanText = getCleanText(item);
+
+            const IconComponent =
+              (iconMap as Record<string, any>)[item] ?? CheckCircle2;
+
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
             const gradientClass = gradientColors[index % gradientColors.length];
             const bgGradient = bgGradients[index % bgGradients.length];
 
@@ -145,8 +202,30 @@ export default function TrustBar() {
 
                   <div className="flex items-center gap-3">
                     {/* أيقونة مع خلفية متدرجة */}
+<<<<<<< HEAD
                     <div className={`flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br ${gradientClass} p-2 text-white shadow-lg`}>
                       <IconComponent className="w-full h-full" />
+=======
+                    <div className={`flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br ${gradientClass} p-2 text-white shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                      <IconComponent className="w-full h-full" />
+                    </div>
+
+                    {/* النص */}
+                    <div className="flex-1">
+                      <span className="block text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                        {cleanText}
+                      </span>
+
+                      {/* نقاط إضافية للثقة */}
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        whileHover={{ opacity: 1, height: "auto" }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <span className="text-xs text-gray-500 dark:text-gray-400">✓ ضمان الجودة</span>
+                      </motion.div>
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
                     </div>
 
                     {/* النص - بدون أي hover effects */}
@@ -156,11 +235,21 @@ export default function TrustBar() {
                       </span>
                     </div>
 
+<<<<<<< HEAD
                     {/* علامة النجاح الصغيرة - ثابتة */}
                     <div className="flex-shrink-0">
                       <CheckCircle2 className="w-5 h-5 text-green-500" />
                     </div>
                   </div>
+=======
+                  {/* تأثير لمعان عند الهوفر */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-white/10 to-transparent"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "100%" }}
+                    transition={{ duration: 0.8 }}
+                  />
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
                 </div>
               </motion.div>
             );
@@ -199,7 +288,11 @@ export default function TrustBar() {
           })}
         </motion.div>
 
+<<<<<<< HEAD
         {/* شعار الثقة الإضافي - بدون رموز تعبيرية */}
+=======
+        {/* شعار الثقة الإضافي */}
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -208,7 +301,11 @@ export default function TrustBar() {
           className="flex justify-center gap-2 py-2 text-xs text-gray-400 dark:text-gray-500"
         >
           <Sparkles className="w-3 h-3" />
+<<<<<<< HEAD
           <span>موثوق من أكثر من 20 عميل</span>
+=======
+          <span>موثوق من أكثر من ٢٠ عميل</span>
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
           <Heart className="w-3 h-3" />
         </motion.div>
       </Container>

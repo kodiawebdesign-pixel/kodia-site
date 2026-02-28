@@ -13,13 +13,20 @@ export default {
   ],
   theme: {
     extend: {
+<<<<<<< HEAD
       // ✅ ألوان مريحة للعين - بدون أحمر أو بنفسجي صارخ
       colors: {
         // Brand tokens - ألوان هادئة ومحترفة
+=======
+      // ألوان مخصصة للعلامة التجارية - هوية بنفسجية فاخرة
+      colors: {
+        // ✅ Brand tokens from CSS variables
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
         brand: "rgb(var(--brand) / <alpha-value>)",
         "brand-light": "rgb(var(--brand-light) / <alpha-value>)",
         "brand-dark": "rgb(var(--brand-dark) / <alpha-value>)",
 
+<<<<<<< HEAD
         // ✅ Primary palette - أزرق هادئ ومريح
         primary: {
           DEFAULT: "#2563EB", // أزرق معتدل
@@ -34,10 +41,27 @@ export default {
           800: "#1E40AF", // نصوص داكنة
           900: "#1E3A8A", // خلفيات داكنة
           950: "#172554", // داكن جداً
+=======
+        // ✅ Primary palette
+        primary: {
+          DEFAULT: "#8b5cf6",
+          50: "#f5f3ff",
+          100: "#ede9fe",
+          200: "#ddd6fe",
+          300: "#c4b5fd",
+          400: "#a78bfa",
+          500: "#8b5cf6",
+          600: "#7c3aed",
+          700: "#6d28d9",
+          800: "#5b21b6",
+          900: "#4c1d95",
+          950: "#2e1065",
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
         },
         
         // ✅ Secondary palette - أخضر مريح وزيتوني
         secondary: {
+<<<<<<< HEAD
           DEFAULT: "#059669", // أخضر زمردي هادئ
           50: "#ECFDF5",
           100: "#D1FAE5",
@@ -50,10 +74,25 @@ export default {
           800: "#065F46",
           900: "#064E3B",
           950: "#022C22",
+=======
+          DEFAULT: "#ec4899",
+          50: "#fdf2f8",
+          100: "#fce7f3",
+          200: "#fbcfe8",
+          300: "#f9a8d4",
+          400: "#f472b6",
+          500: "#ec4899",
+          600: "#db2777",
+          700: "#be185d",
+          800: "#9d174d",
+          900: "#831843",
+          950: "#500724",
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
         },
         
         // ✅ Accent - أزرق سماوي/نعناعي هادئ
         accent: {
+<<<<<<< HEAD
           DEFAULT: "#0891B2", // أزرق سماوي هادئ
           50: "#ECFEFF",
           100: "#CFFAFE",
@@ -111,6 +150,91 @@ export default {
           800: "#92400E",
           900: "#78350F",
           950: "#451A03",
+=======
+          DEFAULT: "#f59e0b",
+          50: "#fffbeb",
+          100: "#fef3c7",
+          200: "#fde68a",
+          300: "#fcd34d",
+          400: "#fbbf24",
+          500: "#f59e0b",
+          600: "#d97706",
+          700: "#b45309",
+          800: "#92400e",
+          900: "#78350f",
+          950: "#451a03",
+        },
+
+        // ✅ Extended palette
+        violet: {
+          50: "#f5f3ff",
+          100: "#ede9fe",
+          200: "#ddd6fe",
+          300: "#c4b5fd",
+          400: "#a78bfa",
+          500: "#8b5cf6",
+          600: "#7c3aed",
+          700: "#6d28d9",
+          800: "#5b21b6",
+          900: "#4c1d95",
+          950: "#2e1065",
+        },
+        fuchsia: {
+          50: "#fdf4ff",
+          100: "#fae8ff",
+          200: "#f5d0fe",
+          300: "#f0abfc",
+          400: "#e879f9",
+          500: "#d946ef",
+          600: "#c026d3",
+          700: "#a21caf",
+          800: "#86198f",
+          900: "#701a75",
+          950: "#4a044e",
+        },
+        amber: {
+          50: "#fffbeb",
+          100: "#fef3c7",
+          200: "#fde68a",
+          300: "#fcd34d",
+          400: "#fbbf24",
+          500: "#f59e0b",
+          600: "#d97706",
+          700: "#b45309",
+          800: "#92400e",
+          900: "#78350f",
+          950: "#451a03",
+        },
+
+        // ✅ Semantic colors
+        success: {
+          DEFAULT: "#10b981",
+          50: "#ecfdf5",
+          100: "#d1fae5",
+          200: "#a7f3d0",
+          300: "#6ee7b7",
+          400: "#34d399",
+          500: "#10b981",
+          600: "#059669",
+          700: "#047857",
+          800: "#065f46",
+          900: "#064e3b",
+          950: "#022c22",
+        },
+        warning: {
+          DEFAULT: "#f59e0b",
+          50: "#fffbeb",
+          100: "#fef3c7",
+          200: "#fde68a",
+          300: "#fcd34d",
+          400: "#fbbf24",
+          500: "#f59e0b",
+          600: "#d97706",
+          700: "#b45309",
+          800: "#92400e",
+          900: "#78350f",
+          950: "#451a03",
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
         },
         danger: {
           DEFAULT: "#B91C1C", // أحمر هادئ (أغمق وأقل إزعاجاً)
@@ -226,6 +350,7 @@ export default {
         ],
       },
 
+<<<<<<< HEAD
       // خلفيات متدرجة هادئة
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -376,6 +501,9 @@ export default {
       },
 
       // باقي الإعدادات
+=======
+      // أحجام خطوط
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
       fontSize: {
         xxs: "0.625rem",
         xs: "0.75rem",
@@ -392,6 +520,11 @@ export default {
         "8xl": "6rem",
         "9xl": "8rem",
       },
+<<<<<<< HEAD
+=======
+
+      // مسافات
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
       spacing: {
         0: "0",
         1: "0.25rem",
@@ -415,6 +548,146 @@ export default {
         80: "20rem",
         96: "24rem",
       },
+<<<<<<< HEAD
+=======
+
+      // أنيميشن
+      animation: {
+        "fade-in": "fadeIn 0.5s ease-in-out",
+        "fade-out": "fadeOut 0.5s ease-in-out",
+        "slide-in": "slideIn 0.3s ease-out",
+        "slide-out": "slideOut 0.3s ease-out",
+        "bounce-slow": "bounce 3s infinite",
+        "pulse-slow": "pulse 3s infinite",
+        "spin-slow": "spin 3s linear infinite",
+        float: "float 6s ease-in-out infinite",
+        "float-slow": "float 8s ease-in-out infinite",
+        "pulse-ring": "pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        gradient: "gradient 3s ease infinite",
+        shimmer: "shimmer 2s linear infinite",
+        "scale-up": "scaleUp 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        "scale-down": "scaleDown 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        "slide-up": "slideUp 0.4s ease-out",
+        "slide-down": "slideDown 0.4s ease-out",
+        "slide-in-right": "slideInRight 0.4s ease-out",
+        "slide-in-left": "slideInLeft 0.4s ease-out",
+        wiggle: "wiggle 1s ease-in-out infinite",
+        glow: "glow 2s ease-in-out infinite",
+        "glow-purple": "glowPurple 2s ease-in-out infinite",
+      },
+
+      // إطارات المفاتيح
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        fadeOut: {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
+        slideIn: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        slideOut: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        slideInRight: {
+          "0%": { transform: "translateX(30px)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+        slideInLeft: {
+          "0%": { transform: "translateX(-30px)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+        pulseRing: {
+          "0%": { transform: "scale(0.8)", opacity: "0.5" },
+          "100%": { transform: "scale(1.5)", opacity: "0" },
+        },
+        gradient: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        shimmer: {
+          "100%": { transform: "translateX(100%)" },
+        },
+        scaleUp: {
+          "0%": { transform: "scale(0.9)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
+        scaleDown: {
+          "0%": { transform: "scale(1.1)", opacity: "1" },
+          "100%": { transform: "scale(1)", opacity: "0" },
+        },
+        slideUp: {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        slideDown: {
+          "0%": { transform: "translateY(-20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
+        glow: {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(139, 92, 246, 0.3)" },
+          "50%": { boxShadow: "0 0 40px rgba(139, 92, 246, 0.5)" },
+        },
+        glowPurple: {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(139, 92, 246, 0.4)" },
+          "50%": { boxShadow: "0 0 30px rgba(139, 92, 246, 0.6)" },
+        },
+      },
+
+      // ظلال
+      boxShadow: {
+        xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        sm: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+        "2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+        inner: "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
+        soft: "0 2px 8px rgba(0, 0, 0, 0.05)",
+        medium: "0 4px 12px rgba(0, 0, 0, 0.08)",
+        hard: "0 8px 24px rgba(0, 0, 0, 0.12)",
+        glow: "0 0 20px rgba(139, 92, 246, 0.3)",
+        "glow-lg": "0 0 30px rgba(139, 92, 246, 0.4)",
+        "glow-purple": "0 0 20px rgba(139, 92, 246, 0.4)",
+        "glow-fuchsia": "0 0 20px rgba(236, 72, 153, 0.4)",
+        "glow-gold": "0 0 20px rgba(245, 158, 11, 0.3)",
+        none: "none",
+      },
+
+      // خلفيات متدرجة
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-primary": "linear-gradient(to right, #8b5cf6, #ec4899)",
+        "gradient-secondary": "linear-gradient(to right, #ec4899, #f59e0b)",
+        "gradient-accent": "linear-gradient(to right, #f59e0b, #8b5cf6)",
+        "gradient-success": "linear-gradient(to right, #10b981, #059669)",
+        "gradient-warning": "linear-gradient(to right, #f59e0b, #d97706)",
+        "gradient-danger": "linear-gradient(to right, #ef4444, #dc2626)",
+        "gradient-dark": "linear-gradient(to right, #1f2937, #111827)",
+        "gradient-purple": "linear-gradient(to right, #8b5cf6, #7c3aed)",
+        "gradient-fuchsia": "linear-gradient(to right, #ec4899, #db2777)",
+        "gradient-amber": "linear-gradient(to right, #f59e0b, #d97706)",
+        "gradient-violet-fuchsia": "linear-gradient(to right, #8b5cf6, #ec4899)",
+        "gradient-fuchsia-amber": "linear-gradient(to right, #ec4899, #f59e0b)",
+        "gradient-amber-violet": "linear-gradient(to right, #f59e0b, #8b5cf6)",
+      },
+
+      // شبكات
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
       gridTemplateColumns: {
         "auto-fit": "repeat(auto-fit, minmax(200px, 1fr))",
         "auto-fill": "repeat(auto-fill, minmax(200px, 1fr))",
@@ -443,6 +716,11 @@ export default {
         smooth: "cubic-bezier(0.25, 0.1, 0.25, 1)",
         elastic: "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
       },
+<<<<<<< HEAD
+=======
+
+      // نصف قطر الحدود
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
       borderRadius: {
         none: "0",
         sm: "0.125rem",
@@ -455,6 +733,11 @@ export default {
         "4xl": "2rem",
         full: "9999px",
       },
+<<<<<<< HEAD
+=======
+
+      // الشفافية
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
       opacity: {
         0: "0",
         5: "0.05",
@@ -472,6 +755,11 @@ export default {
         95: "0.95",
         100: "1",
       },
+<<<<<<< HEAD
+=======
+
+      // Z-Index
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
       zIndex: {
         0: "0",
         10: "10",

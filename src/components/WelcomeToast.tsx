@@ -79,8 +79,12 @@ export default function WelcomeToast() {
                   <Sparkles className="w-6 h-6 text-yellow-300" />
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
+<<<<<<< HEAD
                     transition={{ duration: 2, repeat: Infinity ,
   repeatType: "reverse"}}
+=======
+                    transition={{ duration: 2, repeat: Infinity }}
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
                     className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full"
                   />
                 </div>

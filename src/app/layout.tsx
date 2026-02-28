@@ -1,7 +1,10 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Cairo, Tajawal } from "next/font/google";
+<<<<<<< HEAD
 import { motion } from "framer-motion"; // ✅ أضفنا motion هنا
+=======
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
 import TopBar from "@/components/TopBar";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -42,8 +45,13 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   themeColor: [
+<<<<<<< HEAD
     { media: "(prefers-color-scheme: light)", color: "#8b5cf6" },
     { media: "(prefers-color-scheme: dark)", color: "#6d28d9" },
+=======
+    { media: "(prefers-color-scheme: light)", color: "#8b5cf6" }, // بنفسجي
+    { media: "(prefers-color-scheme: dark)", color: "#6d28d9" }, // بنفسجي داكن
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
   ],
 };
 
@@ -184,10 +192,17 @@ export const metadata: Metadata = {
   },
 
   verification: {
+<<<<<<< HEAD
     google: "google-site-verification-code",
     yandex: "yandex-verification-code",
     yahoo: "yahoo-verification-code",
     bing: "bing-verification-code",
+=======
+    google: "google-site-verification-code", // ضع كود التحقق هنا
+    yandex: "yandex-verification-code", // اختياري
+    yahoo: "yahoo-verification-code", // اختياري
+    bing: "bing-verification-code", // اختياري
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
   },
 
   category: "technology",

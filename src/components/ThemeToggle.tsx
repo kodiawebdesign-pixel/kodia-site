@@ -98,25 +98,43 @@ export default function ThemeToggleSimple() {
             scale: [1, 1.1, 1]
           }}
           transition={{ duration: 0.5 }}
+<<<<<<< HEAD
           className="text-primary-600 dark:text-primary-400"
+=======
+          className="text-violet-600 dark:text-violet-400"
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
         >
           {getThemeIcon()}
         </motion.div>
 
         <span className="hidden sm:inline text-sm">{getThemeLabel()}</span>
 
+<<<<<<< HEAD
         {/* خلفية متدرجة متحركة - ألوان محدثة */}
         <motion.div
           className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-10 dark:opacity-0 dark:group-hover:opacity-20 transition-opacity"
+=======
+        {/* خلفية متدرجة متحركة */}
+        <motion.div
+          className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 opacity-0 group-hover:opacity-10 dark:opacity-0 dark:group-hover:opacity-20 transition-opacity"
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
           animate={{ scale: [1, 1.02, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
         />
 
+<<<<<<< HEAD
         {/* شارة صغيرة للتميز - ألوان محدثة */}
         <motion.div
           animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
           className="absolute -top-1 -right-1 w-2 h-2 bg-primary-600 rounded-full"
+=======
+        {/* شارة صغيرة للتميز */}
+        <motion.div
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute -top-1 -right-1 w-2 h-2 bg-violet-600 rounded-full"
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
         />
       </motion.button>
 
@@ -146,17 +164,29 @@ export default function ThemeToggleSimple() {
                 onClick={() => changeTheme("light")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
                   theme === "light"
+<<<<<<< HEAD
                     ? "bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-700 dark:from-primary-900/30 dark:to-secondary-900/30 dark:text-primary-300"
                     : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                 }`}
               >
                 <Sun className="w-4 h-4 text-amber-600" />
+=======
+                    ? "bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700 dark:from-violet-900/30 dark:to-fuchsia-900/30 dark:text-violet-300"
+                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                }`}
+              >
+                <Sun className="w-4 h-4 text-amber-500" />
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
                 <span className="flex-1 text-right">فاتح</span>
                 {theme === "light" && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
+<<<<<<< HEAD
                     className="w-1.5 h-1.5 rounded-full bg-primary-600"
+=======
+                    className="w-1.5 h-1.5 rounded-full bg-violet-600"
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
                   />
                 )}
               </motion.button>
@@ -167,17 +197,29 @@ export default function ThemeToggleSimple() {
                 onClick={() => changeTheme("dark")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
                   theme === "dark"
+<<<<<<< HEAD
                     ? "bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-700 dark:from-primary-900/30 dark:to-secondary-900/30 dark:text-primary-300"
                     : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                 }`}
               >
                 <Moon className="w-4 h-4 text-primary-600" />
+=======
+                    ? "bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700 dark:from-violet-900/30 dark:to-fuchsia-900/30 dark:text-violet-300"
+                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                }`}
+              >
+                <Moon className="w-4 h-4 text-indigo-500" />
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
                 <span className="flex-1 text-right">داكن</span>
                 {theme === "dark" && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
+<<<<<<< HEAD
                     className="w-1.5 h-1.5 rounded-full bg-primary-600"
+=======
+                    className="w-1.5 h-1.5 rounded-full bg-violet-600"
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
                   />
                 )}
               </motion.button>
@@ -188,17 +230,29 @@ export default function ThemeToggleSimple() {
                 onClick={() => changeTheme("system")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
                   theme === "system"
+<<<<<<< HEAD
                     ? "bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-700 dark:from-primary-900/30 dark:to-secondary-900/30 dark:text-primary-300"
                     : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                 }`}
               >
                 <Monitor className="w-4 h-4 text-primary-600" />
+=======
+                    ? "bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700 dark:from-violet-900/30 dark:to-fuchsia-900/30 dark:text-violet-300"
+                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                }`}
+              >
+                <Monitor className="w-4 h-4 text-violet-600" />
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
                 <span className="flex-1 text-right">تلقائي</span>
                 {theme === "system" && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
+<<<<<<< HEAD
                     className="w-1.5 h-1.5 rounded-full bg-primary-600"
+=======
+                    className="w-1.5 h-1.5 rounded-full bg-violet-600"
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
                   />
                 )}
               </motion.button>
@@ -210,7 +264,11 @@ export default function ThemeToggleSimple() {
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                   className="flex justify-center"
                 >
+<<<<<<< HEAD
                   <Sparkles className="w-3 h-3 text-amber-600" />
+=======
+                  <Sparkles className="w-3 h-3 text-amber-500" />
+>>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
                 </motion.div>
               </div>
             </motion.div>
