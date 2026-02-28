@@ -15,39 +15,49 @@ import {
   Mail,
   Clock,
   CheckCircle2,
-  Star
+  Star,
+  Zap,
+  Shield,
+  Award,
+  Heart
 } from "lucide-react";
 
 const quick = [
   { 
     q: "عايز عرض سعر سريع", 
-    a: "ابعت نوع الموقع وعدد الصفحات والمجال، وهنرد عليك خلال ساعات.",
-    icon: "💰"
+    a: "ابعت نوع الموقع وعدد الصفحات والمجال، وهنرد عليك خلال ساعات. يمكنك أيضاً استخدام حاسبة السعر للحصول على تقدير فوري.",
+    icon: "💰",
+    color: "from-amber-600 to-orange-600"
   },
   { 
     q: "مدة التنفيذ؟", 
-    a: "حسب حجم المشروع: مواقع بسيطة ٣-٧ أيام، متوسطة ١٠-١٥ يوم، كبيرة ٢٠-٣٠ يوم.",
-    icon: "⏱️"
+    a: "حسب حجم المشروع: مواقع بسيطة ٣-٧ أيام، متوسطة ١٠-١٥ يوم، كبيرة ٢٠-٣٠ يوم. نلتزم بالجدول الزمني المتفق عليه.",
+    icon: "⏱️",
+    color: "from-blue-600 to-cyan-600"
   },
   { 
     q: "هل الموقع متجاوب؟", 
-    a: "نعم 100% على كل الأجهزة (موبايل، تابلت، كمبيوتر) مع تجربة مستخدم ممتازة.",
-    icon: "📱"
+    a: "نعم 100% على كل الأجهزة (موبايل، تابلت، كمبيوتر) مع تجربة مستخدم ممتازة وتصميم يتكيف مع جميع الشاشات.",
+    icon: "📱",
+    color: "from-emerald-600 to-teal-600"
   },
   { 
     q: "هل في دعم بعد التسليم؟", 
-    a: "نعم، نقدم دعماً فنياً لمدة شهر مجاناً، ويمكن الاتفاق على عقود دعم أطول.",
-    icon: "🛡️"
+    a: "نعم، نقدم دعماً فنياً لمدة شهر مجاناً، ويمكن الاتفاق على عقود دعم أطول. فريقنا متاح ٢٤/٧ للمشاكل الطارئة.",
+    icon: "🛡️",
+    color: "from-violet-600 to-fuchsia-600"
   },
   { 
     q: "ما هي خطوات العمل؟", 
-    a: "١. تحليل المتطلبات، ٢. تصميم واجهات، ٣. تطوير، ٤. اختبار، ٥. تسليم مع تدريب.",
-    icon: "📋"
+    a: "١. تحليل المتطلبات، ٢. تصميم واجهات، ٣. تطوير، ٤. اختبار، ٥. تسليم مع تدريب. كل مرحلة نوثقها معك.",
+    icon: "📋",
+    color: "from-purple-600 to-pink-600"
   },
   { 
     q: "هل تقدمون SEO؟", 
-    a: "نعم، نقدم تهيئة أساسية لمحركات البحث في جميع المشاريع، وخدمات SEO متقدمة.",
-    icon: "🚀"
+    a: "نعم، نقدم تهيئة أساسية لمحركات البحث في جميع المشاريع، وخدمات SEO متقدمة لتحسين ظهورك في جوجل.",
+    icon: "🚀",
+    color: "from-indigo-600 to-violet-600"
   },
 ];
 
@@ -58,6 +68,7 @@ export default function HelpBot() {
   const [messages, setMessages] = useState<Array<{text: string, sender: 'user' | 'bot'}>>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [unreadCount, setUnreadCount] = useState(1);
+  const [rating, setRating] = useState<number | null>(null);
 
   // التمرير لآخر رسالة
   useEffect(() => {
@@ -69,7 +80,7 @@ export default function HelpBot() {
     if (open && messages.length === 0) {
       setTimeout(() => {
         setMessages([
-          { text: "مرحباً! 👋 كيف يمكنني مساعدتك اليوم؟", sender: 'bot' }
+          { text: "مرحباً! 👋 أنا مساعد Kodia الذكي. كيف يمكنني مساعدتك اليوم؟", sender: 'bot' }
         ]);
       }, 300);
       setUnreadCount(0);
@@ -93,16 +104,31 @@ export default function HelpBot() {
 
   const getBotResponse = (msg: string) => {
     const lowerMsg = msg.toLowerCase();
-    if (lowerMsg.includes("سعر") || lowerMsg.includes("تكلفة")) {
-      return "للحصول على عرض سعر دقيق، يرجى إرسال تفاصيل مشروعك عبر واتساب أو النموذج المخصص. سيقوم فريقنا بالرد خلال ٢٤ ساعة.";
+    if (lowerMsg.includes("سعر") || lowerMsg.includes("تكلفة") || lowerMsg.includes("عرض")) {
+      return "للحصول على عرض سعر دقيق، يرجى إرسال تفاصيل مشروعك عبر واتساب أو استخدام نموذج Brief. سيقوم فريقنا بالرد خلال ٢٤ ساعة.";
     }
-    if (lowerMsg.includes("وقت") || lowerMsg.includes("مدة")) {
-      return "مدة التنفيذ تعتمد على حجم المشروع: المواقع البسيطة ٣-٧ أيام، المتوسطة ١٠-١٥ يوم، والكبيرة ٢٠-٣٠ يوم.";
+    if (lowerMsg.includes("وقت") || lowerMsg.includes("مدة") || lowerMsg.includes("تسليم")) {
+      return "مدة التنفيذ تعتمد على حجم المشروع: المواقع البسيطة ٣-٧ أيام، المتوسطة ١٠-١٥ يوم، والكبيرة ٢٠-٣٠ يوم. نلتزم بالموعد المتفق عليه.";
     }
-    if (lowerMsg.includes("شكرا") || lowerMsg.includes("thanks")) {
+    if (lowerMsg.includes("شكرا") || lowerMsg.includes("thanks") || lowerMsg.includes("تسلم")) {
       return "العفو! 🤝 سعيد بمساعدتك. هل هناك شيء آخر تريد الاستفسار عنه؟";
     }
+    if (lowerMsg.includes("ضمان") || lowerMsg.includes("ضمانات")) {
+      return "نقدم ضمان استعادة الحقوق إذا لم نلتزم بالمواصفات. كما نوفر ضمان الجودة ودعم فني مستمر. تفاصيل أكثر في صفحة السياسات.";
+    }
+    if (lowerMsg.includes("خدمات") || lowerMsg.includes("تخدم")) {
+      return "نقدم مجموعة متكاملة من الخدمات: تصميم مواقع شركات، متاجر إلكترونية، تطبيقات موبايل، UI/UX، تحسين SEO، ودعم فني. يمكنك زيارة صفحة الخدمات للمزيد.";
+    }
     return "شكراً لتواصلك! يمكنك اختيار أحد الأسئلة الشائعة أعلاه أو التواصل مباشرة عبر واتساب لفريق الدعم.";
+  };
+
+  const handleQuickQuestion = (q: string, a: string) => {
+    setMessages(prev => [...prev, { text: q, sender: 'user' }]);
+    setShowTyping(true);
+    setTimeout(() => {
+      setShowTyping(false);
+      setMessages(prev => [...prev, { text: a, sender: 'bot' }]);
+    }, 1000);
   };
 
   return (
@@ -114,139 +140,150 @@ export default function HelpBot() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="absolute bottom-20 right-0 w-[380px] bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden"
+            className="absolute bottom-20 right-0 w-[380px] bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-violet-100 dark:border-violet-800 overflow-hidden"
           >
             {/* رأس المساعد */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <Bot className="w-8 h-8" />
-                    <motion.div
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white"
-                    />
+            <div className="bg-gradient-to-r from-violet-600 via-fuchsia-600 to-amber-600 p-4 text-white relative overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                        <Bot className="w-6 h-6" />
+                      </div>
+                      <motion.div
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-bold">المساعد الذكي</h3>
+                      <p className="text-xs text-white/80">رد فوري ٢٤/٧</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold">المساعد الذكي</h3>
-                    <p className="text-xs text-white/80">رد فوري ٢٤/٧</p>
-                  </div>
+                  <button
+                    onClick={() => setOpen(false)}
+                    className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
-                <button
-                  onClick={() => setOpen(false)}
-                  className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors"
-                >
-                  <X className="w-4 h-4" />
-                </button>
               </div>
             </div>
 
             {/* المحادثة */}
-            <div className="h-[400px] overflow-y-auto p-4 bg-gray-50">
+            <div className="h-[400px] overflow-y-auto p-4 bg-gray-50 dark:bg-gray-900">
               <div className="space-y-3">
                 {/* رسالة ترحيب أولية */}
                 <div className="flex gap-2">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-xs">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 flex items-center justify-center text-white text-xs flex-shrink-0">
                     🤖
                   </div>
                   <div className="flex-1">
-                    <div className="bg-white rounded-2xl rounded-tr-none p-3 shadow-sm">
-                      <p className="text-xs text-gray-600">
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-tr-none p-3 shadow-sm">
+                      <p className="text-xs text-gray-700 dark:text-gray-300">
                         مرحباً! أنا مساعد Kodia الذكي. كيف يمكنني مساعدتك اليوم؟
                       </p>
                     </div>
-                    <span className="text-[10px] text-gray-400 mt-1">الآن</span>
+                    <span className="text-[10px] text-gray-400 dark:text-gray-500 mt-1">الآن</span>
                   </div>
                 </div>
 
                 {/* الأسئلة السريعة */}
                 <div className="mt-4">
-                  <p className="text-xs text-gray-500 mb-2">أسئلة سريعة:</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">أسئلة سريعة:</p>
                   <div className="grid grid-cols-2 gap-2">
                     {quick.slice(0, 4).map((x, idx) => (
-                      <button
+                      <motion.button
                         key={idx}
-                        onClick={() => {
-                          setMessages(prev => [...prev, { text: x.q, sender: 'user' }]);
-                          setShowTyping(true);
-                          setTimeout(() => {
-                            setShowTyping(false);
-                            setMessages(prev => [...prev, { text: x.a, sender: 'bot' }]);
-                          }, 1000);
-                        }}
-                        className="text-right bg-white p-2 rounded-xl border border-gray-200 hover:border-blue-200 hover:shadow-md transition-all"
+                        whileHover={{ scale: 1.02, y: -2 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => handleQuickQuestion(x.q, x.a)}
+                        className={`text-right bg-white dark:bg-gray-800 p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-violet-200 dark:hover:border-violet-700 hover:shadow-md transition-all group`}
                       >
-                        <span className="text-sm">{x.icon}</span>
-                        <p className="text-xs font-bold mt-1">{x.q}</p>
-                      </button>
+                        <div className={`w-6 h-6 rounded-lg bg-gradient-to-br ${x.color} p-1 text-white text-sm mb-1`}>
+                          {x.icon}
+                        </div>
+                        <p className="text-xs font-bold mt-1 text-gray-800 dark:text-gray-200 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+                          {x.q}
+                        </p>
+                      </motion.button>
                     ))}
                   </div>
                 </div>
 
                 {/* رسائل المحادثة */}
                 {messages.map((msg, idx) => (
-                  <div
+                  <motion.div
                     key={idx}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
                     className={`flex gap-2 ${msg.sender === 'user' ? 'justify-end' : ''}`}
                   >
                     {msg.sender === 'bot' && (
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-xs">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 flex items-center justify-center text-white text-xs flex-shrink-0">
                         🤖
                       </div>
                     )}
                     <div
                       className={`max-w-[80%] rounded-2xl p-3 ${
                         msg.sender === 'user'
-                          ? 'bg-blue-600 text-white rounded-br-none'
-                          : 'bg-white text-gray-700 rounded-tl-none shadow-sm'
+                          ? 'bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-br-none'
+                          : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-tl-none shadow-sm'
                       }`}
                     >
                       <p className="text-xs">{msg.text}</p>
                     </div>
                     {msg.sender === 'user' && (
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-r from-green-600 to-emerald-600 flex items-center justify-center text-white text-xs">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-r from-green-600 to-emerald-600 flex items-center justify-center text-white text-xs flex-shrink-0">
                         👤
                       </div>
                     )}
-                  </div>
+                  </motion.div>
                 ))}
 
                 {/* مؤشر الكتابة */}
                 {showTyping && (
-                  <div className="flex gap-2">
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-xs">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="flex gap-2"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 flex items-center justify-center text-white text-xs flex-shrink-0">
                       🤖
                     </div>
-                    <div className="bg-white rounded-2xl rounded-tl-none p-3 shadow-sm">
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-tl-none p-3 shadow-sm">
                       <div className="flex gap-1">
                         <motion.div
                           animate={{ y: [0, -5, 0] }}
                           transition={{ duration: 0.6, repeat: Infinity }}
-                          className="w-1.5 h-1.5 bg-gray-400 rounded-full"
+                          className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full"
                         />
                         <motion.div
                           animate={{ y: [0, -5, 0] }}
                           transition={{ duration: 0.6, delay: 0.2, repeat: Infinity }}
-                          className="w-1.5 h-1.5 bg-gray-400 rounded-full"
+                          className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full"
                         />
                         <motion.div
                           animate={{ y: [0, -5, 0] }}
                           transition={{ duration: 0.6, delay: 0.4, repeat: Infinity }}
-                          className="w-1.5 h-1.5 bg-gray-400 rounded-full"
+                          className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full"
                         />
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
                 <div ref={messagesEndRef} />
               </div>
             </div>
 
             {/* أسفل المساعد */}
-            <div className="p-4 border-t border-gray-200 bg-white">
+            <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
               {/* معلومات التواصل السريع */}
-              <div className="flex items-center justify-between mb-3 text-xs text-gray-500">
+              <div className="flex items-center justify-between mb-3 text-xs text-gray-500 dark:text-gray-400">
                 <div className="flex items-center gap-1">
                   <Clock className="w-3 h-3" />
                   <span>متوسط الرد: دقيقة</span>
@@ -259,29 +296,35 @@ export default function HelpBot() {
 
               {/* أزرار التواصل */}
               <div className="grid grid-cols-3 gap-2 mb-3">
-                <a
+                <motion.a
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   href={siteData.brand.whatsappLink}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-center gap-1 p-2 bg-green-600 text-white rounded-xl text-xs font-semibold hover:bg-green-700 transition-colors"
+                  className="flex items-center justify-center gap-1 p-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl text-xs font-semibold hover:shadow-lg transition-all"
                 >
                   <MessageCircle className="w-3 h-3" />
                   واتساب
-                </a>
-                <a
+                </motion.a>
+                <motion.a
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   href={`tel:${siteData.brand.phoneE164}`}
-                  className="flex items-center justify-center gap-1 p-2 bg-blue-600 text-white rounded-xl text-xs font-semibold hover:bg-blue-700 transition-colors"
+                  className="flex items-center justify-center gap-1 p-2 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl text-xs font-semibold hover:shadow-lg transition-all"
                 >
                   <Phone className="w-3 h-3" />
                   اتصال
-                </a>
-                <a
+                </motion.a>
+                <motion.a
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   href={`mailto:${siteData.brand.email}`}
-                  className="flex items-center justify-center gap-1 p-2 bg-purple-600 text-white rounded-xl text-xs font-semibold hover:bg-purple-700 transition-colors"
+                  className="flex items-center justify-center gap-1 p-2 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl text-xs font-semibold hover:shadow-lg transition-all"
                 >
                   <Mail className="w-3 h-3" />
                   بريد
-                </a>
+                </motion.a>
               </div>
 
               {/* حقل إدخال الرسالة */}
@@ -292,17 +335,19 @@ export default function HelpBot() {
                   onChange={(e) => setMessage(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="اكتب رسالتك..."
-                  className="flex-1 px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="flex-1 px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 />
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={handleSendMessage}
-                  className="px-3 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all"
+                  className="px-3 py-2 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl hover:shadow-lg transition-all"
                 >
                   <Send className="w-4 h-4" />
-                </button>
+                </motion.button>
               </div>
 
-              <p className="mt-2 text-[10px] text-gray-400 text-center">
+              <p className="mt-2 text-[10px] text-gray-400 dark:text-gray-500 text-center">
                 اكتب استفسارك أو اختر أحد الأسئلة الشائعة
               </p>
             </div>
@@ -318,12 +363,12 @@ export default function HelpBot() {
         className={`relative flex items-center gap-2 px-4 py-3 rounded-2xl shadow-xl transition-all ${
           open 
             ? 'bg-gradient-to-r from-red-600 to-pink-600' 
-            : 'bg-gradient-to-r from-blue-600 to-purple-600'
+            : 'bg-gradient-to-r from-violet-600 to-fuchsia-600'
         }`}
       >
         {/* خلفية متوهجة */}
         <motion.div
-          className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 blur-xl opacity-50"
+          className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 blur-xl opacity-50"
           animate={{
             scale: [1, 1.2, 1],
           }}
@@ -365,15 +410,27 @@ export default function HelpBot() {
       {/* تقييم المساعد */}
       {open && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="absolute -top-12 right-0 flex items-center gap-2 bg-white rounded-full px-3 py-1 shadow-md border border-gray-200"
+          className="absolute -top-12 right-0 flex items-center gap-2 bg-white dark:bg-gray-800 rounded-full px-3 py-1 shadow-md border border-gray-200 dark:border-gray-700"
         >
-          <span className="text-xs text-gray-600">تقييم المساعد:</span>
+          <span className="text-xs text-gray-600 dark:text-gray-400">تقييم المساعد:</span>
           <div className="flex gap-0.5">
             {[1,2,3,4,5].map((star) => (
-              <Star key={star} className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+              <motion.button
+                key={star}
+                whileHover={{ scale: 1.2 }}
+                onClick={() => setRating(star)}
+              >
+                <Star 
+                  className={`w-3 h-3 transition-colors ${
+                    star <= (rating || 5) 
+                      ? 'text-amber-400 fill-amber-400' 
+                      : 'text-gray-300 dark:text-gray-600'
+                  }`} 
+                />
+              </motion.button>
             ))}
           </div>
         </motion.div>
