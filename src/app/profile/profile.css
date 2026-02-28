@@ -2,10 +2,10 @@
 
 /* ===== VARIABLES ===== */
 :root {
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --secondary: #a855f7;
-  --secondary-dark: #9333ea;
+  --primary: #8b5cf6;
+  --primary-dark: #7c3aed;
+  --secondary: #ec4899;
+  --secondary-dark: #db2777;
   --brand: #0f172a;
   --text: #1e293b;
   --text-light: #64748b;
@@ -14,16 +14,203 @@
   --muted: #f8fafc;
   --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.dark {
+  --primary: #a78bfa;
+  --primary-dark: #8b5cf6;
+  --secondary: #f472b6;
+  --secondary-dark: #ec4899;
+  --brand: #f8fafc;
+  --text: #f1f5f9;
+  --text-light: #94a3b8;
+  --border: #334155;
+  --background: #0f172a;
+  --muted: #1e293b;
 }
 
 /* ===== BASE STYLES ===== */
 .profile-page {
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Cairo', 'Tajawal', sans-serif;
   background: var(--background);
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
 
-/* ... بقية الكود CSS الذي أرسلته ... */
+/* ===== PRINT STYLES ===== */
+@media print {
+  .profile-page {
+    background: white;
+    color: black;
+    padding: 0;
+    margin: 0;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .print\:block {
+    display: block !important;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .bg-gradient-to-br,
+  .bg-gradient-to-r {
+    background: #f3f4f6 !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .shadow-lg,
+  .shadow-xl,
+  .shadow-md {
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+  }
+
+  .rounded-2xl,
+  .rounded-3xl,
+  .rounded-xl {
+    border-radius: 0.5rem !important;
+  }
+
+  /* إخفاء العناصر غير المرغوب فيها في الطباعة */
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* إظهار عناصر الطباعة */
+  .print\:block {
+    display: block !important;
+  }
+
+  /* تحسين تباين الألوان في الطباعة */
+  .text-gray-600,
+  .text-gray-500,
+  .text-gray-400 {
+    color: #4b5563 !important;
+  }
+
+  .bg-violet-50,
+  .bg-fuchsia-50 {
+    background-color: #f3f4f6 !important;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.text-gradient {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-gradient-brand {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+.profile-page ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.profile-page ::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 10px;
+}
+
+.profile-page ::-webkit-scrollbar-thumb {
+  background: var(--text-light);
+  border-radius: 10px;
+}
+
+.profile-page ::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* ===== DARK MODE ADJUSTMENTS ===== */
+.dark .profile-page {
+  color-scheme: dark;
+}
+
+.dark .bg-white {
+  background-color: #1e293b;
+}
+
+.dark .border-gray-200 {
+  border-color: #334155;
+}
+
+.dark .text-gray-900 {
+  color: #f1f5f9;
+}
+
+.dark .text-gray-700 {
+  color: #e2e8f0;
+}
+
+.dark .text-gray-600 {
+  color: #cbd5e1;
+}
+
+.dark .text-gray-500 {
+  color: #94a3b8;
+}
+
+.dark .hover\:bg-gray-50:hover {
+  background-color: #334155;
+}
+
+.dark .hover\:text-gray-900:hover {
+  color: #f1f5f9;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .profile-page {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .profile-page .container {
+    max-width: 1280px;
+  }
+}
