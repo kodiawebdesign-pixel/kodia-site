@@ -105,7 +105,7 @@ export default function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="relative bg-gradient-to-b from-gray-50 to-white border-t border-violet-100/50 overflow-hidden">
+    <footer className="relative bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950 border-t border-violet-100/50 dark:border-violet-900/30 overflow-hidden">
       {/* خلفية متحركة فاخرة */}
       <div className="absolute inset-0 -z-10">
         <motion.div
@@ -115,7 +115,7 @@ export default function Footer() {
             opacity: [0.1, 0.15, 0.1]
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-violet-200/30 to-fuchsia-200/30 rounded-full blur-3xl"
+          className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-violet-200/30 to-fuchsia-200/30 dark:from-violet-800/20 dark:to-fuchsia-800/20 rounded-full blur-3xl"
         />
         <motion.div
           animate={{ 
@@ -124,9 +124,9 @@ export default function Footer() {
             opacity: [0.1, 0.15, 0.1]
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-amber-200/20 to-violet-200/20 rounded-full blur-3xl"
+          className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-amber-200/20 to-violet-200/20 dark:from-amber-800/10 dark:to-violet-800/10 rounded-full blur-3xl"
         />
-        <div className="absolute inset-0 bg-[url('/images/noise.png')] opacity-5" />
+        <div className="absolute inset-0 bg-[url('/images/noise.png')] opacity-5 dark:opacity-10" />
       </div>
 
       <Container>
@@ -136,7 +136,7 @@ export default function Footer() {
           whileInView="animate"
           viewport={{ once: true }}
           variants={staggerChildren}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-b border-violet-100/50"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-b border-violet-100/50 dark:border-violet-900/30"
         >
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
@@ -144,14 +144,15 @@ export default function Footer() {
               <motion.div
                 key={idx}
                 variants={fadeInScale}
-                className="flex items-center gap-3 p-3 bg-white rounded-xl border border-violet-100/50 shadow-sm hover:shadow-md transition-all"
+                whileHover={{ y: -4 }}
+                className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-xl border border-violet-100/50 dark:border-violet-900/30 shadow-sm hover:shadow-md transition-all"
               >
                 <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${stat.color} p-2 text-white flex-shrink-0`}>
                   <Icon className="w-full h-full" />
                 </div>
                 <div>
-                  <div className="text-lg font-bold text-gray-900">{stat.value}</div>
-                  <div className="text-xs text-gray-500">{stat.label}</div>
+                  <div className="text-lg font-bold text-gray-900 dark:text-white">{stat.value}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">{stat.label}</div>
                 </div>
               </motion.div>
             );
@@ -176,42 +177,42 @@ export default function Footer() {
                 {name?.charAt(0) || "K"}
               </motion.div>
               <div>
-                <h3 className="text-xl font-bold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">
+                <h3 className="text-xl font-bold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent dark:from-violet-400 dark:to-fuchsia-400">
                   {name || "Kodia"}
                 </h3>
-                <p className="text-xs text-gray-500">شريكك الرقمي الموثوق</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">شريكك الرقمي الموثوق</p>
               </div>
             </div>
 
-            <p className="text-sm text-gray-600 leading-relaxed mb-6">
+            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
               {footer?.about ||
                 "نقدم حلولاً رقمية متكاملة تجمع بين الإبداع التقني والفهم العميق لاحتياجات السوق، نساعدك على بناء حضور قوي وتحقيق نتائج ملموسة."}
             </p>
 
             {/* معلومات إضافية */}
             <div className="space-y-3 mb-6">
-              <div className="flex items-center gap-2 text-sm text-gray-600 group hover:text-violet-600 transition-colors">
-                <MapPin className="w-4 h-4 text-violet-600 group-hover:scale-110 transition-transform" />
+              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 group hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                <MapPin className="w-4 h-4 text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform" />
                 <span>{serviceArea || "مصر - السعودية - الإمارات"}</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600 group hover:text-violet-600 transition-colors">
-                <Clock className="w-4 h-4 text-violet-600 group-hover:scale-110 transition-transform" />
+              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 group hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                <Clock className="w-4 h-4 text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform" />
                 <span>{siteData?.home?.marketing?.responseLine || "الرد خلال ٢٤ ساعة"}</span>
               </div>
             </div>
 
             {/* وسائل التواصل الاجتماعي */}
             <div>
-              <h4 className="text-sm font-bold mb-3 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-violet-600" />
+              <h4 className="text-sm font-bold mb-3 flex items-center gap-2 text-gray-900 dark:text-white">
+                <Sparkles className="w-4 h-4 text-violet-600 dark:text-violet-400" />
                 تابعنا على
               </h4>
 
-              <div className="inline-flex items-center gap-2 rounded-xl border border-violet-100 bg-white/80 px-3 py-2 shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-xl border border-violet-100 dark:border-violet-800 bg-white/80 dark:bg-gray-800/80 px-3 py-2 shadow-sm">
                 <SocialLinks items={siteData?.topNav?.socials || []} variant="footer" />
               </div>
 
-              <p className="text-xs text-gray-400 mt-2">
+              <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
                 تابع جديدنا وتواصل معنا على المنصات الاجتماعية
               </p>
             </div>
@@ -219,7 +220,7 @@ export default function Footer() {
 
           {/* القسم الثاني: روابط سريعة */}
           <motion.div variants={fadeInUp} className="lg:col-span-2">
-            <h4 className="text-lg font-bold mb-4 relative inline-block">
+            <h4 className="text-lg font-bold mb-4 relative inline-block text-gray-900 dark:text-white">
               روابط سريعة
               <span className="absolute -bottom-2 right-0 w-12 h-0.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full" />
             </h4>
@@ -229,7 +230,7 @@ export default function Footer() {
                 <Link
                   key={l?.href || `link-${idx}`}
                   href={l?.href || "#"}
-                  className="group flex items-center gap-1 text-sm text-gray-600 hover:text-violet-600 transition-colors"
+                  className="group flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
                 >
                   <ArrowLeft className="w-3 h-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                   {l?.label || "رابط"}
@@ -239,18 +240,18 @@ export default function Footer() {
 
             {/* روابط إضافية */}
             <div className="mt-6">
-              <h4 className="text-sm font-bold mb-3 text-gray-700">روابط مهمة</h4>
+              <h4 className="text-sm font-bold mb-3 text-gray-700 dark:text-gray-300">روابط مهمة</h4>
               <div className="space-y-2">
-                <Link href="/about" className="block text-sm text-gray-600 hover:text-violet-600 transition-colors">
+                <Link href="/about" className="block text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                   من نحن
                 </Link>
-                <Link href="/contact" className="block text-sm text-gray-600 hover:text-violet-600 transition-colors">
+                <Link href="/contact" className="block text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                   اتصل بنا
                 </Link>
-                <Link href="/blog" className="block text-sm text-gray-600 hover:text-violet-600 transition-colors">
+                <Link href="/blog" className="block text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                   المدونة
                 </Link>
-                <Link href="/faq" className="block text-sm text-gray-600 hover:text-violet-600 transition-colors">
+                <Link href="/faq" className="block text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                   الأسئلة الشائعة
                 </Link>
               </div>
@@ -259,7 +260,7 @@ export default function Footer() {
 
           {/* القسم الثالث: خدمات مميزة */}
           <motion.div variants={fadeInUp} className="lg:col-span-3">
-            <h4 className="text-lg font-bold mb-4 relative inline-block">
+            <h4 className="text-lg font-bold mb-4 relative inline-block text-gray-900 dark:text-white">
               خدمات مميزة
               <span className="absolute -bottom-2 right-0 w-12 h-0.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full" />
             </h4>
@@ -271,12 +272,12 @@ export default function Footer() {
                   <Link
                     key={idx}
                     href={service.href}
-                    className="group flex items-center gap-2 p-2 rounded-lg hover:bg-violet-50 transition-all"
+                    className="group flex items-center gap-2 p-2 rounded-lg hover:bg-violet-50 dark:hover:bg-violet-900/30 transition-all"
                   >
                     <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${service.color} p-1.5 text-white`}>
                       <Icon className="w-full h-full" />
                     </div>
-                    <span className="text-sm text-gray-700 group-hover:text-violet-600 transition-colors">
+                    <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
                       {service.label}
                     </span>
                   </Link>
@@ -285,7 +286,7 @@ export default function Footer() {
             </div>
 
             {/* شهادة سريعة */}
-            <div className="mt-6 p-4 bg-gradient-to-br from-violet-50 to-fuchsia-50 rounded-xl border border-violet-100">
+            <div className="mt-6 p-4 bg-gradient-to-br from-violet-50 to-fuchsia-50 dark:from-violet-900/20 dark:to-fuchsia-900/20 rounded-xl border border-violet-100 dark:border-violet-800">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center text-white">
@@ -293,10 +294,10 @@ export default function Footer() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-700 italic">
+                  <p className="text-sm text-gray-700 dark:text-gray-300 italic">
                     "فريق محترف ومتفهم، ساعدونا في تطوير موقعنا بشكل رائع"
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">- أحمد عبدالله، صاحب متجر UrbanWear</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">- أحمد عبدالله، صاحب متجر UrbanWear</p>
                 </div>
               </div>
             </div>
@@ -304,7 +305,7 @@ export default function Footer() {
 
           {/* القسم الرابع: تواصل معنا */}
           <motion.div variants={fadeInUp} className="lg:col-span-3">
-            <h4 className="text-lg font-bold mb-4 relative inline-block">
+            <h4 className="text-lg font-bold mb-4 relative inline-block text-gray-900 dark:text-white">
               تواصل معنا
               <span className="absolute -bottom-2 right-0 w-12 h-0.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full" />
             </h4>
@@ -314,14 +315,14 @@ export default function Footer() {
               <motion.a
                 whileHover={{ scale: 1.02, y: -2 }}
                 href={`tel:${phoneE164 || ""}`}
-                className="flex items-center gap-3 p-4 bg-white rounded-xl border border-violet-100 hover:border-violet-300 hover:shadow-lg transition-all group"
+                className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-xl border border-violet-100 dark:border-violet-800 hover:border-violet-300 dark:hover:border-violet-600 hover:shadow-lg transition-all group"
               >
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs text-gray-500">اتصل بنا</div>
-                  <div className="text-base font-bold text-gray-800 group-hover:text-violet-600 transition-colors" dir="ltr">
+                  <div className="text-xs text-gray-500 dark:text-gray-400">اتصل بنا</div>
+                  <div className="text-base font-bold text-gray-800 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors" dir="ltr">
                     {phoneDisplay || "٠١٢٣٤٥٦٧٨٩"}
                   </div>
                 </div>
@@ -331,14 +332,14 @@ export default function Footer() {
               <motion.a
                 whileHover={{ scale: 1.02, y: -2 }}
                 href={`mailto:${email || ""}`}
-                className="flex items-center gap-3 p-4 bg-white rounded-xl border border-violet-100 hover:border-fuchsia-300 hover:shadow-lg transition-all group"
+                className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-xl border border-violet-100 dark:border-violet-800 hover:border-fuchsia-300 dark:hover:border-fuchsia-600 hover:shadow-lg transition-all group"
               >
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-fuchsia-600 to-pink-600 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs text-gray-500">راسلنا</div>
-                  <div className="text-base font-bold text-gray-800 group-hover:text-fuchsia-600 transition-colors" dir="ltr">
+                  <div className="text-xs text-gray-500 dark:text-gray-400">راسلنا</div>
+                  <div className="text-base font-bold text-gray-800 dark:text-white group-hover:text-fuchsia-600 dark:group-hover:text-fuchsia-400 transition-colors" dir="ltr">
                     {email || "info@kodia.com"}
                   </div>
                 </div>
@@ -352,7 +353,7 @@ export default function Footer() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-violet-100 rounded-lg text-xs text-gray-700 hover:border-violet-300 hover:text-violet-600 hover:shadow-md transition-all group"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white dark:bg-gray-800 border border-violet-100 dark:border-violet-800 rounded-lg text-xs text-gray-700 dark:text-gray-300 hover:border-violet-300 dark:hover:border-violet-600 hover:text-violet-600 dark:hover:text-violet-400 hover:shadow-md transition-all group"
                     >
                       <Icon className="w-3.5 h-3.5" />
                       {link.label}
@@ -370,7 +371,7 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 py-8 border-t border-violet-100/50"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 py-8 border-t border-violet-100/50 dark:border-violet-900/30"
         >
           {/* واتساب */}
           <motion.a
@@ -433,36 +434,36 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="relative py-6 border-t border-violet-100/50"
+          className="relative py-6 border-t border-violet-100/50 dark:border-violet-900/30"
         >
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
               جميع الحقوق محفوظة © {new Date().getFullYear()} {name || "Kodia"}.
             </p>
 
-            <div className="flex items-center gap-4 text-xs text-gray-500">
-              <Link href="/policies" className="hover:text-violet-600 transition-colors">
+            <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+              <Link href="/policies" className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                 سياسة الخصوصية
               </Link>
-              <span>|</span>
-              <Link href="/terms" className="hover:text-violet-600 transition-colors">
+              <span className="text-gray-300 dark:text-gray-600">|</span>
+              <Link href="/terms" className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                 شروط الاستخدام
               </Link>
-              <span>|</span>
+              <span className="text-gray-300 dark:text-gray-600">|</span>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={scrollToTop}
-                className="flex items-center gap-1 hover:text-violet-600 transition-colors"
+                className="flex items-center gap-1 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
               >
                 <ChevronUp className="w-3 h-3" />
                 العودة للأعلى
               </motion.button>
             </div>
 
-            <div className="flex items-center gap-1 text-xs text-gray-400">
+            <div className="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
               <Heart className="w-3 h-3 text-red-500 animate-pulse" />
               <span>صنع بكل</span>
-              <span className="font-bold text-violet-600">❤️</span>
+              <span className="font-bold text-violet-600 dark:text-violet-400">❤️</span>
             </div>
           </div>
         </motion.div>
