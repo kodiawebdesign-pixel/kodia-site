@@ -11,6 +11,10 @@ import {
   X,
   ChevronUp,
   HelpCircle,
+  Sparkles,
+  Zap,
+  Shield,
+  Star
 } from "lucide-react";
 
 export default function FloatingActions() {
@@ -41,13 +45,13 @@ export default function FloatingActions() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  // إخفاء التلميح بعد 5 ثوانٍ
+  // إخفاء التلميح بعد 7 ثوانٍ
   useEffect(() => {
-    const timer = setTimeout(() => setShowHint(false), 5000);
+    const timer = setTimeout(() => setShowHint(false), 7000);
     return () => clearTimeout(timer);
   }, []);
 
-  // ✅ متغيرات الحركة (Fix TS: type literal + Variants)
+  // متغيرات الحركة
   const containerVariants: Variants = {
     hidden: { opacity: 0, x: 20 },
     visible: {
@@ -66,7 +70,6 @@ export default function FloatingActions() {
     },
   };
 
-  // ✅ زرار العناصر (function variant) — نثبت type أيضًا
   const buttonVariants: Variants = {
     hidden: { opacity: 0, scale: 0.5, y: 20 },
     visible: (custom: number) => ({
@@ -81,6 +84,19 @@ export default function FloatingActions() {
       },
     }),
     exit: { opacity: 0, scale: 0.5, y: 20 },
+  };
+
+  const pulseVariants: Variants = {
+    initial: { scale: 1, opacity: 0.5 },
+    animate: {
+      scale: [1, 1.2, 1],
+      opacity: [0.5, 0.2, 0.5],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
   };
 
   return (
@@ -100,16 +116,23 @@ export default function FloatingActions() {
                 initial={{ opacity: 0, scale: 0.8, x: -20 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 exit={{ opacity: 0, scale: 0.8, x: -20 }}
-                className="relative bg-white rounded-2xl shadow-xl p-3 mb-2 border border-gray-200 max-w-[200px]"
+                className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-4 mb-2 border border-violet-100 dark:border-violet-800 max-w-[240px]"
               >
                 <div className="flex items-start gap-2">
-                  <HelpCircle className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <p className="text-xs text-gray-600">
-                    تواصل معنا مباشرة عبر واتساب أو اتصال
-                  </p>
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white flex-shrink-0">
+                    <Sparkles className="w-3 h-3" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-800 dark:text-gray-200 mb-1">
+                      تواصل معنا مباشرة
+                    </p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                      واتساب • اتصال • بريد إلكتروني
+                    </p>
+                  </div>
                 </div>
                 {/* سهم صغير */}
-                <div className="absolute bottom-[-6px] right-4 w-3 h-3 bg-white border-r border-b border-gray-200 transform rotate-45" />
+                <div className="absolute bottom-[-6px] right-4 w-3 h-3 bg-white dark:bg-gray-800 border-r border-b border-violet-100 dark:border-violet-800 transform rotate-45" />
               </motion.div>
             )}
           </AnimatePresence>
@@ -128,12 +151,18 @@ export default function FloatingActions() {
                   exit="exit"
                   whileHover={{ scale: 1.05, x: -5 }}
                   whileTap={{ scale: 0.95 }}
-                  className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2.5 text-white shadow-lg hover:shadow-xl transition-all"
+                  className="group relative flex items-center gap-3 rounded-full bg-gradient-to-r from-amber-600 to-orange-600 px-4 py-3 text-white shadow-lg hover:shadow-xl transition-all overflow-hidden"
                   aria-label="بريد إلكتروني"
                 >
-                  <Mail className="w-4 h-4" />
-                  <span className="text-sm font-medium">بريد</span>
-                  <span className="text-xs opacity-75 hidden sm:inline">
+                  <motion.div
+                    variants={pulseVariants}
+                    initial="initial"
+                    animate="animate"
+                    className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-600 blur-lg opacity-50"
+                  />
+                  <Mail className="w-4 h-4 relative z-10" />
+                  <span className="text-sm font-medium relative z-10">بريد</span>
+                  <span className="text-xs opacity-75 hidden sm:inline relative z-10">
                     | {siteData.brand.email}
                   </span>
                 </motion.a>
@@ -148,12 +177,18 @@ export default function FloatingActions() {
                   exit="exit"
                   whileHover={{ scale: 1.05, x: -5 }}
                   whileTap={{ scale: 0.95 }}
-                  className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-2.5 text-white shadow-lg hover:shadow-xl transition-all"
+                  className="group relative flex items-center gap-3 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-3 text-white shadow-lg hover:shadow-xl transition-all overflow-hidden"
                   aria-label="اتصال"
                 >
-                  <Phone className="w-4 h-4" />
-                  <span className="text-sm font-medium">اتصال</span>
-                  <span className="text-xs opacity-75 hidden sm:inline">
+                  <motion.div
+                    variants={pulseVariants}
+                    initial="initial"
+                    animate="animate"
+                    className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 blur-lg opacity-50"
+                  />
+                  <Phone className="w-4 h-4 relative z-10" />
+                  <span className="text-sm font-medium relative z-10">اتصال</span>
+                  <span className="text-xs opacity-75 hidden sm:inline relative z-10">
                     | {siteData.brand.phoneDisplay}
                   </span>
                 </motion.a>
@@ -170,12 +205,18 @@ export default function FloatingActions() {
                   exit="exit"
                   whileHover={{ scale: 1.05, x: -5 }}
                   whileTap={{ scale: 0.95 }}
-                  className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-green-600 to-emerald-600 px-4 py-2.5 text-white shadow-lg hover:shadow-xl transition-all"
+                  className="group relative flex items-center gap-3 rounded-full bg-gradient-to-r from-green-600 to-emerald-600 px-4 py-3 text-white shadow-lg hover:shadow-xl transition-all overflow-hidden"
                   aria-label="تواصل واتساب"
                 >
-                  <MessageCircle className="w-4 h-4" />
-                  <span className="text-sm font-medium">واتساب</span>
-                  <span className="text-xs opacity-75 hidden sm:inline">
+                  <motion.div
+                    variants={pulseVariants}
+                    initial="initial"
+                    animate="animate"
+                    className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600 blur-lg opacity-50"
+                  />
+                  <MessageCircle className="w-4 h-4 relative z-10" />
+                  <span className="text-sm font-medium relative z-10">واتساب</span>
+                  <span className="text-xs opacity-75 hidden sm:inline relative z-10">
                     | رد فوري
                   </span>
                 </motion.a>
@@ -191,13 +232,13 @@ export default function FloatingActions() {
             className={`relative flex items-center justify-center w-14 h-14 rounded-full shadow-xl transition-all ${
               isOpen
                 ? "bg-gradient-to-r from-red-600 to-pink-600 rotate-180"
-                : "bg-gradient-to-r from-blue-600 to-purple-600"
+                : "bg-gradient-to-r from-violet-600 to-fuchsia-600"
             }`}
             aria-label={isOpen ? "إغلاق" : "فتح"}
           >
             {/* خلفية متوهجة */}
             <motion.div
-              className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 blur-xl opacity-50"
+              className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 blur-xl opacity-50"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{
                 duration: 2,
@@ -218,8 +259,10 @@ export default function FloatingActions() {
               <motion.span
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white"
-              />
+                className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full border-2 border-white flex items-center justify-center"
+              >
+                <span className="text-[10px] text-white font-bold">1</span>
+              </motion.span>
             )}
           </motion.button>
 
@@ -233,7 +276,7 @@ export default function FloatingActions() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="w-10 h-10 rounded-full bg-gray-800 text-white shadow-lg flex items-center justify-center hover:bg-gray-700 transition-all"
+                className="w-10 h-10 rounded-full bg-gray-800 dark:bg-gray-700 text-white shadow-lg flex items-center justify-center hover:bg-gray-700 dark:hover:bg-gray-600 transition-all"
                 aria-label="الرجوع للأعلى"
               >
                 <ChevronUp className="w-5 h-5" />
