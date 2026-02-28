@@ -1,0 +1,439 @@
+"use client";
+
+import { useMemo, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import {
+  Grid,
+  ShoppingBag,
+  Building2,
+  Hotel,
+  GraduationCap,
+  Smartphone,
+  Eye,
+  ArrowLeft,
+  Tag,
+  ChevronLeft,
+  ChevronRight,
+  Star,
+  Award,
+  Clock,
+  Sparkles,
+  Heart,
+  Users,
+  Briefcase
+} from "lucide-react";
+import Section from "./Section";
+import { siteData } from "@/lib/siteData";
+
+// خريطة الأيقونات لكل تبويب - محدثة
+const tabIcons: Record<string, any> = {
+  company: Building2,
+  ecommerce: ShoppingBag,
+  tourism: Hotel,
+  education: GraduationCap,
+  apps: Smartphone,
+};
+
+// ألوان متدرجة لكل تبويب - محدثة بالبنفسجي
+const tabGradients: Record<string, string> = {
+  company: "from-violet-600 to-fuchsia-600",
+  ecommerce: "from-blue-600 to-cyan-600",
+  tourism: "from-amber-600 to-orange-600",
+  education: "from-emerald-600 to-teal-600",
+  apps: "from-purple-600 to-pink-600",
+};
+
+// ألوان للخلفيات - محدثة
+const bgGradients: Record<string, string> = {
+  company: "from-violet-50 to-fuchsia-50 dark:from-violet-900/20 dark:to-fuchsia-900/20",
+  ecommerce: "from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20",
+  tourism: "from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20",
+  education: "from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20",
+  apps: "from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20",
+};
+
+// دالة للحصول على عدد مشاهدات ثابت لكل مشروع
+const getViewCount = (slug: string): number => {
+  const hash = slug.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return 100 + (hash % 400); // 100 - 500
+};
+
+// دالة للحصول على سنة المشروع
+const getYear = (item: any): string => {
+  return item.year || "٢٠٢٤";
+};
+
+export default function PortfolioTabs() {
+  const { portfolioIntro, portfolioTabs } = siteData.home;
+
+  // ✅ ضمان إن tabs دايمًا Array
+  const tabs = useMemo(() => portfolioTabs ?? [], [portfolioTabs]);
+
+  // ✅ key افتراضي آمن حتى لو tabs فاضية
+  const defaultKey = tabs[0]?.key ?? "company";
+
+  const [active, setActive] = useState<string>(defaultKey);
+  const [direction, setDirection] = useState(0); // للتحكم باتجاه الأنيميشن
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+
+  // ✅ لو tabs اتغيرت و active بقى مش موجود، رجّعه لأول تبويب
+  useEffect(() => {
+    if (tabs.length === 0) return;
+    const exists = tabs.some((t) => t?.key === active);
+    if (!exists) setActive(tabs[0]?.key ?? defaultKey);
+  }, [tabs, active]);
+
+  const current = useMemo(() => {
+    if (tabs.length === 0) return null;
+    return tabs.find((t) => t?.key === active) ?? tabs[0] ?? null;
+  }, [active, tabs]);
+
+  // تغيير الاتجاه عند تغيير التبويب
+  const handleTabChange = (key: string) => {
+    const oldIndex = tabs.findIndex((t) => t?.key === active);
+    const newIndex = tabs.findIndex((t) => t?.key === key);
+    setDirection(newIndex > oldIndex ? 1 : -1);
+    setActive(key);
+  };
+
+  // متغيرات الحركة
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+      },
+    },
+    exit: { opacity: 0 },
+  };
+
+  const itemVariants = {
+    hidden: (dir: number) => ({
+      opacity: 0,
+      x: dir * 50,
+    }),
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+    exit: (dir: number) => ({
+      opacity: 0,
+      x: -dir * 50,
+      transition: { duration: 0.2 },
+    }),
+  };
+
+  // ✅ لو مفيش Tabs نهائيًا، اعرض fallback
+  if (!current) {
+    return (
+      <Section title={portfolioIntro?.title ?? ""} subtitle={portfolioIntro?.subtitle ?? ""} badge="معرض الأعمال">
+        <div className="text-center text-gray-500 dark:text-gray-400 py-10">لا توجد بيانات للمعرض حالياً</div>
+      </Section>
+    );
+  }
+
+  // الحصول على الأيقونة المناسبة للتبويب
+  const ActiveIcon = tabIcons[active] || Grid;
+  const activeGradient = tabGradients[active] || "from-violet-600 to-fuchsia-600";
+  const activeBgGradient = bgGradients[active] || "from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900";
+
+  // إحصائيات سريعة - محدثة
+  const stats = [
+    { label: "مشاريع منجزة", value: "٢٥+", color: activeGradient },
+    { label: "مجالات متنوعة", value: tabs.length.toString(), color: "from-blue-600 to-cyan-600" },
+    { label: "عملاء سعداء", value: "٢٠+", color: "from-amber-600 to-orange-600" },
+    { label: "سنوات خبرة", value: "٢+", color: "from-green-600 to-emerald-600" },
+  ];
+
+  return (
+    <Section 
+      title={portfolioIntro?.title ?? ""} 
+      subtitle={portfolioIntro?.subtitle ?? ""} 
+      badge="معرض الأعمال"
+      className="bg-gradient-to-b from-white to-violet-50/30 dark:from-gray-950 dark:to-violet-950/20"
+    >
+      {/* تبويبات متحركة */}
+      <div className="relative mb-8">
+        {/* خلفية متحركة */}
+        <motion.div
+          className={`absolute inset-0 bg-gradient-to-r ${activeBgGradient} rounded-2xl -z-10`}
+          animate={{ scale: [1, 1.02, 1] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        {/* أزرار التبويبات */}
+        <div className="flex flex-wrap justify-center gap-3 p-2">
+          {tabs.map((t, idx) => {
+            const key = t?.key ?? `tab-${idx}`;
+            const isActive = t?.key === active;
+            const Icon = tabIcons[t?.key ?? ""] || Grid;
+            const gradient = tabGradients[t?.key ?? ""] || "from-violet-600 to-fuchsia-600";
+
+            return (
+              <motion.button
+                key={key}
+                onClick={() => t?.key && handleTabChange(t.key)}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className={`relative group px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
+                  isActive
+                    ? `bg-gradient-to-r ${gradient} text-white shadow-xl`
+                    : "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 hover:shadow-lg border border-gray-200/50 dark:border-gray-700"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300"}`} />
+                  <span>{t?.label ?? "تبويب"}</span>
+                  {isActive && (
+                    <motion.div 
+                      initial={{ scale: 0 }} 
+                      animate={{ scale: 1 }} 
+                      className="w-2 h-2 bg-white rounded-full" 
+                    />
+                  )}
+                </div>
+
+                {/* تأثير لمعان */}
+                {isActive && (
+                  <motion.div
+                    className="absolute inset-0 bg-white/20 rounded-xl"
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                )}
+              </motion.button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* شبكة المشاريع مع أنيميشن */}
+      <AnimatePresence mode="wait" custom={direction}>
+        <motion.div
+          key={active}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          custom={direction}
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {(current.items ?? []).map((item: any) => (
+            <motion.div
+              key={item?.slug ?? item?.title ?? `${Math.random()}`}
+              variants={itemVariants}
+              custom={direction}
+              whileHover={{ y: -8 }}
+              onHoverStart={() => setHoveredItem(item?.slug ?? null)}
+              onHoverEnd={() => setHoveredItem(null)}
+              className="group relative cursor-pointer"
+            >
+              <Link href={`/portfolio/${item.slug}`}>
+                <div
+                  className={`relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 bg-gradient-to-br ${activeBgGradient} hover:bg-white dark:hover:bg-gray-800`}
+                >
+                  {/* صورة المشروع */}
+                  <div className="relative h-48 overflow-hidden bg-gray-100 dark:bg-gray-700">
+                    <motion.img
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.5 }}
+                      src={`/images/demos/${item.slug}-1.svg`}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop";
+                      }}
+                    />
+
+                    {/* طبقة داكنة */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
+                    >
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        whileHover={{ scale: 1 }}
+                        transition={{ delay: 0.1 }}
+                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                      >
+                        <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center text-violet-600">
+                          <Eye className="w-6 h-6" />
+                        </div>
+                      </motion.div>
+                    </motion.div>
+
+                    {/* شارة التبويب */}
+                    <div className="absolute top-3 right-3">
+                      <span
+                        className={`inline-flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r ${activeGradient} text-white text-xs font-bold rounded-full shadow-lg`}
+                      >
+                        <ActiveIcon className="w-3 h-3" />
+                        {current.label}
+                      </span>
+                    </div>
+
+                    {/* شارة السنة */}
+                    <div className="absolute top-3 left-3">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 bg-black/50 backdrop-blur-sm text-white text-xs rounded-full">
+                        <Clock className="w-3 h-3" />
+                        {getYear(item)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* محتوى البطاقة */}
+                  <div className="p-5">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-lg font-bold group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors line-clamp-1 text-gray-900 dark:text-white">
+                        {item.title}
+                      </h3>
+                      <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                        <Eye className="w-3 h-3" />
+                        {getViewCount(item.slug)}
+                      </div>
+                    </div>
+
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">{item.summary}</p>
+
+                    {/* التاجات */}
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {(item.tags ?? []).slice(0, 3).map((tag: string, idx: number) => (
+                        <motion.span
+                          key={`${item.slug}-tag-${idx}`}
+                          whileHover={{ scale: 1.05 }}
+                          className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs rounded-full"
+                        >
+                          <Tag className="w-3 h-3" />
+                          {tag}
+                        </motion.span>
+                      ))}
+                    </div>
+
+                    {/* مميزات المشروع */}
+                    {(item.deliverables?.length ?? 0) > 0 && (
+                      <div className="border-t border-gray-100 dark:border-gray-700 pt-3">
+                        <div className="flex flex-wrap gap-1">
+                          {(item.deliverables ?? []).slice(0, 2).map((del: string, idx: number) => (
+                            <span
+                              key={`${item.slug}-del-${idx}`}
+                              className="text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 px-2 py-1 rounded-full"
+                            >
+                              {del}
+                            </span>
+                          ))}
+                          {(item.deliverables?.length ?? 0) > 2 && (
+                            <span className="text-xs text-gray-400 dark:text-gray-500">+{(item.deliverables?.length ?? 0) - 2}</span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* مؤشر التمرير */}
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileHover={{ width: "100%" }}
+                      transition={{ duration: 0.4 }}
+                      className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${activeGradient}`}
+                    />
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
+
+      {/* إحصائيات سريعة */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.1,
+              delayChildren: 0.4,
+            },
+          },
+        }}
+        className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
+      >
+        {stats.map((stat, index) => (
+          <motion.div
+            key={`stat-${index}`}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            whileHover={{ y: -4 }}
+            className="text-center p-5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all"
+          >
+            <div className={`text-2xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+              {stat.value}
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{stat.label}</div>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* زر عرض الكل */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.5 }}
+        className="mt-10 text-center"
+      >
+        <Link href={portfolioIntro?.ctaHref ?? "/portfolio"}>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden"
+          >
+            <span className="relative z-10">{portfolioIntro?.ctaLabel ?? "عرض الكل"}</span>
+            <ArrowLeft className="relative z-10 w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+              initial={{ x: "-100%" }}
+              whileHover={{ x: "100%" }}
+              transition={{ duration: 0.5 }}
+            />
+          </motion.button>
+        </Link>
+      </motion.div>
+
+      {/* شعارات إضافية */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.6 }}
+        className="mt-8 flex flex-wrap justify-center gap-6"
+      >
+        {[
+          { icon: Award, text: "تصاميم حاصلة على جوائز" },
+          { icon: Users, text: "فريق محترف" },
+          { icon: Star, text: "تقييمات ٥ نجوم" },
+        ].map((item, idx) => (
+          <div key={idx} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+            <item.icon className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+            <span>{item.text}</span>
+          </div>
+        ))}
+      </motion.div>
+    </Section>
+  );
+}
