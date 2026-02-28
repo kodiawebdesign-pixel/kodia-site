@@ -7,24 +7,22 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./src/lib/**/*.{js,ts,jsx,tsx}",
     "./src/pages/**/*.{js,ts,jsx,tsx}",
+    "./src/hooks/**/*.{js,ts,jsx,tsx}",
+    "./src/utils/**/*.{js,ts,jsx,tsx}",
+    "./src/types/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       // ألوان مخصصة للعلامة التجارية - هوية بنفسجية فاخرة
       colors: {
-        /**
-         * ✅ Brand tokens from CSS variables
-         * تدعم: bg-brand/5, border-brand/30, hover:border-brand/30 ... إلخ
-         */
+        // ✅ Brand tokens from CSS variables
         brand: "rgb(var(--brand) / <alpha-value>)",
         "brand-light": "rgb(var(--brand-light) / <alpha-value>)",
         "brand-dark": "rgb(var(--brand-dark) / <alpha-value>)",
 
-        // (اختياري) لو حابب تستخدمها كـ primary token ديناميكي مع الثيم
-        // primary: "rgb(var(--brand) / <alpha-value>)",
-
+        // ✅ Primary palette
         primary: {
-          DEFAULT: "#8b5cf6", // بنفسجي فاتح (أساسي)
+          DEFAULT: "#8b5cf6",
           50: "#f5f3ff",
           100: "#ede9fe",
           200: "#ddd6fe",
@@ -38,7 +36,7 @@ export default {
           950: "#2e1065",
         },
         secondary: {
-          DEFAULT: "#ec4899", // وردي/فوشيا (ثانوي)
+          DEFAULT: "#ec4899",
           50: "#fdf2f8",
           100: "#fce7f3",
           200: "#fbcfe8",
@@ -52,7 +50,7 @@ export default {
           950: "#500724",
         },
         accent: {
-          DEFAULT: "#f59e0b", // ذهبي/أصفر (أكسنت)
+          DEFAULT: "#f59e0b",
           50: "#fffbeb",
           100: "#fef3c7",
           200: "#fde68a",
@@ -65,6 +63,8 @@ export default {
           900: "#78350f",
           950: "#451a03",
         },
+
+        // ✅ Extended palette
         violet: {
           50: "#f5f3ff",
           100: "#ede9fe",
@@ -104,8 +104,10 @@ export default {
           900: "#78350f",
           950: "#451a03",
         },
+
+        // ✅ Semantic colors
         success: {
-          DEFAULT: "#10b981", // أخضر زمردي
+          DEFAULT: "#10b981",
           50: "#ecfdf5",
           100: "#d1fae5",
           200: "#a7f3d0",
@@ -119,7 +121,7 @@ export default {
           950: "#022c22",
         },
         warning: {
-          DEFAULT: "#f59e0b", // ذهبي
+          DEFAULT: "#f59e0b",
           50: "#fffbeb",
           100: "#fef3c7",
           200: "#fde68a",
@@ -133,7 +135,7 @@ export default {
           950: "#451a03",
         },
         danger: {
-          DEFAULT: "#ef4444", // أحمر
+          DEFAULT: "#ef4444",
           50: "#fef2f2",
           100: "#fee2e2",
           200: "#fecaca",
@@ -161,7 +163,7 @@ export default {
         },
       },
 
-      // خطوط مخصصة عربية فاخرة
+      // خطوط مخصصة
       fontFamily: {
         sans: [
           "Cairo",
@@ -191,7 +193,7 @@ export default {
         ],
       },
 
-      // أحجام خطوط مخصصة
+      // أحجام خطوط
       fontSize: {
         xxs: "0.625rem",
         xs: "0.75rem",
@@ -209,7 +211,7 @@ export default {
         "9xl": "8rem",
       },
 
-      // مسافات مخصصة
+      // مسافات
       spacing: {
         0: "0",
         1: "0.25rem",
@@ -234,7 +236,7 @@ export default {
         96: "24rem",
       },
 
-      // أنيميشن مخصصة
+      // أنيميشن
       animation: {
         "fade-in": "fadeIn 0.5s ease-in-out",
         "fade-out": "fadeOut 0.5s ease-in-out",
@@ -259,7 +261,7 @@ export default {
         "glow-purple": "glowPurple 2s ease-in-out infinite",
       },
 
-      // إطارات المفاتيح للأنيميشن
+      // إطارات المفاتيح
       keyframes: {
         fadeIn: {
           "0%": { opacity: "0" },
@@ -330,7 +332,7 @@ export default {
         },
       },
 
-      // ظلال مخصصة
+      // ظلال
       boxShadow: {
         xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
         sm: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
@@ -350,7 +352,7 @@ export default {
         none: "none",
       },
 
-      // خلفيات متدرجة مخصصة
+      // خلفيات متدرجة
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
@@ -369,7 +371,7 @@ export default {
         "gradient-amber-violet": "linear-gradient(to right, #f59e0b, #8b5cf6)",
       },
 
-      // شبكات مخصصة
+      // شبكات
       gridTemplateColumns: {
         "auto-fit": "repeat(auto-fit, minmax(200px, 1fr))",
         "auto-fill": "repeat(auto-fill, minmax(200px, 1fr))",
