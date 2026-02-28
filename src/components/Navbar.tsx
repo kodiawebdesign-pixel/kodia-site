@@ -23,13 +23,25 @@ import {
   ShoppingCart,
   Smartphone,
   TrendingUp,
-  ChevronLeft
+  ChevronLeft,
+  Code,
+  Palette,
+  Award,
+  Star,
+  Rocket,
+  Shield,
+  Zap,
+  Heart,
+  Globe,
+  Mail,
+  Calendar,
+  Download
 } from "lucide-react";
 
 type NavItem = {
   label: string;
   href: string;
-  children?: { label: string; href: string }[];
+  children?: { label: string; href: string; description?: string }[];
 };
 
 // خريطة الأيقونات للروابط
@@ -45,16 +57,29 @@ const iconMap: Record<string, any> = {
   "حاسبة السعر": TrendingUp,
   "نموذج Brief": FileText,
   "Company Profile": Briefcase,
-  "السياسات والضمانات": FileText,
+  "السياسات والضمانات": Shield,
   "Resources": Sparkles,
   "معرض الأعمال": Briefcase,
+  "تصميم مواقع": Code,
+  "تصميم متاجر": ShoppingCart,
+  "تطبيقات موبايل": Smartphone,
+  "UI/UX": Palette,
+  "SEO": TrendingUp,
+  "الدعم الفني": Zap,
+  "استضافة": Globe,
+  "كتابة محتوى": FileText,
+  "Profile الشركة": Award,
+  "الأسئلة الشائعة": Star,
+  "الضمانات": Shield,
+  "عملاء": Heart,
+  "تواصل": Phone,
 };
 
 function DesktopDropdown({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
-  const isActive = pathname === item.href;
+  const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
 
   // اقفل القائمة لو ضغطت بره
   useEffect(() => {
@@ -70,18 +95,18 @@ function DesktopDropdown({ item }: { item: NavItem }) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`text-sm font-medium inline-flex items-center gap-1 px-3 py-2 rounded-xl transition-all ${
+        className={`group text-sm font-medium inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl transition-all duration-300 ${
           isActive 
-            ? 'bg-blue-50 text-blue-600' 
-            : 'hover:bg-gray-100 text-gray-700'
+            ? 'bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700' 
+            : 'hover:bg-violet-50/50 text-gray-700 hover:text-violet-600'
         }`}
         aria-haspopup="menu"
         aria-expanded={open}
       >
-        {item.label}
+        <span>{item.label}</span>
         <motion.div
           animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
         >
           <ChevronDown className="w-4 h-4" />
         </motion.div>
@@ -90,13 +115,20 @@ function DesktopDropdown({ item }: { item: NavItem }) {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="absolute right-0 mt-2 w-64 rounded-2xl border bg-white shadow-xl overflow-hidden"
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute right-0 mt-2 w-80 rounded-2xl border border-violet-100 bg-white shadow-2xl overflow-hidden"
           >
-            <div className="p-2">
+            {/* رأس القائمة */}
+            <div className="p-3 bg-gradient-to-r from-violet-50 to-fuchsia-50 border-b border-violet-100">
+              <h3 className="font-bold text-violet-700">{item.label}</h3>
+              <p className="text-xs text-gray-500">اختر الخدمة المناسبة</p>
+            </div>
+
+            {/* عناصر القائمة */}
+            <div className="p-3 max-h-[400px] overflow-y-auto">
               {item.children!.map((c, idx) => {
                 const Icon = iconMap[c.label] || ChevronLeft;
                 const isChildActive = pathname === c.href;
@@ -105,24 +137,48 @@ function DesktopDropdown({ item }: { item: NavItem }) {
                   <Link
                     key={c.href}
                     href={c.href}
-                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all ${
+                    className={`flex items-start gap-3 rounded-xl px-3 py-3 text-sm transition-all duration-300 group ${
                       isChildActive
-                        ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600'
-                        : 'hover:bg-gray-50 text-gray-700'
+                        ? 'bg-gradient-to-r from-violet-50 to-fuchsia-50'
+                        : 'hover:bg-gray-50'
                     }`}
                     onClick={() => setOpen(false)}
                   >
-                    <div className={`w-6 h-6 rounded-lg ${
+                    <div className={`w-8 h-8 rounded-lg flex-shrink-0 ${
                       isChildActive 
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
-                        : 'bg-gray-100 text-gray-500'
-                    } flex items-center justify-center`}>
-                      <Icon className="w-3.5 h-3.5" />
+                        ? 'bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white' 
+                        : 'bg-gray-100 text-gray-500 group-hover:bg-violet-100 group-hover:text-violet-600'
+                    } flex items-center justify-center transition-colors duration-300`}>
+                      <Icon className="w-4 h-4" />
                     </div>
-                    <span className="flex-1">{c.label}</span>
+                    <div className="flex-1">
+                      <div className={`font-medium ${
+                        isChildActive ? 'text-violet-700' : 'text-gray-800'
+                      }`}>
+                        {c.label}
+                      </div>
+                      {c.description && (
+                        <p className="text-xs text-gray-500 mt-0.5">{c.description}</p>
+                      )}
+                    </div>
+                    <ChevronLeft className={`w-4 h-4 ${
+                      isChildActive ? 'text-violet-600' : 'text-gray-400'
+                    } group-hover:translate-x-1 transition-transform duration-300`} />
                   </Link>
                 );
               })}
+            </div>
+
+            {/* تذييل القائمة */}
+            <div className="p-3 bg-gray-50 border-t border-gray-100">
+              <Link
+                href={item.href}
+                className="flex items-center justify-between text-sm text-violet-600 hover:text-violet-700 transition-colors"
+                onClick={() => setOpen(false)}
+              >
+                <span>عرض الكل</span>
+                <ChevronLeft className="w-4 h-4" />
+              </Link>
             </div>
           </motion.div>
         )}
@@ -140,20 +196,29 @@ function MobileAccordion({
 }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const isActive = pathname === item.href;
+  const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
 
   return (
-    <div className="rounded-xl border bg-white overflow-hidden">
+    <div className="rounded-xl border border-gray-200 bg-white overflow-hidden">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`flex w-full items-center justify-between px-4 py-3 text-sm font-medium transition-all ${
-          isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-700'
+        className={`flex w-full items-center justify-between px-4 py-4 text-sm font-medium transition-all duration-300 ${
+          isActive ? 'text-violet-700 bg-violet-50' : 'text-gray-700 hover:bg-gray-50'
         }`}
       >
-        <span>{item.label}</span>
+        <div className="flex items-center gap-3">
+          <div className={`w-8 h-8 rounded-lg ${
+            isActive 
+              ? 'bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white' 
+              : 'bg-gray-100 text-gray-500'
+          } flex items-center justify-center`}>
+            {<PenTool className="w-4 h-4" />}
+          </div>
+          <span className="font-medium">{item.label}</span>
+        </div>
         <motion.div
           animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.3 }}
         >
           <ChevronDown className="w-4 h-4" />
         </motion.div>
@@ -165,29 +230,10 @@ function MobileAccordion({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="border-t"
+            transition={{ duration: 0.3 }}
+            className="border-t border-gray-100"
           >
-            <div className="p-2 space-y-1">
-              <Link
-                href={item.href}
-                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all ${
-                  pathname === item.href
-                    ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600'
-                    : 'hover:bg-gray-50 text-gray-700'
-                }`}
-                onClick={onNavigate}
-              >
-                <div className={`w-6 h-6 rounded-lg ${
-                  pathname === item.href
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                    : 'bg-gray-100 text-gray-500'
-                } flex items-center justify-center`}>
-                  <Home className="w-3.5 h-3.5" />
-                </div>
-                <span className="flex-1">عرض الكل</span>
-              </Link>
-
+            <div className="p-3 space-y-2 bg-gray-50">
               {item.children!.map((c) => {
                 const Icon = iconMap[c.label] || ChevronLeft;
                 const isChildActive = pathname === c.href;
@@ -196,21 +242,26 @@ function MobileAccordion({
                   <Link
                     key={c.href}
                     href={c.href}
-                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all ${
+                    className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm transition-all duration-300 ${
                       isChildActive
-                        ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600'
-                        : 'hover:bg-gray-50 text-gray-700'
+                        ? 'bg-gradient-to-r from-violet-100 to-fuchsia-100 text-violet-700'
+                        : 'bg-white hover:bg-violet-50 text-gray-700'
                     }`}
                     onClick={onNavigate}
                   >
-                    <div className={`w-6 h-6 rounded-lg ${
+                    <div className={`w-8 h-8 rounded-lg flex-shrink-0 ${
                       isChildActive
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                        ? 'bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white'
                         : 'bg-gray-100 text-gray-500'
                     } flex items-center justify-center`}>
-                      <Icon className="w-3.5 h-3.5" />
+                      <Icon className="w-4 h-4" />
                     </div>
-                    <span className="flex-1">{c.label}</span>
+                    <div className="flex-1">
+                      <div className="font-medium">{c.label}</div>
+                      {c.description && (
+                        <p className="text-xs text-gray-500">{c.description}</p>
+                      )}
+                    </div>
                   </Link>
                 );
               })}
@@ -253,17 +304,21 @@ export default function Navbar() {
     <>
       <div className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-md' 
-          : 'bg-white/90 backdrop-blur-sm border-b'
+          ? 'bg-white/95 backdrop-blur-md shadow-lg' 
+          : 'bg-white/90 backdrop-blur-sm border-b border-violet-100/50'
       }`}>
         <Container>
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* الشعار */}
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-lg group-hover:shadow-xl transition-all">
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-bold text-sm shadow-lg group-hover:shadow-xl transition-all"
+              >
                 K
-              </div>
-              <span className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              </motion.div>
+              <span className="text-lg font-bold bg-gradient-to-r from-violet-700 to-fuchsia-700 bg-clip-text text-transparent">
                 {siteData.brand.name}
               </span>
             </Link>
@@ -282,13 +337,15 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 group ${
                       isActive
-                        ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600'
-                        : 'hover:bg-gray-100 text-gray-700'
+                        ? 'bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700'
+                        : 'hover:bg-violet-50/50 text-gray-700 hover:text-violet-600'
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className={`w-4 h-4 transition-transform duration-300 group-hover:scale-110 ${
+                      isActive ? 'text-violet-600' : 'text-gray-500 group-hover:text-violet-600'
+                    }`} />
                     {item.label}
                   </Link>
                 );
@@ -299,24 +356,27 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <ThemeToggle />
               
-              <a
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 href={siteData.brand.whatsappLink}
                 target="_blank"
                 rel="noreferrer"
-                className="hidden md:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl transition-all"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>طلب عرض سعر</span>
-              </a>
+              </motion.a>
 
               {/* زر القائمة للموبايل */}
-              <button
+              <motion.button
+                whileTap={{ scale: 0.9 }}
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="md:hidden w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                className="md:hidden w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center hover:bg-violet-100 transition-colors"
                 aria-label="فتح القائمة"
               >
-                {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
+                {mobileOpen ? <X className="w-5 h-5 text-violet-600" /> : <Menu className="w-5 h-5 text-violet-600" />}
+              </motion.button>
             </div>
           </div>
         </Container>
@@ -343,7 +403,7 @@ export default function Navbar() {
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 bottom-0 w-[85%] max-w-md bg-white z-50 md:hidden overflow-y-auto"
             >
-              <div className="p-4">
+              <div className="p-5">
                 {/* رأس القائمة */}
                 <div className="flex items-center justify-between mb-6">
                   <Link 
@@ -351,21 +411,22 @@ export default function Navbar() {
                     className="flex items-center gap-2"
                     onClick={() => setMobileOpen(false)}
                   >
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-bold">
                       K
                     </div>
-                    <span className="font-bold">{siteData.brand.name}</span>
+                    <span className="font-bold text-gray-800">{siteData.brand.name}</span>
                   </Link>
-                  <button
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
                     onClick={() => setMobileOpen(false)}
-                    className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center"
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
                   >
                     <X className="w-4 h-4" />
-                  </button>
+                  </motion.button>
                 </div>
 
                 {/* روابط القائمة */}
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {nav.map((item) => {
                     if (item.children?.length) {
                       return (
@@ -384,21 +445,24 @@ export default function Navbar() {
                       <Link
                         key={item.href}
                         href={item.href}
-                        className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all ${
+                        className={`flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-medium transition-all duration-300 ${
                           isActive
-                            ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600'
-                            : 'hover:bg-gray-50 text-gray-700'
+                            ? 'bg-gradient-to-r from-violet-100 to-fuchsia-100 text-violet-700'
+                            : 'hover:bg-violet-50 text-gray-700'
                         }`}
                         onClick={() => setMobileOpen(false)}
                       >
-                        <div className={`w-8 h-8 rounded-lg ${
+                        <div className={`w-9 h-9 rounded-lg flex-shrink-0 ${
                           isActive 
-                            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
+                            ? 'bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white' 
                             : 'bg-gray-100 text-gray-500'
                         } flex items-center justify-center`}>
                           <Icon className="w-4 h-4" />
                         </div>
-                        <span className="flex-1">{item.label}</span>
+                        <div className="flex-1 font-medium">{item.label}</div>
+                        <ChevronLeft className={`w-4 h-4 ${
+                          isActive ? 'text-violet-600' : 'text-gray-400'
+                        }`} />
                       </Link>
                     );
                   })}
@@ -406,27 +470,45 @@ export default function Navbar() {
 
                 {/* زر واتساب للموبايل */}
                 <div className="mt-6">
-                  <a
+                  <motion.a
+                    whileTap={{ scale: 0.95 }}
                     href={siteData.brand.whatsappLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold shadow-lg"
+                    className="flex items-center justify-center gap-2 w-full px-4 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold shadow-lg"
                     onClick={() => setMobileOpen(false)}
                   >
                     <MessageCircle className="w-5 h-5" />
                     طلب عرض سعر
-                  </a>
+                  </motion.a>
                 </div>
 
                 {/* معلومات سريعة */}
-                <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-                  <p className="text-xs text-gray-500 mb-2">تواصل معنا</p>
-                  <a href={`tel:${siteData.brand.phoneE164}`} className="text-sm font-bold text-gray-800 block mb-1">
+                <div className="mt-6 p-5 bg-gradient-to-br from-violet-50 to-fuchsia-50 rounded-xl">
+                  <p className="text-xs text-violet-600 mb-3 font-medium">تواصل معنا</p>
+                  <a href={`tel:${siteData.brand.phoneE164}`} className="text-base font-bold text-gray-800 block mb-2 hover:text-violet-600 transition-colors">
                     {siteData.brand.phoneDisplay}
                   </a>
-                  <a href={`mailto:${siteData.brand.email}`} className="text-sm text-gray-600">
+                  <a href={`mailto:${siteData.brand.email}`} className="text-sm text-gray-600 hover:text-violet-600 transition-colors flex items-center gap-2">
+                    <Mail className="w-4 h-4" />
                     {siteData.brand.email}
                   </a>
+                </div>
+
+                {/* أيقونات التواصل الاجتماعي */}
+                <div className="mt-4 flex justify-center gap-2">
+                  {siteData.brand.sameAs?.slice(0, 4).map((url, idx) => (
+                    <motion.a
+                      key={idx}
+                      whileHover={{ scale: 1.1 }}
+                      href={url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-violet-600 hover:text-white transition-all"
+                    >
+                      <Globe className="w-4 h-4" />
+                    </motion.a>
+                  ))}
                 </div>
               </div>
             </motion.div>
