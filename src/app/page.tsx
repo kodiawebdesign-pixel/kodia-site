@@ -133,7 +133,8 @@ export default function HomePage() {
           transition={{ delay: 0.4 }}
           className="mt-16"
         >
-          
+        <Testimonials />
+  
         </motion.div>
       </SectionWrapper>
 
