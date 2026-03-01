@@ -4,6 +4,19 @@ const nextConfig: NextConfig = {
   // تفعيل الوضع الصارم لـ React
   reactStrictMode: true,
   
+  // ⚠️ إضافة إعدادات Turbopack لحل مشكلة البناء
+  turbopack: {
+    // يمكنك تركها فارغة إذا لم تحتاج إعدادات خاصة
+    // أو إضافة إعدادات Turbopack المخصصة هنا
+    rules: {
+      // دعم ملفات SVG في Turbopack (مشابه لإعداد webpack)
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
+  
   // إعدادات الصور
   images: {
     remotePatterns: [
@@ -125,7 +138,7 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // إعدادات Webpack المخصصة
+  // ⚠️ إعدادات Webpack المخصصة (ستعمل مع Turbopack أيضاً)
   webpack: (config, { isServer }) => {
     // إضافة دعم لملفات SVG كمكونات React
     config.module.rules.push({
@@ -152,6 +165,13 @@ const nextConfig: NextConfig = {
   generateEtags: true, // توليد ETags
   httpAgentOptions: {
     keepAlive: true, // الحفاظ على اتصالات HTTP
+  },
+  
+  // ✅ تحسينات إضافية اختيارية
+  // تمكين تجربة التصفح المحسنة
+  experimental: {
+    optimizeCss: false, // يمكن تفعيله إذا كنت تستخدم CSS
+    optimizePackageImports: ['lucide-react', 'date-fns'], // تحسين استيراد الحزم
   },
 };
 
