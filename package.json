@@ -29,9 +29,10 @@
     "npm": ">=10.0.0"
   },
   "scripts": {
+    
     "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+ "build": "next build --webpack",
+     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
