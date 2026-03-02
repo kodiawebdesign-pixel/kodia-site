@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, Monitor, Sparkles } from "lucide-react";
+import { Moon, Sun, Monitor } from "lucide-react";
 
 type Theme = "light" | "dark" | "system";
 
-export default function ThemeToggleSimple() {
+export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -40,7 +40,7 @@ export default function ThemeToggleSimple() {
     }
   }, []);
 
-  // متابعة تغيير ثيم النظام
+  // ✅ متابعة تغيير ثيم النظام (بدون addListener/removeListener)
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -93,55 +93,24 @@ export default function ThemeToggleSimple() {
         aria-label="تغيير الثيم"
       >
         <motion.div
-          animate={{ 
-            rotate: theme === "dark" ? 360 : 0,
-            scale: [1, 1.1, 1]
-          }}
+          animate={{ rotate: theme === "dark" ? 360 : 0 }}
           transition={{ duration: 0.5 }}
-<<<<<<< HEAD
-          className="text-primary-600 dark:text-primary-400"
-=======
-          className="text-violet-600 dark:text-violet-400"
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
         >
           {getThemeIcon()}
         </motion.div>
 
         <span className="hidden sm:inline text-sm">{getThemeLabel()}</span>
 
-<<<<<<< HEAD
-        {/* خلفية متدرجة متحركة - ألوان محدثة */}
         <motion.div
-          className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-10 dark:opacity-0 dark:group-hover:opacity-20 transition-opacity"
-=======
-        {/* خلفية متدرجة متحركة */}
-        <motion.div
-          className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 opacity-0 group-hover:opacity-10 dark:opacity-0 dark:group-hover:opacity-20 transition-opacity"
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+          className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-10 transition-opacity"
           animate={{ scale: [1, 1.02, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
-        />
-
-<<<<<<< HEAD
-        {/* شارة صغيرة للتميز - ألوان محدثة */}
-        <motion.div
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute -top-1 -right-1 w-2 h-2 bg-primary-600 rounded-full"
-=======
-        {/* شارة صغيرة للتميز */}
-        <motion.div
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute -top-1 -right-1 w-2 h-2 bg-violet-600 rounded-full"
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
         />
       </motion.button>
 
       <AnimatePresence>
         {showOptions && (
           <>
-            {/* طبقة خلفية شفافة */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -150,127 +119,69 @@ export default function ThemeToggleSimple() {
               onClick={() => setShowOptions(false)}
             />
 
-            {/* قائمة الخيارات */}
             <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute left-0 mt-2 w-40 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl overflow-hidden z-50"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute left-0 mt-2 w-40 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden z-50 dark:bg-gray-800 dark:border-gray-700"
             >
-              {/* خيار فاتح */}
-              <motion.button
-                whileHover={{ x: 2 }}
+              <button
                 onClick={() => changeTheme("light")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
                   theme === "light"
-<<<<<<< HEAD
-                    ? "bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-700 dark:from-primary-900/30 dark:to-secondary-900/30 dark:text-primary-300"
-                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                    ? "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
+                    : "hover:bg-gray-50 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-200"
                 }`}
               >
-                <Sun className="w-4 h-4 text-amber-600" />
-=======
-                    ? "bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700 dark:from-violet-900/30 dark:to-fuchsia-900/30 dark:text-violet-300"
-                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
-                }`}
-              >
-                <Sun className="w-4 h-4 text-amber-500" />
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+                <Sun className="w-4 h-4" />
                 <span className="flex-1 text-right">فاتح</span>
                 {theme === "light" && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-<<<<<<< HEAD
-                    className="w-1.5 h-1.5 rounded-full bg-primary-600"
-=======
-                    className="w-1.5 h-1.5 rounded-full bg-violet-600"
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+                    className="w-1.5 h-1.5 rounded-full bg-blue-600"
                   />
                 )}
-              </motion.button>
+              </button>
 
-              {/* خيار داكن */}
-              <motion.button
-                whileHover={{ x: 2 }}
+              <button
                 onClick={() => changeTheme("dark")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
                   theme === "dark"
-<<<<<<< HEAD
-                    ? "bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-700 dark:from-primary-900/30 dark:to-secondary-900/30 dark:text-primary-300"
-                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                    ? "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
+                    : "hover:bg-gray-50 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-200"
                 }`}
               >
-                <Moon className="w-4 h-4 text-primary-600" />
-=======
-                    ? "bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700 dark:from-violet-900/30 dark:to-fuchsia-900/30 dark:text-violet-300"
-                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
-                }`}
-              >
-                <Moon className="w-4 h-4 text-indigo-500" />
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+                <Moon className="w-4 h-4" />
                 <span className="flex-1 text-right">داكن</span>
                 {theme === "dark" && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-<<<<<<< HEAD
-                    className="w-1.5 h-1.5 rounded-full bg-primary-600"
-=======
-                    className="w-1.5 h-1.5 rounded-full bg-violet-600"
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+                    className="w-1.5 h-1.5 rounded-full bg-blue-600"
                   />
                 )}
-              </motion.button>
+              </button>
 
-              {/* خيار تلقائي */}
-              <motion.button
-                whileHover={{ x: 2 }}
+              <button
                 onClick={() => changeTheme("system")}
                 className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${
                   theme === "system"
-<<<<<<< HEAD
-                    ? "bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-700 dark:from-primary-900/30 dark:to-secondary-900/30 dark:text-primary-300"
-                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                    ? "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
+                    : "hover:bg-gray-50 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-200"
                 }`}
               >
-                <Monitor className="w-4 h-4 text-primary-600" />
-=======
-                    ? "bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700 dark:from-violet-900/30 dark:to-fuchsia-900/30 dark:text-violet-300"
-                    : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
-                }`}
-              >
-                <Monitor className="w-4 h-4 text-violet-600" />
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+                <Monitor className="w-4 h-4" />
                 <span className="flex-1 text-right">تلقائي</span>
                 {theme === "system" && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-<<<<<<< HEAD
-                    className="w-1.5 h-1.5 rounded-full bg-primary-600"
-=======
-                    className="w-1.5 h-1.5 rounded-full bg-violet-600"
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+                    className="w-1.5 h-1.5 rounded-full bg-blue-600"
                   />
                 )}
-              </motion.button>
-
-              {/* تذييل القائمة مع تأثير متحرك */}
-              <div className="p-2 border-t border-gray-100 dark:border-gray-700">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="flex justify-center"
-                >
-<<<<<<< HEAD
-                  <Sparkles className="w-3 h-3 text-amber-600" />
-=======
-                  <Sparkles className="w-3 h-3 text-amber-500" />
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
-                </motion.div>
-              </div>
+              </button>
             </motion.div>
           </>
         )}

@@ -15,14 +15,10 @@ import {
   Target,
   Rocket,
   Heart,
-  Clock,
-  Shield,
-  Users,
-  TrendingUp
+  Clock  // <-- تم إضافة Clock هنا
 } from "lucide-react";
 import Section from "./Section";
 import { siteData } from "@/lib/siteData";
-import Link from "next/link";
 
 export default function LeadMagnet() {
   const l = siteData.home.leadMagnet;
@@ -33,20 +29,19 @@ export default function LeadMagnet() {
       title={l.title} 
       subtitle={l.subtitle}
       badge="عرض خاص"
-      className="bg-gradient-to-b from-white to-violet-50/30 dark:from-gray-950 dark:to-violet-950/20"
     >
       {/* بطاقة الجذب الرئيسية */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+        transition={{ duration: 0.6 }}
         className="relative group"
       >
         {/* خلفية متدرجة متحركة */}
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500 dark:opacity-30 dark:group-hover:opacity-40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
         
-        <div className="relative bg-gradient-to-br from-violet-600 via-fuchsia-600 to-amber-600 rounded-3xl overflow-hidden shadow-2xl">
+        <div className="relative bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl overflow-hidden shadow-2xl">
           {/* خلفية متحركة بنقاط متلألئة */}
           <div className="absolute inset-0">
             <motion.div
@@ -77,7 +72,7 @@ export default function LeadMagnet() {
               rotate: [0, -5, 5, 0],
             }}
             transition={{ duration: 7, repeat: Infinity }}
-            className="absolute -bottom-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"
+            className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-300/20 rounded-full blur-3xl"
           />
 
           <div className="relative p-8 md:p-12">
@@ -89,7 +84,7 @@ export default function LeadMagnet() {
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+                  transition={{ type: "spring", delay: 0.2 }}
                   className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white border border-white/30 mb-6"
                 >
                   <Gift className="w-4 h-4" />
@@ -125,7 +120,7 @@ export default function LeadMagnet() {
                 >
                   {l.bullets.map((bullet, idx) => (
                     <motion.div
-                      key={`bullet-${idx}`}
+                      key={`bullet-${idx}`}  // <-- تم تعديل المفتاح
                       variants={{
                         hidden: { opacity: 0, x: -20 },
                         visible: { opacity: 1, x: 0 },
@@ -135,7 +130,7 @@ export default function LeadMagnet() {
                       <div className="flex-shrink-0 w-6 h-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
                         <CheckCircle2 className="w-4 h-4 text-white" />
                       </div>
-                      <span className="text-white/90 text-sm">{bullet.replace('✓', '')}</span>
+                      <span className="text-white/90 text-sm">{bullet}</span>
                     </motion.div>
                   ))}
                 </motion.div>
@@ -148,7 +143,7 @@ export default function LeadMagnet() {
                     href={brand.whatsappLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-violet-600 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     <MessageCircle className="w-5 h-5" />
                     {l.ctaLabel}
@@ -158,7 +153,7 @@ export default function LeadMagnet() {
                   <motion.a
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    href={`tel:${brand.phoneE164}`}
+                    href={`tel:${brand.phoneDisplay}`}
                     className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold border border-white/30 hover:bg-white/30 transition-all duration-300"
                   >
                     <Phone className="w-5 h-5" />
@@ -206,13 +201,13 @@ export default function LeadMagnet() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
-                  className="absolute -top-4 -right-4 bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-xl"
+                  className="absolute -top-4 -right-4 bg-white rounded-2xl p-4 shadow-xl"
                 >
                   <div className="flex items-center gap-2">
-                    <Target className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+                    <Target className="w-5 h-5 text-blue-600" />
                     <div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">تحليل مجاني</div>
-                      <div className="text-sm font-bold text-gray-900 dark:text-white">قيمة ١٠٠٠ جنيه</div>
+                      <div className="text-xs text-gray-500">تحليل مجاني</div>
+                      <div className="text-sm font-bold">قيمة ١٠٠٠ جنيه</div>
                     </div>
                   </div>
                 </motion.div>
@@ -222,13 +217,13 @@ export default function LeadMagnet() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.5 }}
-                  className="absolute -bottom-4 -left-4 bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-xl"
+                  className="absolute -bottom-4 -left-4 bg-white rounded-2xl p-4 shadow-xl"
                 >
                   <div className="flex items-center gap-2">
-                    <Rocket className="w-5 h-5 text-fuchsia-600 dark:text-fuchsia-400" />
+                    <Rocket className="w-5 h-5 text-purple-600" />
                     <div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">عدد المستفيدين</div>
-                      <div className="text-sm font-bold text-gray-900 dark:text-white">٥٠+ عميل</div>
+                      <div className="text-xs text-gray-500">عدد المستفيدين</div>
+                      <div className="text-sm font-bold">٥٠+ عميل</div>
                     </div>
                   </div>
                 </motion.div>
@@ -244,11 +239,9 @@ export default function LeadMagnet() {
               className="mt-8 pt-6 border-t border-white/20 flex flex-wrap items-center justify-between gap-4"
             >
               <div className="flex items-center gap-4">
-                <div className="flex gap-0.5">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={`star-${star}`} className="w-4 h-4 text-yellow-300 fill-yellow-300" />
-                  ))}
-                </div>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star key={`star-${star}`} className="w-4 h-4 text-yellow-300 fill-yellow-300" />
+                ))}
                 <span className="text-white/80 text-sm">تقييم ٤.٩ من ٥٠+ عميل</span>
               </div>
 
@@ -263,41 +256,26 @@ export default function LeadMagnet() {
 
       {/* إحصائيات الثقة */}
       <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: {
-              staggerChildren: 0.1,
-              delayChildren: 0.4,
-            },
-          },
-        }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.4 }}
         className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4"
       >
         {[
-          { icon: Heart, label: "عميل سعيد", value: "٥٠+", color: "from-violet-600 to-fuchsia-600" },
-          { icon: Zap, label: "تحليل مجاني", value: "٥٠+", color: "from-blue-600 to-cyan-600" },
-          { icon: Star, label: "تقييم", value: "٤.٩/٥", color: "from-amber-600 to-orange-600" },
-          { icon: Clock, label: "دعم فوري", value: "٢٤/٧", color: "from-green-600 to-emerald-600" },
+          { icon: Heart, label: "عميل سعيد", value: "٥٠+" },
+          { icon: Zap, label: "تحليل مجاني", value: "٥٠+" },
+          { icon: Star, label: "تقييم", value: "٤.٩/٥" },
+          { icon: Clock, label: "دعم فوري", value: "٢٤/٧" }, // <-- الآن Clock موجودة
         ].map((stat, idx) => (
           <motion.div
-            key={`stat-${idx}`}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 }
-            }}
+            key={`stat-${idx}`}  // <-- تم تعديل المفتاح
             whileHover={{ y: -4 }}
-            className="text-center p-5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all"
+            className="text-center p-4 bg-gradient-to-b from-white to-gray-50 rounded-xl border border-gray-100 shadow-sm"
           >
-            <div className={`w-10 h-10 mx-auto mb-2 rounded-lg bg-gradient-to-br ${stat.color} p-2 text-white`}>
-              <stat.icon className="w-full h-full" />
-            </div>
-            <div className="text-lg font-bold text-gray-900 dark:text-white">{stat.value}</div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{stat.label}</div>
+            <stat.icon className="w-6 h-6 text-blue-600 mx-auto mb-2" />
+            <div className="text-lg font-bold text-gray-900">{stat.value}</div>
+            <div className="text-xs text-gray-500">{stat.label}</div>
           </motion.div>
         ))}
       </motion.div>
@@ -307,36 +285,16 @@ export default function LeadMagnet() {
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
-        className="mt-8 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl p-6 border border-amber-200 dark:border-amber-800 text-center"
+        transition={{ delay: 0.5 }}
+        className="mt-8 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-6 border border-amber-200 text-center"
       >
         <div className="flex items-center justify-center gap-2 mb-2">
-          <Rocket className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-          <span className="text-sm font-bold text-amber-800 dark:text-amber-300">لا تفوت الفرصة!</span>
+          <Rocket className="w-5 h-5 text-amber-600" />
+          <span className="text-sm font-bold text-amber-800">لا تفوت الفرصة!</span>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-sm text-gray-600">
           {l.bullets[0]?.replace('✓', '') || 'احجز استشارتك المجانية الآن'} - احجز استشارتك المجانية الآن وابدأ رحلة نجاح مشروعك
         </p>
-      </motion.div>
-
-      {/* شارات ضمان إضافية */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.6 }}
-        className="mt-4 flex flex-wrap justify-center gap-4"
-      >
-        {[
-          { icon: Shield, text: "بدون التزام" },
-          { icon: Users, text: "خبراء متخصصون" },
-          { icon: TrendingUp, text: "نتائج مضمونة" },
-        ].map((item, idx) => (
-          <div key={`badge-${idx}`} className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-            <item.icon className="w-3 h-3" />
-            <span>{item.text}</span>
-          </div>
-        ))}
       </motion.div>
 
       {/* ملاحظة التطوير */}
@@ -344,10 +302,10 @@ export default function LeadMagnet() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.7 }}
+        transition={{ delay: 0.6 }}
         className="mt-4 text-center"
       >
-        <span className="inline-block px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs rounded-full border border-gray-200 dark:border-gray-700">
+        <span className="inline-block px-3 py-1 bg-gray-100 text-gray-500 text-xs rounded-full">
           💡 (لزيادة المصداقية: بعد ما تعمل ٢–٣ مشاريع حقيقية، استبدل النص بأرقام/نتائج حقيقية)
         </span>
       </motion.div>

@@ -3,12 +3,12 @@
     // هدف الترجمة والمكتبات
     "target": "ES2022",
     "lib": [
-      "dom",
-      "dom.iterable",
+      "dom", 
+      "dom.iterable", 
       "esnext",
-      "ES2022",
-      "ES2023"
+      "ES2022"
     ],
+    
     // إعدادات الوحدة
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,54 +19,35 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx", // تم التغيير من react-jsx إلى preserve
+    "jsx": "react-jsx",
     "incremental": true,
+    
     // إعدادات إضافية لتحسين تجربة التطوير
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true, // تم التغيير إلى true
-    "noUnusedParameters": true, // تم التغيير إلى true
+    "noUnusedLocals": false, // يمكن تغييرها إلى true للتحقق من المتغيرات غير المستخدمة
+    "noUnusedParameters": false, // يمكن تغييرها إلى true للتحقق من المعاملات غير المستخدمة
     "noImplicitReturns": true,
     "noImplicitOverride": true,
     "allowUnreachableCode": false,
+    
     // تحسين الأداء
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
     "pretty": true,
+    
     // إعدادات المسارات
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@lib/*": [
-        "./src/lib/*"
-      ],
-      "@app/*": [
-        "./src/app/*"
-      ],
-      "@public/*": [
-        "./public/*"
-      ],
-      "@images/*": [
-        "./public/images/*"
-      ],
-      "@styles/*": [
-        "./src/styles/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@hooks/*": [
-        "./src/hooks/*"
-      ],
-      "@types/*": [
-        "./src/types/*"
-      ]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@app/*": ["./src/app/*"],
+      "@public/*": ["./public/*"],
+      "@images/*": ["./public/images/*"],
+      "@styles/*": ["./src/styles/*"]
     },
+    
     // إعدادات متقدمة
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -78,13 +59,7 @@
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": false,
-    // إعدادات ديكورية
-    "experimentalDecorators": false,
-    "emitDecoratorMetadata": false,
-    // إعدادات إضافية
-    "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true,
-    "importHelpers": true,
+    
     // إعدادات Next.js
     "plugins": [
       {
@@ -92,6 +67,7 @@
       }
     ]
   },
+  
   // الملفات المشمولة
   "include": [
     "next-env.d.ts",
@@ -101,12 +77,9 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "src/**/*.ts",
-    "src/**/*.tsx",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.mjs",
-    "**/*.cjs"
+    "src/**/*.tsx"
   ],
+  
   // الملفات المستثناة
   "exclude": [
     "node_modules",
@@ -115,16 +88,7 @@
     "dist",
     "build",
     "**/*.test.ts",
-    "**/*.test.tsx",
     "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "coverage",
-    "public",
-    "*.config.js",
-    "*.config.ts",
-    "postcss.config.js",
-    "tailwind.config.ts",
-    "next.config.ts",
-    "eslint.config.js"
+    "coverage"
   ]
 }

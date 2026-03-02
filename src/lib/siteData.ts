@@ -1,22 +1,16 @@
-// siteData.ts - نسخة محسنة ومتكاملة مع الهوية البنفسجية
+// siteData.ts - نسخة محسنة واحترافية
+// يمكنك نسخ هذا الملف بالكامل واستبدال ملفك القديم
 
 export const siteData = {
   brand: {
     name: "Kodia Web Design",
-    shortName: "Kodia",
-    tagline: "شريكك الرقمي الموثوق",
     phoneDisplay: "01207005495",
     phoneE164: "+201207005495",
     email: "kodia.web.design@gmail.com",
     whatsappLink: "https://wa.me/201207005495",
-    url: "https://kodia-web-design-com.vercel.app", // رابط Vercel بعد النشر
-    logo: "/images/logo.png",
-    favicon: "/favicon.ico",
+    url: "https://YOUR-DOMAIN.com", // ضع رابط Vercel بعد النشر
+    logo: "/images/logo.png", // اختياري
     locale: "ar_EG",
-    serviceArea: "مصر وجميع الدول العربية (أونلاين)",
-    foundingYear: "2023",
-    teamSize: "١٢+ خبير",
-    satisfactionRate: "٩٨٪",
     sameAs: [
       "https://www.instagram.com/kodia_web_design",
       "https://www.threads.com/@kodia_web_design",
@@ -28,6 +22,10 @@ export const siteData = {
       "https://www.snapchat.com/add/kodia.webdesign?share_id=PruhWFTedA0&locale=ar-EG",
       "https://youtube.com/@kodia_web_design?si=TJ0n66Pbla0z3vWX",
     ],
+    serviceArea: "Egypt (Online)",
+    foundingYear: "2023",
+    teamSize: "5+ خبراء",
+    satisfaction_rate: "100%",
   },
 
   topNav: {
@@ -37,80 +35,65 @@ export const siteData = {
       { name: "Facebook", href: "https://www.facebook.com/kodia.web.design.apps/", icon: "facebook" },
       { name: "LinkedIn", href: "https://www.linkedin.com/in/kodia-web-design/", icon: "linkedin" },
       { name: "Telegram", href: "https://t.me/kodia_web_design", icon: "telegram" },
-      { name: "TikTok", href: "https://www.tiktok.com/@kodia_web_design", icon: "tiktok" },
+      { name: "TikTok", href: "https://www.tiktok.com/@kodia_web_design?_r=1&_t=ZS-943sLTpQ5CP", icon: "tiktok" },
       { name: "X", href: "https://x.com/kodia_web_desgn", icon: "x" },
-      { name: "Snapchat", href: "https://www.snapchat.com/add/kodia.webdesign", icon: "snapchat" },
-      { name: "YouTube", href: "https://youtube.com/@kodia_web_design", icon: "youtube" },
+      { name: "Snapchat", href: "https://www.snapchat.com/add/kodia.webdesign?share_id=PruhWFTedA0&locale=ar-EG", icon: "snapchat" },
+      { name: "YouTube", href: "https://youtube.com/@kodia_web_design?si=TJ0n66Pbla0z3vWX", icon: "youtube" },
     ],
   },
   
   nav: [
     { label: "الرئيسية", href: "/" },
     { label: "من نحن", href: "/about" },
-    { 
-      label: "خدماتنا", 
-      href: "/services",
-      children: [
-        { label: "تصميم مواقع شركات", href: "/services/web-design", description: "مواقع تعبر عن قيمتك" },
-        { label: "متاجر إلكترونية", href: "/services/ecommerce", description: "متاجر تبيع 24/7" },
-        { label: "تطبيقات موبايل", href: "/services/mobile-apps", description: "تطبيقات Android و iOS" },
-        { label: "UI/UX Design", href: "/services/ui-ux", description: "واجهات وتجربة مستخدم" },
-        { label: "تحسين SEO", href: "/services/seo", description: "ظهور متقدم في جوجل" },
-        { label: "دعم فني", href: "/services/support", description: "متابعة مستمرة" },
-      ],
-    },
-    { 
-      label: "أعمالنا", 
-      href: "/portfolio",
-      children: [
-        { label: "جميع الأعمال", href: "/portfolio" },
-        { label: "مواقع شركات", href: "/portfolio?category=company" },
-        { label: "متاجر إلكترونية", href: "/portfolio?category=ecommerce" },
-        { label: "تطبيقات موبايل", href: "/portfolio?category=apps" },
-        { label: "معرض الصور", href: "/portfolio/gallery" },
-      ],
-    },
+    { label: "خدماتنا", href: "/services" },
+    { label: "أعمالنا", href: "/portfolio" },
     { label: "آراء العملاء", href: "/testimonials" },
     { label: "المدونة", href: "/blog" },
+    { label: "انضم إلينا", href: "/join" },
     { label: "اتصل بنا", href: "/contact" },
     {
       label: "ابدأ مشروعك",
       href: "/quote",
       children: [
-        { label: "طلب عرض سعر", href: "/quote", description: "احصل على عرض دقيق" },
-        { label: "حاسبة السعر", href: "/estimate", description: "احسب تكلفة مشروعك" },
-        { label: "نموذج Brief", href: "/brief", description: "اشرح فكرتك بالتفصيل" },
-        { label: "Company Profile", href: "/profile", description: "تعرف على ملف الشركة" },
-        { label: "الضمانات", href: "/policies", description: "سياسات العمل والضمانات" },
+        { label: "طلب عرض سعر", href: "/quote" },
+        { label: "حاسبة السعر", href: "/estimate" },
+        { label: "نموذج Brief", href: "/brief" },
+        { label: "Company Profile", href: "/profile" },
+        { label: "السياسات والضمانات", href: "/policies" },
+        { label: "Resources", href: "/resources" },
+        { label: "معرض الأعمال", href: "/portfolio/gallery" },
       ],
     },
   ],
 
-  home: {
-    marketing: {
-      speedLine: "⚡ أداء عالي وسرعة فائقة | 🎯 تصميم يجذب العملاء",
-      responseLine: "📞 الرد خلال ساعات العمل - تواصل فوري عبر واتساب",
-      badgeLine: "✨ تجربة مستخدم احترافية + تصميم فاخر + كود نظيف",
-      trustIndicators: ["موثوق من +٢٠ عميل", "تسليم في الموعد", "دعم فني ٢٤/٧"],
-    },
+home: {
+  marketing: {
+    speedLine: "⚡ أداء عالي وسرعة فائقة | 🎯 تصميم يجذب العملاء",
+    responseLine: "📞 الرد خلال ساعات العمل - تواصل فوري عبر واتساب",
+    badgeLine: "✨ تجربة مستخدم احترافية + تصميم فاخر + كود نظيف",
+    trustIndicators: ["موثوق من +10 عملاء", "تسليم في الموعد", "دعم فني مستمر"],
+  },
 
-    showreel: {
-      title: "شاهد كيف نصنع الفرق",
-      subtitle: "فيديو تعريفي بخدماتنا وأعمالنا",
-      videoUrl: "https://www.youtube.com/embed/placeholder",
-      videoMp4Url: "/videos/showreel.mp4",
-      posterImage: "/images/showreel-poster.jpg",
-    },
-
+  // قسم الفيديو التوضيحي (نسخة واحدة فقط)
+  showreel: {
+    title: "شاهد كيف نصنع الفرق",
+    subtitle: "فيديو تعريفي بخدماتنا وأعمالنا",
+    // لو هتعرضه داخل iframe استخدم embed:
+    videoUrl: "https://www.youtube.com/embed/placeholder",
+    // اختياري لو عندك mp4 وبتعرضه بـ <video>:
+    videoMp4Url: "https://your-video-url.mp4",
+    posterImage: "/images/showreel-poster.jpg",
+  },
     hero: {
       title: "نُحوِّل أفكارك إلى مواقع وتطبيقات فاخرة تبيع نيابة عنك",
-      subtitle: "نصمم ونطور مواقع شركات، متاجر إلكترونية، وتطبيقات موبايل بتجربة مستخدم استثنائية وتصميم يخلّي العميل يثق فيك من أول نظرة.",
+      subtitle:
+        "نصمم و نطور مواقع شركات، متاجر إلكترونية، وتطبيقات موبايل بتجربة مستخدم استثنائية وتصميم يخلّي العميل يثق فيك من أول نظرة.",
       primaryCta: { label: "شاهد أعمالنا", href: "/portfolio" },
       secondaryCta: { label: "تحدث مع خبير", href: "/contact" },
       stats: [
-        { value: "٢٥+", label: "نموذج عمل" },
-        { value: "٢٠+", label: "عميل سعيد" },
-        { value: "٢٤/٧", label: "دعم فني" },
+        { value: "15+", label: "نموذج عمل" },
+        { value: "10+", label: "عميل سعيد" },
+        { value: "24/7", label: "دعم فني" },
       ],
     },
 
@@ -121,14 +104,206 @@ export const siteData = {
         "🚀 تهيئة SEO وسرعة",
         "🛠️ تسليم منظم + دعم",
         "💯 ضمان استعادة الحقوق",
-        "🎨 تصميم فاخر",
       ],
     },
+
+    // إضافة قسم الفيديو التوضيحي
+
+    serviceLandings: [
+      {
+        slug: "web-design",
+        icon: "Globe2",
+        title: "تصميم مواقع شركات فخمة",
+        subtitle: "موقع يعبر عن قيمة علامتك التجارية ويحول الزوار إلى عملاء حقيقيين",
+        problem: "معظم مواقع الشركات تعاني من ضعف في التصميم وبطء في الأداء، مما يفقده فرصاً ثمينة.",
+        solution: "نصمم موقعاً يعكس احترافيتك مع تجربة مستخدم سلسة تجعل العميل يثق بك فوراً ويتواصل معك.",
+        features: [
+          { icon: "Palette", title: "تصميم UI/UX فاخر", desc: "واجهات جذابة وتجربة استخدام مدروسة" },
+          { icon: "Smartphone", title: "متجاوب 100%", desc: "يظهر بشكل مثالي على جميع الأجهزة" },
+          { icon: "Search", title: "SEO أساسي + Meta", desc: "تهيئة لمحركات البحث من اليوم الأول" },
+          { icon: "MessageCircle", title: "ربط واتساب تلقائي", desc: "وصول مباشر للعملاء" },
+          { icon: "Zap", title: "أداء عالي", desc: "تحميل سريع وتجربة سلسة" },
+          { icon: "Code2", title: "كود نظيف", desc: "هيكل منظم قابل للتطوير" },
+        ],
+        packages: [
+          {
+            name: "Starter",
+            price: "يبدأ من 5,000 جنيه",
+            popular: false,
+            points: [
+              "✓ حتى 5 صفحات رئيسية",
+              "✓ تصميم متجاوب بالكامل",
+              "✓ نموذج تواصل احترافي",
+              "✓ تهيئة SEO أساسية",
+              "✓ ربط وسائل التواصل",
+            ],
+          },
+          {
+            name: "Pro",
+            price: "يبدأ من 9,000 جنيه",
+            popular: true,
+            points: [
+              "✓ حتى 10 صفحات احترافية",
+              "✓ أقسام إقناع متكاملة",
+              "✓ تحسين سرعة متقدم",
+              "✓ تهيئة SEO شاملة",
+              "✓ دعم فني لمدة شهر",
+              "✓ تحليلات وإحصائيات",
+            ],
+          },
+          {
+            name: "Elite",
+            price: "يبدأ من 15,000 جنيه",
+            popular: false,
+            points: [
+              "✓ عدد غير محدود من الصفحات",
+              "✓ تصميم حسب الطلب بالكامل",
+              "✓ محتوى تسويقي احترافي",
+              "✓ تحسينات تحويل متقدمة",
+              "✓ دعم فني لمدة 3 أشهر",
+              "✓ تدريب على الإدارة",
+            ],
+          },
+        ],
+        faq: [
+          { q: "كم يستغرق تنفيذ موقع شركة؟", a: "المدة تعتمد على حجم المشروع، لكن غالباً بين 2 إلى 4 أسابيع للمواقع المتوسطة." },
+          { q: "هل يمكنني تحديث الموقع بنفسي بعد التسليم؟", a: "نعم، نوفر لك لوحة تحكم سهلة تمكنك من تحديث المحتوى بنفسك." },
+          { q: "هل الموقع سيكون جاهزاً لمحركات البحث؟", a: "نعم، نطبق أفضل ممارسات تحسين محركات البحث من اليوم الأول." },
+          { q: "هل توفرون استضافة للموقع؟", a: "نعم، نساعدك في اختيار أفضل استضافة ويمكننا إعدادها لك." },
+        ],
+        caseStudy: {
+          client: "شركة تكافل للتأمين",
+          result: "زيادة في طلبات الاتصال بنسبة 140% بعد إطلاق الموقع الجديد",
+        },
+      },
+      {
+        slug: "ecommerce",
+        icon: "ShoppingCart",
+        title: "تصميم متجر إلكتروني يبيع 24/7",
+        subtitle: "متجر احترافي بتجربة شراء سلسة تزيد المبيعات وتبني ولاء العملاء",
+        problem: "المتاجر الإلكترونية غير المدروسة تفقد عملاءها في لحظة الدفع بسبب ضعف الثقة.",
+        solution: "نبني متجراً يعزز ثقة العميل بواجهة واضحة، صور جذابة، وسلة شراء سهلة تزيد نسبة التحويل.",
+        features: [
+          { icon: "Grid3x3", title: "عرض منتجات منظم", desc: "تصنيفات وفلاتر متقدمة" },
+          { icon: "ShoppingBag", title: "سلة شراء احترافية", desc: "تجربة إضافة وشراء سلسة" },
+          { icon: "Shield", title: "عوامل ثقة", desc: "شهادات ضمان وسياسات واضحة" },
+          { icon: "Truck", title: "طرق شحن متعددة", desc: "ربط مع شركات الشحن" },
+          { icon: "CreditCard", title: "بوابات دفع", desc: "ربط مع فوري، باي موب، بطاقات" },
+          { icon: "BarChart3", title: "تقارير مبيعات", desc: "تحليلات متكاملة" },
+        ],
+        packages: [
+          {
+            name: "Starter Store",
+            price: "يبدأ من 8,000 جنيه",
+            points: [
+              "✓ حتى 50 منتج",
+              "✓ تصميم متجاوب",
+              "✓ سلة شراء أساسية",
+              "✓ ربط واتساب للطلبات",
+              "✓ تصنيفات أساسية",
+            ],
+          },
+          {
+            name: "Pro Store",
+            price: "يبدأ من 15,000 جنيه",
+            popular: true,
+            points: [
+              "✓ حتى 200 منتج",
+              "✓ صفحات منتج احترافية",
+              "✓ فلاتر متقدمة",
+              "✓ تقييمات المنتجات",
+              "✓ سياسات وشروط",
+              "✓ ربط شحن وبوابات دفع",
+            ],
+          },
+          {
+            name: "Enterprise",
+            price: "يبدأ من 25,000 جنيه",
+            points: [
+              "✓ منتجات غير محدودة",
+              "✓ نظام كوبونات وخصومات",
+              "✓ برنامج ولاء العملاء",
+              "✓ تكامل مع ERP/CRM",
+              "✓ تطبيق موبايل (إضافي)",
+              "✓ دعم فني مميز",
+            ],
+          },
+        ],
+        faq: [
+          { q: "هل يمكنني إضافة منتجات غير محدودة؟", a: "في الباقة الاحترافية، يمكنك إضافة منتجات غير محدودة." },
+          { q: "كيف يتم الدفع في المتجر؟", a: "ندعم بوابات الدفع الإلكتروني مثل Paymob, Fawry, وبطاقات ائتمان." },
+          { q: "هل المتجر مناسب للجوال؟", a: "نعم، تم تصميمه ليكون مثالياً على جميع أحجام الشاشات." },
+        ],
+        caseStudy: {
+          client: "متجر أزياء أونلاين",
+          result: "زيادة المبيعات بنسبة 85% في أول 3 أشهر",
+        },
+      },
+      {
+        slug: "mobile-apps",
+        icon: "Smartphone",
+        title: "تصميم تطبيقات جوال بتجربة مستخدم استثنائية",
+        subtitle: "نصمم شاشات تطبيقك بدقة واحترافية تجعل المستخدم يعشق التطبيق من أول استخدام",
+        problem: "التطبيقات ذات التصميم المعقد أو البطيء يتم حذفها خلال دقائق من التثبيت.",
+        solution: "نصمم واجهات بديهية وتجربة مستخدم سلسة تجعل المستخدم يعود لتطبيقك يومياً.",
+        features: [
+          { icon: "PenTool", title: "تصميم شاشات Mobile UI", desc: "واجهات عصرية وجذابة" },
+          { icon: "Map", title: "User Flow واضح", desc: "رحلة مستخدم مدروسة" },
+          { icon: "Layers", title: "Design System متكامل", desc: "مكونات قابلة لإعادة الاستخدام" },
+          { icon: "figma", title: "تسليم ملفات Figma", desc: "جاهزة للتسليم للمطورين" },
+          { icon: "Smartphone", title: "Android & iOS", desc: "متوافق مع نظامي التشغيل" },
+          { icon: "Rocket", title: "Prototype تفاعلي", desc: "لمشاهدة التجربة قبل التطوير" },
+        ],
+        packages: [
+          {
+            name: "UI Essential",
+            price: "يبدأ من 6,000 جنيه",
+            points: [
+              "✓ 10-15 شاشة رئيسية",
+              "✓ Style Guide أساسي",
+              "✓ تصميم متجاوب",
+              "✓ تسليم ملفات Figma",
+            ],
+          },
+          {
+            name: "UX Pro",
+            price: "يبدأ من 12,000 جنيه",
+            popular: true,
+            points: [
+              "✓ 20-30 شاشة متكاملة",
+              "✓ User Flow كامل",
+              "✓ Prototype تفاعلي",
+              "✓ Design System",
+              "✓ تسليم للمطورين",
+            ],
+          },
+          {
+            name: "Full Package",
+            price: "يبدأ من 20,000 جنيه",
+            points: [
+              "✓ جميع الشاشات",
+              "✓ تحسينات تجربة متقدمة",
+              "✓ اختبارات مستخدمين",
+              "✓ تطبيق مبني (إضافي)",
+              "✓ دعم بعد التسليم",
+            ],
+          },
+        ],
+        faq: [
+          { q: "هل تصميم التطبيق يصلح للبرمجة؟", a: "نعم، نصمم بنظام مكونات واضح يسهل تحويله لكود." },
+          { q: "كم شاشة يحتاجها تطبيق بسيط؟", a: "المتوسط بين 15-25 شاشة حسب تعقيد التطبيق." },
+        ],
+        caseStudy: {
+          client: "تطبيق طبي",
+          result: "تقييم 4.8 في متجر التطبيقات بعد الإطلاق",
+        },
+      },
+    ],
 
     servicesIntro: {
       title: "خدماتنا المتكاملة",
       subtitle: "نقدم حلولاً رقمية شاملة تأخذ مشروعك من الفكرة إلى النجاح باحترافية",
-      badge: "جميع الحلول الرقمية",
+      badge: "جميع الخدمات",
     },
 
     services: [
@@ -136,51 +311,49 @@ export const siteData = {
         title: "تصميم مواقع الشركات", 
         desc: "موقع يعبر عن قيمتك ويحول الزوار إلى عملاء",
         icon: "Building2",
-        slug: "/services/web-design",
-        popular: true,
+        slug: "/services/web-design"
       },
       { 
         title: "تصميم المتاجر الإلكترونية", 
         desc: "متجر يبيع 24 ساعة بتجربة شراء استثنائية",
         icon: "ShoppingBag",
-        slug: "/services/ecommerce",
-        popular: true,
+        slug: "/services/ecommerce"
       },
       { 
         title: "برمجة تطبيقات الهاتف", 
         desc: "تطبيقات Android و iOS بتصميم جذاب وأداء عالي",
         icon: "Smartphone",
-        slug: "/services/mobile-apps",
+        slug: "/services/mobile-apps"
       },
       { 
         title: "UI/UX Design", 
         desc: "واجهات مستخدم بديهية وتجربة استخدام تزيد التحويل",
-        icon: "Palette",
-        slug: "/services/ui-ux",
+        icon: "PenTool",
+        slug: "/services/ui-ux"
       },
       { 
         title: "تحسين محركات البحث (SEO)", 
         desc: "ظهور متقدم في جوجل يجلب زواراً مستهدفين",
         icon: "TrendingUp",
-        slug: "/services/seo",
+        slug: "/services/seo"
       },
       { 
         title: "الدعم الفني والصيانة", 
         desc: "متابعة مستمرة وتحديثات منتظمة لموقعك",
         icon: "Settings",
-        slug: "/services/maintenance",
+        slug: "/services/maintenance"
       },
       { 
         title: "كتابة المحتوى التسويقي", 
         desc: "محتوى إبداعي يخاطب جمهورك ويقنعه",
         icon: "FileText",
-        slug: "/services/content",
+        slug: "/services/content"
       },
       { 
         title: "استضافة وحماية", 
         desc: "استضافة سريعة وآمنة مع شهادة SSL",
         icon: "Shield",
-        slug: "/services/hosting",
+        slug: "/services/hosting"
       },
     ],
 
@@ -189,46 +362,40 @@ export const siteData = {
       subtitle: "منهجية عمل واضحة تضمن نتائج مبهرة في كل مشروع",
       steps: [
         { 
-          number: "٠١", 
+          number: "01", 
           title: "فهم وتحليل", 
           desc: "نجلس معك لنفهم نشاطك، جمهورك، وأهدافك بالكامل",
-          icon: "Users",
-          duration: "١-٣ أيام",
+          icon: "Users"
         },
         { 
-          number: "٠٢", 
+          number: "02", 
           title: "تصميم واجهات", 
           desc: "نصمم نموذج أولي تفاعلي لترى كيف سيبدو موقعك",
-          icon: "Palette",
-          duration: "٢-٤ أيام",
+          icon: "Palette"
         },
         { 
-          number: "٠٣", 
+          number: "03", 
           title: "تطوير وبرمجة", 
           desc: "نحول التصميم إلى كود نظيف بأحدث التقنيات",
-          icon: "Code2",
-          duration: "٣-٥ أيام",
+          icon: "Code2"
         },
         { 
-          number: "٠٤", 
+          number: "04", 
           title: "اختبار ومراجعة", 
           desc: "نختبر كل زاوية للتأكد من خلوه من الأخطاء",
-          icon: "TestTube",
-          duration: "١-٢ يوم",
+          icon: "TestTube"
         },
         { 
-          number: "٠٥", 
+          number: "05", 
           title: "إطلاق وتدريب", 
           desc: "ننشر موقعك وندربك على إدارته بنفسك",
-          icon: "Rocket",
-          duration: "يوم الإطلاق",
+          icon: "Rocket"
         },
         { 
-          number: "٠٦", 
-          title: "دعم ومتابعة", 
+          number: "06", 
+          title: "دوم ومتابعة", 
           desc: "نبقى معك حتى بعد الإطلاق لدعم نجاحك",
-          icon: "Heart",
-          duration: "مستمر",
+          icon: "Heart"
         },
       ],
     },
@@ -240,40 +407,38 @@ export const siteData = {
       items: [
         {
           name: "موقع تعريفي",
-          price: "يبدأ من ٥,٠٠٠ جنيه",
+          price: "يبدأ من 5,000 جنيه",
           features: [
-            "✓ حتى ٥ صفحات رئيسية",
-            "✓ تصميم متجاوب بالكامل",
-            "✓ نموذج تواصل احترافي",
-            "✓ ربط واتساب تلقائي",
-            "✓ تهيئة SEO أساسية",
+            "✓ حتى 5 صفحات",
+            "✓ تصميم متجاوب",
+            "✓ نموذج تواصل",
+            "✓ ربط واتساب",
+            "✓ SEO أساسي",
           ],
           cta: { label: "اطلب عرض سعر", href: "/quote" },
         },
         {
           name: "موقع شركة متقدم",
-          price: "يبدأ من ٩,٠٠٠ جنيه",
+          price: "يبدأ من 9,000 جنيه",
           features: [
-            "✓ حتى ١٠ صفحات احترافية",
-            "✓ تصميم فاخر حسب الطلب",
-            "✓ تحسين سرعة متقدم",
-            "✓ تهيئة SEO شاملة",
-            "✓ دعم فني لمدة شهر",
-            "✓ تحليلات وإحصائيات",
+            "✓ حتى 10 صفحات",
+            "✓ تصميم فاخر",
+            "✓ تحسين سرعة",
+            "✓ SEO متقدم",
+            "✓ دعم شهر",
           ],
           cta: { label: "تواصل الآن", href: "/quote" },
           popular: true,
         },
         {
           name: "متجر إلكتروني",
-          price: "يبدأ من ١٥,٠٠٠ جنيه",
+          price: "يبدأ من 15,000 جنيه",
           features: [
-            "✓ حتى ٢٠٠ منتج",
-            "✓ سلة شراء متكاملة",
-            "✓ بوابات دفع إلكتروني",
+            "✓ حتى 200 منتج",
+            "✓ سلة شراء",
+            "✓ بوابات دفع",
             "✓ تقارير مبيعات",
-            "✓ دعم فني ٣ أشهر",
-            "✓ تكامل شحن",
+            "✓ دعم 3 شهور",
           ],
           cta: { label: "اطلب عرض سعر", href: "/quote" },
         },
@@ -305,8 +470,6 @@ export const siteData = {
         { icon: "Vercel", title: "Vercel", desc: "استضافة سريعة مع تكامل مستمر" },
         { icon: "Prisma", title: "Prisma", desc: "قواعد بيانات قوية ومرنة" },
         { icon: "NextAuth", title: "NextAuth.js", desc: "أنظمة تسجيل دخول آمنة" },
-        { icon: "Stripe", title: "Stripe", desc: "بوابات دفع آمنة" },
-        { icon: "Framer", title: "Framer Motion", desc: "تأثيرات حركية سينمائية" },
       ],
     },
 
@@ -314,14 +477,12 @@ export const siteData = {
       title: "الأسئلة الشائعة",
       subtitle: "إجابات واضحة لأهم الأسئلة التي تهم عملائنا",
       items: [
-        { q: "كم تكلفة تصميم موقع إلكتروني؟", a: "التكلفة تعتمد على حجم المشروع وتعقيده. نقدم عروض تبدأ من ٥,٠٠٠ جنيه للمواقع البسيطة، ويمكننا تقديم عرض تفصيلي بعد فهم متطلباتك." },
-        { q: "كم من الوقت يستغرق بناء الموقع؟", a: "المواقع البسيطة تستغرق ١-٢ أسبوع، المتوسطة ٣-٤ أسابيع، والمعقدة ٦-٨ أسابيع حسب المتطلبات." },
+        { q: "كم تكلفة تصميم موقع إلكتروني؟", a: "التكلفة تعتمد على حجم المشروع وتعقيده. نقدم عروض تبدأ من 5,000 جنيه للمواقع البسيطة، ويمكننا تقديم عرض تفصيلي بعد فهم متطلباتك." },
+        { q: "كم من الوقت يستغرق بناء الموقع؟", a: "المواقع البسيطة تستغرق 1-2 أسبوع، المتوسطة 3-4 أسابيع، والمعقدة 6-8 أسابيع حسب المتطلبات." },
         { q: "هل يمكنني تحديث الموقع بنفسي؟", a: "نعم، نوفر لك لوحة تحكم سهلة تمكنك من إضافة وتعديل المحتوى بكل سهولة دون حاجة لمبرمج." },
         { q: "هل تقدمون خدمات SEO؟", a: "نعم، نقدم تهيئة أساسية لمحركات البحث في جميع الباقات، ويمكننا تقديم خطة متكاملة لتحسين ظهورك." },
         { q: "ماذا بعد تسليم الموقع؟", a: "نقدم دعماً فنياً لمدة شهر في الباقة الأساسية، ويمكن الاتفاق على عقود دعم طويلة الأمد." },
         { q: "هل أسعاركم ثابتة؟", a: "الأسعار تقديرية للمعاينة، السعر النهائي يعتمد على تفاصيل مشروعك ويمكننا مناقشته." },
-        { q: "هل تدعمون اللغة العربية؟", a: "نعم، التصميم بالكامل باللغة العربية مع دعم كامل للواجهة والمحتوى." },
-        { q: "هل تقدمون ضمان على المشروع؟", a: "نعم، نقدم ضمان استعادة الحقوق إذا لم نلتزم بالمواصفات المتفق عليها." },
       ],
     },
 
@@ -353,13 +514,13 @@ export const siteData = {
       title: "معايير الجودة لدينا",
       subtitle: "نلتزم بأعلى المعايير لنقدم لك موقعاً يفوق توقعاتك",
       items: [
-        { icon: "Zap", title: "سرعة التحميل", desc: "أقل من ٢ ثانية للتحميل الكامل" },
+        { icon: "Zap", title: "سرعة التحميل", desc: "أقل من 2 ثانية للتحميل الكامل" },
         { icon: "Smartphone", title: "توافق مع الأجهزة", desc: "تجربة مثالية على الموبايل والتابلت والكمبيوتر" },
         { icon: "Search", title: "تحسين محركات البحث", desc: "تطبيق أفضل ممارسات السيو" },
         { icon: "Code2", title: "كود نظيف", desc: "هيكل برمجي منظم وسهل التطوير" },
         { icon: "Accessibility", title: "إمكانية الوصول", desc: "متوافق مع معايير وصول ذوي الاحتياجات الخاصة" },
         { icon: "Shield", title: "أمان عالي", desc: "حماية من الاختراقات والثغرات" },
-        { icon: "Palette", title: "تصميم جذاب", desc: "واجهات عصرية تخطف الأنظار" },
+        { icon: "PenTool", title: "تصميم جذاب", desc: "واجهات عصرية تخطف الأنظار" },
         { icon: "Users", title: "تجربة مستخدم", desc: "سهولة الاستخدام ترضي الزوار" },
       ],
     },
@@ -426,7 +587,7 @@ export const siteData = {
             image: "/images/demos/nexa-construction-1.svg",
             images: ["/images/demos/nexa-construction-1.svg", "/images/demos/nexa-construction-2.svg", "/images/demos/nexa-construction-3.svg"],
             deliverables: ["UI/UX احترافي", "صفحات مشاريع", "طلب معاينة", "SEO"],
-            year: "٢٠٢٤",
+            year: "2024",
             client: "شركة مقاولات كبرى",
           },
           {
@@ -437,7 +598,7 @@ export const siteData = {
             image: "/images/demos/prime-dental-clinic-1.svg",
             images: ["/images/demos/prime-dental-clinic-1.svg", "/images/demos/prime-dental-clinic-2.svg", "/images/demos/prime-dental-clinic-3.svg"],
             deliverables: ["تصميم راقي", "نظام حجوزات", "ملفات مرضى"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "Skyline Logistics",
@@ -447,7 +608,7 @@ export const siteData = {
             image: "/images/demos/skyline-logistics-1.svg",
             images: ["/images/demos/skyline-logistics-1.svg", "/images/demos/skyline-logistics-2.svg", "/images/demos/skyline-logistics-3.svg"],
             deliverables: ["تتبع شحنات", "عرض أسعار", "مناطق تغطية"],
-            year: "٢٠٢٣",
+            year: "2023",
           },
           {
             title: "Elite Law Firm",
@@ -457,7 +618,7 @@ export const siteData = {
             image: "/images/demos/elite-law-firm-1.svg",
             images: ["/images/demos/elite-law-firm-1.svg", "/images/demos/elite-law-firm-2.svg"],
             deliverables: ["تصميم فخم", "سير ذاتية", "مقالات قانونية"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "Harmony Interiors",
@@ -467,7 +628,7 @@ export const siteData = {
             image: "/images/demos/harmony-interiors-1.svg",
             images: ["/images/demos/harmony-interiors-1.svg", "/images/demos/harmony-interiors-2.svg", "/images/demos/harmony-interiors-3.svg"],
             deliverables: ["معرض صور", "تصميم جذاب", "استشارات"],
-            year: "٢٠٢٣",
+            year: "2023",
           },
           {
             title: "TechSolutions IT",
@@ -477,7 +638,7 @@ export const siteData = {
             image: "/images/demos/techsolutions-it-1.svg",
             images: ["/images/demos/techsolutions-it-1.svg", "/images/demos/techsolutions-it-2.svg"],
             deliverables: ["صفحات خدمات", "باقات", "طلب دعم"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
         ],
       },
@@ -494,7 +655,7 @@ export const siteData = {
             image: "/images/demos/urbanwear-store-1.svg",
             images: ["/images/demos/urbanwear-store-1.svg", "/images/demos/urbanwear-store-2.svg", "/images/demos/urbanwear-store-3.svg"],
             deliverables: ["فلترة منتجات", "سلة شراء", "مقاسات", "تقييمات"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "GadgetHub",
@@ -504,7 +665,7 @@ export const siteData = {
             image: "/images/demos/gadgethub-1.svg",
             images: ["/images/demos/gadgethub-1.svg", "/images/demos/gadgethub-2.svg", "/images/demos/gadgethub-3.svg"],
             deliverables: ["مقارنة منتجات", "تقييمات", "مواصفات"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "BeautyBox",
@@ -514,7 +675,7 @@ export const siteData = {
             image: "/images/demos/beautybox-1.svg",
             images: ["/images/demos/beautybox-1.svg", "/images/demos/beautybox-2.svg", "/images/demos/beautybox-3.svg"],
             deliverables: ["باقات", "اشتراكات", "منتجات"],
-            year: "٢٠٢٣",
+            year: "2023",
           },
           {
             title: "FreshMart",
@@ -524,7 +685,7 @@ export const siteData = {
             image: "/images/demos/freshmart-1.svg",
             images: ["/images/demos/freshmart-1.svg", "/images/demos/freshmart-2.svg"],
             deliverables: ["توصيل", "أقسام", "عروض"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "BookNest",
@@ -534,7 +695,7 @@ export const siteData = {
             image: "/images/demos/booknest-1.svg",
             images: ["/images/demos/booknest-1.svg", "/images/demos/booknest-2.svg", "/images/demos/booknest-3.svg"],
             deliverables: ["بحث متقدم", "تصنيفات", "مراجعات"],
-            year: "٢٠٢٣",
+            year: "2023",
           },
           {
             title: "FurniCasa",
@@ -544,7 +705,7 @@ export const siteData = {
             image: "/images/demos/furnicasa-1.svg",
             images: ["/images/demos/furnicasa-1.svg", "/images/demos/furnicasa-2.svg"],
             deliverables: ["معرض 3D", "تصميم أنيق", "حجوزات"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
         ],
       },
@@ -561,7 +722,7 @@ export const siteData = {
             image: "/images/demos/niletrip-tours-1.svg",
             images: ["/images/demos/niletrip-tours-1.svg", "/images/demos/niletrip-tours-2.svg", "/images/demos/niletrip-tours-3.svg"],
             deliverables: ["باقات سياحية", "حجوزات", "برامج"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "Sinai Camp",
@@ -571,7 +732,7 @@ export const siteData = {
             image: "/images/demos/sinai-camp-1.svg",
             images: ["/images/demos/sinai-camp-1.svg", "/images/demos/sinai-camp-2.svg", "/images/demos/sinai-camp-3.svg"],
             deliverables: ["حجوزات", "أنشطة", "معرض"],
-            year: "٢٠٢٣",
+            year: "2023",
           },
           {
             title: "Cairo Heritage",
@@ -581,17 +742,17 @@ export const siteData = {
             image: "/images/demos/cairo-heritage-1.svg",
             images: ["/images/demos/cairo-heritage-1.svg", "/images/demos/cairo-heritage-2.svg", "/images/demos/cairo-heritage-3.svg"],
             deliverables: ["مدونة", "جولات", "خرائط"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "LuxorStay",
             slug: "luxorstay",
-            tags: ["فنادق", "إقامة", "معابد"],
+            tags: ["فنادق", "اقامة", "معابد"],
             summary: "موقع حجوزات فنادق في الأقصر مع عروض سياحية",
             image: "/images/demos/luxorstay-1.svg",
             images: ["/images/demos/luxorstay-1.svg", "/images/demos/luxorstay-2.svg"],
             deliverables: ["فنادق", "عروض", "حجوزات"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
         ],
       },
@@ -608,7 +769,7 @@ export const siteData = {
             image: "/images/demos/learnify-academy-1.svg",
             images: ["/images/demos/learnify-academy-1.svg", "/images/demos/learnify-academy-2.svg", "/images/demos/learnify-academy-3.svg"],
             deliverables: ["دورات", "دروس فيديو", "اختبارات"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "Quranic Path",
@@ -618,7 +779,7 @@ export const siteData = {
             image: "/images/demos/quranic-path-1.svg",
             images: ["/images/demos/quranic-path-1.svg", "/images/demos/quranic-path-2.svg", "/images/demos/quranic-path-3.svg"],
             deliverables: ["مستويات", "اختبارات", "تلاوات"],
-            year: "٢٠٢٣",
+            year: "2023",
           },
           {
             title: "CodeStart Kids",
@@ -628,7 +789,7 @@ export const siteData = {
             image: "/images/demos/codestart-kids-1.svg",
             images: ["/images/demos/codestart-kids-1.svg", "/images/demos/codestart-kids-2.svg", "/images/demos/codestart-kids-3.svg"],
             deliverables: ["تمارين", "تحديات", "مستويات"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "LangMaster",
@@ -638,7 +799,7 @@ export const siteData = {
             image: "/images/demos/langmaster-1.svg",
             images: ["/images/demos/langmaster-1.svg", "/images/demos/langmaster-2.svg"],
             deliverables: ["دروس", "تمارين", "شهادات"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
         ],
       },
@@ -655,7 +816,7 @@ export const siteData = {
             image: "/images/demos/fittrack-app-1.svg",
             images: ["/images/demos/fittrack-app-1.svg", "/images/demos/fittrack-app-2.svg", "/images/demos/fittrack-app-3.svg"],
             deliverables: ["خطط تمارين", "متابعة", "إشعارات"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "Foodie Delivery",
@@ -665,7 +826,7 @@ export const siteData = {
             image: "/images/demos/foodie-delivery-1.svg",
             images: ["/images/demos/foodie-delivery-1.svg", "/images/demos/foodie-delivery-2.svg", "/images/demos/foodie-delivery-3.svg"],
             deliverables: ["سلة شراء", "تتبع طلب", "مطاعم"],
-            year: "٢٠٢٣",
+            year: "2023",
           },
           {
             title: "Clinic Booking",
@@ -675,7 +836,7 @@ export const siteData = {
             image: "/images/demos/clinic-booking-1.svg",
             images: ["/images/demos/clinic-booking-1.svg", "/images/demos/clinic-booking-2.svg", "/images/demos/clinic-booking-3.svg"],
             deliverables: ["حجوزات", "ملفات مرضى", "مواعيد"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "TaskFlow",
@@ -685,7 +846,7 @@ export const siteData = {
             image: "/images/demos/taskflow-1.svg",
             images: ["/images/demos/taskflow-1.svg", "/images/demos/taskflow-2.svg"],
             deliverables: ["مهام", "مشاريع", "تقارير"],
-            year: "٢٠٢٤",
+            year: "2024",
           },
           {
             title: "SocialApp",
@@ -695,7 +856,7 @@ export const siteData = {
             image: "/images/demos/socialapp-1.svg",
             images: ["/images/demos/socialapp-1.svg", "/images/demos/socialapp-2.svg", "/images/demos/socialapp-3.svg"],
             deliverables: ["منشورات", "تفاعلات", "رسائل"],
-            year: "٢٠٢٣",
+            year: "2023",
           },
         ],
       },
@@ -708,10 +869,10 @@ export const siteData = {
         { 
           name: "أحمد عبدالله", 
           role: "صاحب متجر UrbanWear", 
-          quote: "كنت محتاج متجر إلكتروني يبيع بجد، والنتيجة كانت مذهلة. المبيعات زادت ٨٥٪ في أول ٣ شهور. التعامل مع Kodia كان احترافي من أول يوم.",
+          quote: "كنت محتاج متجر إلكتروني يبيع بجد، والنتيجة كانت مذهلة. المبيعات زادت 85% في أول 3 شهور. التعامل مع Kodia كان احترافي من أول يوم.",
           rating: 5,
           avatar: "/images/avatars/avatar-1.jpg",
-          date: "فبراير ٢٠٢٤",
+          date: "فبراير 2024",
         },
         { 
           name: "د. منى سامي", 
@@ -719,7 +880,7 @@ export const siteData = {
           quote: "الدكتورة منى سعيدة جداً بالموقع. المرضى بيحجزوا أونلاين والتصميم راقي جداً. الفريق فهم احتياجاتنا بسرعة ونفذها بدقة.",
           rating: 5,
           avatar: "/images/avatars/avatar-2.jpg",
-          date: "يناير ٢٠٢٤",
+          date: "يناير 2024",
         },
         { 
           name: "محمد الجمل", 
@@ -727,23 +888,23 @@ export const siteData = {
           quote: "منصة الكورسات اللي صممها فريق Kodia فاقت توقعاتي. الطلاب مدحوا في سهولة الاستخدام والتصميم الجذاب. أكيد هكرر التجربة.",
           rating: 5,
           avatar: "/images/avatars/avatar-3.jpg",
-          date: "مارس ٢٠٢٤",
+          date: "مارس 2024",
         },
         { 
           name: "سارة عادل", 
           role: "مديرة تسويق - تكافل للتأمين", 
-          quote: "موقع الشركة الجديد ساهم في زيادة طلبات الاتصال بنسبة ١٤٠٪. الفريق متفهم ومتعاون والتسليم كان في الوقت المحدد.",
+          quote: "موقع الشركة الجديد ساهم في زيادة طلبات الاتصال بنسبة 140%. الفريق متفهم ومتعاون والتسليم كان في الوقت المحدد.",
           rating: 5,
           avatar: "/images/avatars/avatar-4.jpg",
-          date: "ديسمبر ٢٠٢٣",
+          date: "ديسمبر 2023",
         },
         { 
           name: "خالد السيد", 
           role: "صاحب FitTrack App", 
-          quote: "تصميم التطبيق كان تحفة. المستخدمين مدحوا في الواجهة والسهولة. التطبيق حصل على تقييم ٤.٨ في المتجر.",
+          quote: "تصميم التطبيق كان تحفة. المستخدمين مدحوا في الواجهة والسهولة. التطبيق حصل على تقييم 4.8 في المتجر.",
           rating: 5,
           avatar: "/images/avatars/avatar-5.jpg",
-          date: "نوفمبر ٢٠٢٣",
+          date: "نوفمبر 2023",
         },
         { 
           name: "نورا أحمد", 
@@ -751,12 +912,12 @@ export const siteData = {
           quote: "فريق Kodia فاهم جداً في تجربة المستخدم. المتجر سلس وسهل والطلبات زادت بشكل كبير. شكراً على المجهود الرائع.",
           rating: 5,
           avatar: "/images/avatars/avatar-6.jpg",
-          date: "أكتوبر ٢٠٢٣",
+          date: "أكتوبر 2023",
         },
       ],
     },
 
-    whyUs: {
+    why: {
       title: "لماذا Kodia هو الخيار الأمثل؟",
       subtitle: "نحن لا نصنع مواقع فقط، بل نبني أدوات نجاح حقيقية",
       items: [
@@ -766,18 +927,16 @@ export const siteData = {
         { icon: "Heart", title: "دعم مستمر", desc: "نبقى معك حتى بعد الإطلاق لضمان نجاحك" },
         { icon: "MessageCircle", title: "تواصل شفاف", desc: "نبقيك على اطلاع بكل خطوة في المشروع" },
         { icon: "Shield", title: "ضمان الجودة", desc: "نلتزم بالمواصفات ونضمن رضاك التام" },
-        { icon: "Clock", title: "تسليم سريع", desc: "نلتزم بالجدول الزمني المتفق عليه" },
-        { icon: "Award", title: "خبرة متنوعة", desc: "عملنا مع مختلف القطاعات يضمن فهم احتياجاتك" },
       ],
     },
 
     stats: [
-      { label: "سنوات خبرة", value: "٢+", icon: "Calendar" },
-      { label: "مشاريع منجزة", value: "٢٥+", icon: "Briefcase" },
-      { label: "عملاء سعداء", value: "٢٠+", icon: "Users" },
-      { label: "نماذج أعمال", value: "٣٠+", icon: "Layers" },
-      { label: "رضا العملاء", value: "٩٨٪", icon: "Heart" },
-      { label: "دعم فني", value: "٢٤/٧", icon: "Headphones" },
+      { label: "سنوات خبرة", value: "2+", icon: "Calendar" },
+      { label: "مشاريع منجزة", value: "15+", icon: "Briefcase" },
+      { label: "عملاء سعداء", value: "12+", icon: "Users" },
+      { label: "نماذج أعمال", value: "20+", icon: "Layers" },
+      { label: "رضا العملاء", value: "100%", icon: "Heart" },
+      { label: "دعم فني", value: "24/7", icon: "Headphones" },
     ],
 
     blog: {
@@ -785,18 +944,18 @@ export const siteData = {
       subtitle: "نصائح وأفكار لتطوير أعمالك الرقمية",
       items: [
         { 
-          title: "كيف تصمم موقعاً يحول الزوار إلى عملاء؟ ٩ خطوات عملية", 
+          title: "كيف تصمم موقعاً يحول الزوار إلى عملاء؟ 9 خطوات عملية", 
           category: "تصميم مواقع", 
           href: "/blog/website-conversion-tips",
-          date: "١٥ مارس ٢٠٢٤",
+          date: "15 مارس 2024",
           image: "/images/blog/blog-1.jpg",
           summary: "تعرف على أسرار تحسين التحويل في المواقع الإلكترونية وكيف تجعل زوارك يتواصلون معك.",
         },
         { 
-          title: "دليلك الشامل لاختيار أفضل استضافة لموقعك في ٢٠٢٤", 
+          title: "دليلك الشامل لاختيار أفضل استضافة لموقعك في 2024", 
           category: "استضافة", 
           href: "/blog/hosting-guide",
-          date: "١٠ مارس ٢٠٢٤",
+          date: "10 مارس 2024",
           image: "/images/blog/blog-2.jpg",
           summary: "مقارنة بين أفضل شركات الاستضافة وأهم العوامل التي تحدد اختيارك.",
         },
@@ -804,33 +963,25 @@ export const siteData = {
           title: "أساسيات تحسين محركات البحث للمبتدئين", 
           category: "SEO", 
           href: "/blog/seo-basics",
-          date: "٥ مارس ٢٠٢٤",
+          date: "5 مارس 2024",
           image: "/images/blog/blog-3.jpg",
-          summary: "١٠ خطوات أساسية لتحسين ظهور موقعك في نتائج البحث وجذب زوار مجانيين.",
+          summary: "10 خطوات أساسية لتحسين ظهور موقعك في نتائج البحث وجذب زوار مجانيين.",
         },
         { 
-          title: "تصميم تطبيقات الجوال: ٧ أخطاء تدمر تجربة المستخدم", 
+          title: "تصميم تطبيقات الجوال: 7 أخطاء تدمر تجربة المستخدم", 
           category: "تطبيقات", 
           href: "/blog/mobile-app-mistakes",
-          date: "١ مارس ٢٠٢٤",
+          date: "1 مارس 2024",
           image: "/images/blog/blog-4.jpg",
           summary: "احذر هذه الأخطاء الشائعة في تصميم التطبيقات التي تجعل المستخدمين يحذفون تطبيقك.",
         },
         { 
-          title: "لماذا تحتاج متجراً إلكترونياً في ٢٠٢٤؟", 
+          title: "لماذا تحتاج متجراً إلكترونياً في 2024؟", 
           category: "تجارة إلكترونية", 
           href: "/blog/why-ecommerce",
-          date: "٢٥ فبراير ٢٠٢٤",
+          date: "25 فبراير 2024",
           image: "/images/blog/blog-5.jpg",
-          summary: "٥ أسباب تجعل المتجر الإلكتروني ضرورة لأي نشاط تجاري اليوم.",
-        },
-        { 
-          title: "أهم اتجاهات تصميم المواقع في ٢٠٢٤", 
-          category: "تصميم", 
-          href: "/blog/web-design-trends-2024",
-          date: "٢٠ فبراير ٢٠٢٤",
-          image: "/images/blog/blog-6.jpg",
-          summary: "تعرف على أحدث صيحات التصميم التي تجعل موقعك عصرياً وجذاباً.",
+          summary: "5 أسباب تجعل المتجر الإلكتروني ضرورة لأي نشاط تجاري اليوم.",
         },
       ],
     },
@@ -842,25 +993,22 @@ export const siteData = {
         { label: "من نحن", href: "/about" },
         { label: "خدماتنا", href: "/services" },
         { label: "أعمالنا", href: "/portfolio" },
-        { label: "آراء العملاء", href: "/testimonials" },
         { label: "المدونة", href: "/blog" },
-        { label: "اتصل بنا", href: "/contact" },
       ],
       services: [
-        { label: "تصميم مواقع شركات", href: "/services/web-design" },
+        { label: "تصميم مواقع", href: "/services/web-design" },
         { label: "متاجر إلكترونية", href: "/services/ecommerce" },
         { label: "تطبيقات موبايل", href: "/services/mobile-apps" },
         { label: "UI/UX تصميم", href: "/services/ui-ux" },
         { label: "تحسين SEO", href: "/services/seo" },
-        { label: "الدعم الفني", href: "/services/support" },
       ],
       contact: {
-        phone: "٠١٢٠٧٠٠٥٤٩٥",
+        phone: "01207005495",
         email: "kodia.web.design@gmail.com",
         whatsapp: "https://wa.me/201207005495",
-        address: "القاهرة، مصر - خدمة أونلاين لجميع المحافظات والدول العربية",
+        address: "القاهرة، مصر - خدمة أونلاين لجميع المحافظات",
       },
-      copyright: "© ٢٠٢٤ Kodia Web Design. جميع الحقوق محفوظة.",
+      copyright: "© 2024 Kodia Web Design. جميع الحقوق محفوظة.",
       designCredit: "تصميم وتطوير Kodia Web Design",
     },
   },
@@ -870,19 +1018,17 @@ export const siteData = {
     about: {
       title: "من نحن - Kodia Web Design",
       subtitle: "شريكك الرقمي الموثوق لبناء حضور قوي على الإنترنت",
-      story: "بدأنا رحلتنا في ٢٠٢٣ بهدف بسيط: تقديم تصاميم رقمية راقية تجمع بين الجمال والوظيفة. اليوم، نفخر بثقة عملائنا ونعمل على تطوير أنفسنا باستمرار.",
+      story: "بدأنا رحلتنا في 2023 بهدف بسيط: تقديم تصاميم رقمية راقية تجمع بين الجمال والوظيفة. اليوم، نفخر بثقة عملائنا ونعمل على تطوير أنفسنا باستمرار.",
       mission: "نحن نؤمن أن التصميم الجيد هو استثمار، وليس تكلفة. نساعد الشركات على بناء هوية رقمية قوية تحقق أهدافها وتنمي أعمالها.",
-      vision: "نسعى لنكون الشريك الرقمي الأول للشركات الناشئة والمتوسطة في مصر والوطن العربي.",
       values: [
         { title: "الجودة", desc: "نقدم أفضل ما لدينا في كل مشروع" },
         { title: "الشفافية", desc: "نبقيك على اطلاع بكل خطوة" },
         { title: "الالتزام", desc: "نفي بوعودنا ونسلم في الوقت المحدد" },
         { title: "الاحترافية", desc: "نعمل بأحدث المنهجيات والأدوات" },
-        { title: "الإبداع", desc: "نفكر خارج الصندوق لنقدم تصاميم مميزة" },
       ],
       team: [
-        { name: "أحمد كوديا", role: "مؤسس ومصمم UI/UX", bio: "خبرة ٥ سنوات في تصميم وتطوير المواقع، شغوف بإنشاء تجارب مستخدم استثنائية.", avatar: "/images/team/ahmed.jpg" },
-        { name: "فريق العمل", role: "مطورين ومصممين", bio: "فريق متكامل من الخبراء في مختلف المجالات التقنية.", avatar: "/images/team/team.jpg" },
+        { name: "أحمد كوديا", role: "مؤسس ومصمم UI/UX", bio: "خبرة 5 سنوات في تصميم وتطوير المواقع", avatar: "/images/team/ahmed.jpg" },
+        { name: "فريق العمل", role: "مطورين ومصممين", bio: "فريق متكامل من الخبراء", avatar: "/images/team/team.jpg" },
       ],
     },
     
@@ -896,25 +1042,6 @@ export const siteData = {
         service: "الخدمة المطلوبة",
         message: "رسالتك",
         submit: "إرسال",
-      },
-      info: {
-        response: "نرد خلال ٢٤ ساعة",
-        workingHours: "السبت - الخميس، ٩ ص - ٦ م",
-      },
-    },
-
-    quote: {
-      title: "طلب عرض سعر",
-      subtitle: "أخبرنا عن مشروعك وسنقدم لك عرضاً تفصيلياً",
-      form: {
-        name: "الاسم",
-        email: "البريد الإلكتروني",
-        phone: "رقم الهاتف",
-        projectType: "نوع المشروع",
-        budget: "الميزانية التقريبية",
-        timeline: "الإطار الزمني",
-        details: "تفاصيل المشروع",
-        submit: "طلب عرض السعر",
       },
     },
   },

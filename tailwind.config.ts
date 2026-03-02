@@ -7,316 +7,107 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./src/lib/**/*.{js,ts,jsx,tsx}",
     "./src/pages/**/*.{js,ts,jsx,tsx}",
-    "./src/hooks/**/*.{js,ts,jsx,tsx}",
-    "./src/utils/**/*.{js,ts,jsx,tsx}",
-    "./src/types/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
-<<<<<<< HEAD
-      // ✅ ألوان مريحة للعين - بدون أحمر أو بنفسجي صارخ
+      // ألوان مخصصة للعلامة التجارية
       colors: {
-        // Brand tokens - ألوان هادئة ومحترفة
-=======
-      // ألوان مخصصة للعلامة التجارية - هوية بنفسجية فاخرة
-      colors: {
-        // ✅ Brand tokens from CSS variables
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
-        brand: "rgb(var(--brand) / <alpha-value>)",
-        "brand-light": "rgb(var(--brand-light) / <alpha-value>)",
-        "brand-dark": "rgb(var(--brand-dark) / <alpha-value>)",
-
-<<<<<<< HEAD
-        // ✅ Primary palette - أزرق هادئ ومريح
         primary: {
-          DEFAULT: "#2563EB", // أزرق معتدل
-          50: "#EFF6FF", // خلفيات فاتحة جداً
-          100: "#DBEAFE", // خلفيات فاتحة
-          200: "#BFDBFE", // حدود فاتحة
-          300: "#93C5FD", // عناصر ثانوية
-          400: "#60A5FA", // Hover states
-          500: "#3B82F6", // اللون الأساسي الفاتح
-          600: "#2563EB", // اللون الأساسي
-          700: "#1D4ED8", // عناصر نشطة
-          800: "#1E40AF", // نصوص داكنة
-          900: "#1E3A8A", // خلفيات داكنة
-          950: "#172554", // داكن جداً
-=======
-        // ✅ Primary palette
-        primary: {
-          DEFAULT: "#8b5cf6",
-          50: "#f5f3ff",
-          100: "#ede9fe",
-          200: "#ddd6fe",
-          300: "#c4b5fd",
-          400: "#a78bfa",
-          500: "#8b5cf6",
-          600: "#7c3aed",
-          700: "#6d28d9",
-          800: "#5b21b6",
-          900: "#4c1d95",
-          950: "#2e1065",
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+          DEFAULT: "#3b82f6",
+          50: "#eff6ff",
+          100: "#dbeafe",
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#60a5fa",
+          500: "#3b82f6",
+          600: "#2563eb",
+          700: "#1d4ed8",
+          800: "#1e40af",
+          900: "#1e3a8a",
+          950: "#172554",
         },
-        
-        // ✅ Secondary palette - أخضر مريح وزيتوني
         secondary: {
-<<<<<<< HEAD
-          DEFAULT: "#059669", // أخضر زمردي هادئ
-          50: "#ECFDF5",
-          100: "#D1FAE5",
-          200: "#A7F3D0",
-          300: "#6EE7B7",
-          400: "#34D399",
-          500: "#10B981",
-          600: "#059669",
-          700: "#047857",
-          800: "#065F46",
-          900: "#064E3B",
-          950: "#022C22",
-=======
-          DEFAULT: "#ec4899",
-          50: "#fdf2f8",
-          100: "#fce7f3",
-          200: "#fbcfe8",
-          300: "#f9a8d4",
-          400: "#f472b6",
-          500: "#ec4899",
-          600: "#db2777",
-          700: "#be185d",
-          800: "#9d174d",
-          900: "#831843",
-          950: "#500724",
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+          DEFAULT: "#a855f7",
+          50: "#faf5ff",
+          100: "#f3e8ff",
+          200: "#e9d5ff",
+          300: "#d8b4fe",
+          400: "#c084fc",
+          500: "#a855f7",
+          600: "#9333ea",
+          700: "#7e22ce",
+          800: "#6b21a5",
+          900: "#581c87",
+          950: "#3b0764",
         },
-        
-        // ✅ Accent - أزرق سماوي/نعناعي هادئ
         accent: {
-<<<<<<< HEAD
-          DEFAULT: "#0891B2", // أزرق سماوي هادئ
-          50: "#ECFEFF",
-          100: "#CFFAFE",
-          200: "#A5F3FC",
-          300: "#67E8F9",
-          400: "#22D3EE",
-          500: "#06B6D4",
-          600: "#0891B2",
-          700: "#0E7490",
-          800: "#155E75",
-          900: "#164E63",
-          950: "#083344",
+          DEFAULT: "#f97316",
+          50: "#fff7ed",
+          100: "#ffedd5",
+          200: "#fed7aa",
+          300: "#fdba74",
+          400: "#fb923c",
+          500: "#f97316",
+          600: "#ea580c",
+          700: "#c2410c",
+          800: "#9a3412",
+          900: "#7c2d12",
+          950: "#431407",
         },
-
-        // ✅ Neutral - ألوان محايدة دافئة ومريحة
-        neutral: {
-          50: "#F8FAFC",
-          100: "#F1F5F9",
-          200: "#E2E8F0",
-          300: "#CBD5E1",
-          400: "#94A3B8",
-          500: "#64748B",
-          600: "#475569",
-          700: "#334155",
-          800: "#1E293B",
-          900: "#0F172A",
-          950: "#020617",
-        },
-
-        // ✅ Semantic colors محسنة - أكثر هدوءاً
         success: {
-          DEFAULT: "#059669", // أخضر هادئ
-          50: "#F0FDF4",
-          100: "#DCFCE7",
-          200: "#BBF7D0",
-          300: "#86EFAC",
-          400: "#4ADE80",
-          500: "#22C55E",
-          600: "#16A34A",
-          700: "#15803D",
+          DEFAULT: "#22c55e",
+          50: "#f0fdf4",
+          100: "#dcfce7",
+          200: "#bbf7d0",
+          300: "#86efac",
+          400: "#4ade80",
+          500: "#22c55e",
+          600: "#16a34a",
+          700: "#15803d",
           800: "#166534",
-          900: "#14532D",
-          950: "#052E16",
+          900: "#14532d",
+          950: "#052e16",
         },
         warning: {
-          DEFAULT: "#D97706", // برتقالي هادئ (أقل صراخاً)
-          50: "#FFFBEB",
-          100: "#FEF3C7",
-          200: "#FDE68A",
-          300: "#FCD34D",
-          400: "#FBBF24",
-          500: "#F59E0B",
-          600: "#D97706",
-          700: "#B45309",
-          800: "#92400E",
-          900: "#78350F",
-          950: "#451A03",
-=======
-          DEFAULT: "#f59e0b",
-          50: "#fffbeb",
-          100: "#fef3c7",
-          200: "#fde68a",
-          300: "#fcd34d",
-          400: "#fbbf24",
-          500: "#f59e0b",
-          600: "#d97706",
-          700: "#b45309",
-          800: "#92400e",
-          900: "#78350f",
-          950: "#451a03",
-        },
-
-        // ✅ Extended palette
-        violet: {
-          50: "#f5f3ff",
-          100: "#ede9fe",
-          200: "#ddd6fe",
-          300: "#c4b5fd",
-          400: "#a78bfa",
-          500: "#8b5cf6",
-          600: "#7c3aed",
-          700: "#6d28d9",
-          800: "#5b21b6",
-          900: "#4c1d95",
-          950: "#2e1065",
-        },
-        fuchsia: {
-          50: "#fdf4ff",
-          100: "#fae8ff",
-          200: "#f5d0fe",
-          300: "#f0abfc",
-          400: "#e879f9",
-          500: "#d946ef",
-          600: "#c026d3",
-          700: "#a21caf",
-          800: "#86198f",
-          900: "#701a75",
-          950: "#4a044e",
-        },
-        amber: {
-          50: "#fffbeb",
-          100: "#fef3c7",
-          200: "#fde68a",
-          300: "#fcd34d",
-          400: "#fbbf24",
-          500: "#f59e0b",
-          600: "#d97706",
-          700: "#b45309",
-          800: "#92400e",
-          900: "#78350f",
-          950: "#451a03",
-        },
-
-        // ✅ Semantic colors
-        success: {
-          DEFAULT: "#10b981",
-          50: "#ecfdf5",
-          100: "#d1fae5",
-          200: "#a7f3d0",
-          300: "#6ee7b7",
-          400: "#34d399",
-          500: "#10b981",
-          600: "#059669",
-          700: "#047857",
-          800: "#065f46",
-          900: "#064e3b",
-          950: "#022c22",
-        },
-        warning: {
-          DEFAULT: "#f59e0b",
-          50: "#fffbeb",
-          100: "#fef3c7",
-          200: "#fde68a",
-          300: "#fcd34d",
-          400: "#fbbf24",
-          500: "#f59e0b",
-          600: "#d97706",
-          700: "#b45309",
-          800: "#92400e",
-          900: "#78350f",
-          950: "#451a03",
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+          DEFAULT: "#eab308",
+          50: "#fefce8",
+          100: "#fef9c3",
+          200: "#fef08a",
+          300: "#fde047",
+          400: "#facc15",
+          500: "#eab308",
+          600: "#ca8a04",
+          700: "#a16207",
+          800: "#854d0e",
+          900: "#713f12",
+          950: "#422006",
         },
         danger: {
-          DEFAULT: "#B91C1C", // أحمر هادئ (أغمق وأقل إزعاجاً)
-          50: "#FEF2F2",
-          100: "#FEE2E2",
-          200: "#FECACA",
-          300: "#FCA5A5",
-          400: "#F87171",
-          500: "#EF4444",
-          600: "#DC2626",
-          700: "#B91C1C",
-          800: "#991B1B",
-          900: "#7F1D1D",
-          950: "#450A0A",
-        },
-        info: {
-          DEFAULT: "#2563EB", // أزرق هادئ
-          50: "#EFF6FF",
-          100: "#DBEAFE",
-          200: "#BFDBFE",
-          300: "#93C5FD",
-          400: "#60A5FA",
-          500: "#3B82F6",
-          600: "#2563EB",
-          700: "#1D4ED8",
-          800: "#1E40AF",
-          900: "#1E3A8A",
-          950: "#172554",
-        },
-
-        // ألوان إضافية مريحة
-        teal: {
-          50: "#F0FDFA",
-          100: "#CCFBF1",
-          200: "#99F6E4",
-          300: "#5EEAD4",
-          400: "#2DD4BF",
-          500: "#14B8A6",
-          600: "#0D9488",
-          700: "#0F766E",
-          800: "#115E59",
-          900: "#134E4A",
-          950: "#042F2E",
-        },
-        blue: {
-          50: "#EFF6FF",
-          100: "#DBEAFE",
-          200: "#BFDBFE",
-          300: "#93C5FD",
-          400: "#60A5FA",
-          500: "#3B82F6",
-          600: "#2563EB",
-          700: "#1D4ED8",
-          800: "#1E40AF",
-          900: "#1E3A8A",
-          950: "#172554",
-        },
-        green: {
-          50: "#F0FDF4",
-          100: "#DCFCE7",
-          200: "#BBF7D0",
-          300: "#86EFAC",
-          400: "#4ADE80",
-          500: "#22C55E",
-          600: "#16A34A",
-          700: "#15803D",
-          800: "#166534",
-          900: "#14532D",
-          950: "#052E16",
+          DEFAULT: "#ef4444",
+          50: "#fef2f2",
+          100: "#fee2e2",
+          200: "#fecaca",
+          300: "#fca5a5",
+          400: "#f87171",
+          500: "#ef4444",
+          600: "#dc2626",
+          700: "#b91c1c",
+          800: "#991b1b",
+          900: "#7f1d1d",
+          950: "#450a0a",
         },
         gray: {
-          50: "#F8FAFC",
-          100: "#F1F5F9",
-          200: "#E2E8F0",
-          300: "#CBD5E1",
-          400: "#94A3B8",
-          500: "#64748B",
-          600: "#475569",
-          700: "#334155",
-          800: "#1E293B",
-          900: "#0F172A",
-          950: "#020617",
+          50: "#f9fafb",
+          100: "#f3f4f6",
+          200: "#e5e7eb",
+          300: "#d1d5db",
+          400: "#9ca3af",
+          500: "#6b7280",
+          600: "#4b5563",
+          700: "#374151",
+          800: "#1f2937",
+          900: "#111827",
+          950: "#030712",
         },
       },
 
@@ -324,7 +115,6 @@ export default {
       fontFamily: {
         sans: [
           "Cairo",
-          "Tajawal",
           "system-ui",
           "-apple-system",
           "BlinkMacSystemFont",
@@ -336,174 +126,17 @@ export default {
         ],
         display: ["Cairo", "system-ui", "sans-serif"],
         arabic: ["Cairo", "Tajawal", "system-ui", "sans-serif"],
-        cairo: ["Cairo", "sans-serif"],
-        tajawal: ["Tajawal", "sans-serif"],
         mono: [
           "ui-monospace",
           "SFMono-Regular",
           "Menlo",
           "Monaco",
           "Consolas",
-          "Liberation Mono",
-          "Courier New",
           "monospace",
         ],
       },
 
-<<<<<<< HEAD
-      // خلفيات متدرجة هادئة
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "gradient-primary": "linear-gradient(to right, #2563EB, #059669)", // أزرق إلى أخضر
-        "gradient-secondary": "linear-gradient(to right, #059669, #0891B2)", // أخضر إلى سماوي
-        "gradient-accent": "linear-gradient(to right, #0891B2, #2563EB)", // سماوي إلى أزرق
-        "gradient-success": "linear-gradient(to right, #22C55E, #16A34A)",
-        "gradient-warning": "linear-gradient(to right, #F59E0B, #D97706)",
-        "gradient-danger": "linear-gradient(to right, #EF4444, #DC2626)",
-        "gradient-info": "linear-gradient(to right, #3B82F6, #2563EB)",
-        "gradient-dark": "linear-gradient(to right, #1E293B, #0F172A)",
-        "gradient-teal": "linear-gradient(to right, #14B8A6, #0D9488)",
-        "gradient-blue": "linear-gradient(to right, #3B82F6, #2563EB)",
-        "gradient-green": "linear-gradient(to right, #22C55E, #16A34A)",
-        "gradient-blue-green": "linear-gradient(to right, #2563EB, #059669)",
-        "gradient-green-teal": "linear-gradient(to right, #059669, #0891B2)",
-        "gradient-teal-blue": "linear-gradient(to right, #0891B2, #2563EB)",
-      },
-
-      // ظلال ناعمة
-      boxShadow: {
-        xs: "0 1px 2px 0 rgb(0 0 0 / 0.03)",
-        sm: "0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05)",
-        md: "0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05)",
-        lg: "0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05)",
-        xl: "0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05)",
-        "2xl": "0 25px 50px -12px rgb(0 0 0 / 0.15)",
-        inner: "inset 0 2px 4px 0 rgb(0 0 0 / 0.03)",
-        soft: "0 2px 8px rgba(0, 0, 0, 0.03)",
-        medium: "0 4px 12px rgba(0, 0, 0, 0.05)",
-        hard: "0 8px 24px rgba(0, 0, 0, 0.08)",
-        glow: "0 0 20px rgba(37, 99, 235, 0.15)", // glow أزرق هادئ
-        "glow-lg": "0 0 30px rgba(37, 99, 235, 0.2)",
-        "glow-blue": "0 0 20px rgba(37, 99, 235, 0.2)",
-        "glow-green": "0 0 20px rgba(5, 150, 105, 0.15)",
-        "glow-teal": "0 0 20px rgba(8, 145, 178, 0.15)",
-        "glow-primary": "0 0 20px rgba(37, 99, 235, 0.2)",
-        "glow-secondary": "0 0 20px rgba(5, 150, 105, 0.15)",
-        none: "none",
-      },
-
-      // أنيميشن
-      animation: {
-        "fade-in": "fadeIn 0.5s ease-in-out",
-        "fade-out": "fadeOut 0.5s ease-in-out",
-        "slide-in": "slideIn 0.3s ease-out",
-        "slide-out": "slideOut 0.3s ease-out",
-        "bounce-slow": "bounce 3s infinite",
-        "pulse-slow": "pulse 3s infinite",
-        "spin-slow": "spin 3s linear infinite",
-        float: "float 6s ease-in-out infinite",
-        "float-slow": "float 8s ease-in-out infinite",
-        "pulse-ring": "pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        gradient: "gradient 3s ease infinite",
-        shimmer: "shimmer 2s linear infinite",
-        "scale-up": "scaleUp 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        "scale-down": "scaleDown 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        "slide-up": "slideUp 0.4s ease-out",
-        "slide-down": "slideDown 0.4s ease-out",
-        "slide-in-right": "slideInRight 0.4s ease-out",
-        "slide-in-left": "slideInLeft 0.4s ease-out",
-        wiggle: "wiggle 1s ease-in-out infinite",
-        glow: "glow 2s ease-in-out infinite",
-        "glow-primary": "glowPrimary 2s ease-in-out infinite",
-        "glow-secondary": "glowSecondary 2s ease-in-out infinite",
-        "pulse-soft": "pulseSoft 2s ease-in-out infinite",
-        "pulse-fast": "pulse 1s ease-in-out infinite",
-      },
-
-      // إطارات المفاتيح
-      keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
-        fadeOut: {
-          "0%": { opacity: "1" },
-          "100%": { opacity: "0" },
-        },
-        slideIn: {
-          "0%": { transform: "translateX(100%)" },
-          "100%": { transform: "translateX(0)" },
-        },
-        slideOut: {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-100%)" },
-        },
-        slideInRight: {
-          "0%": { transform: "translateX(30px)", opacity: "0" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
-        },
-        slideInLeft: {
-          "0%": { transform: "translateX(-30px)", opacity: "0" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-20px)" },
-        },
-        pulseRing: {
-          "0%": { transform: "scale(0.8)", opacity: "0.5" },
-          "100%": { transform: "scale(1.5)", opacity: "0" },
-        },
-        gradient: {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-        },
-        shimmer: {
-          "100%": { transform: "translateX(100%)" },
-        },
-        scaleUp: {
-          "0%": { transform: "scale(0.9)", opacity: "0" },
-          "100%": { transform: "scale(1)", opacity: "1" },
-        },
-        scaleDown: {
-          "0%": { transform: "scale(1.1)", opacity: "1" },
-          "100%": { transform: "scale(1)", opacity: "0" },
-        },
-        slideUp: {
-          "0%": { transform: "translateY(20px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
-        slideDown: {
-          "0%": { transform: "translateY(-20px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
-        wiggle: {
-          "0%, 100%": { transform: "rotate(-3deg)" },
-          "50%": { transform: "rotate(3deg)" },
-        },
-        glow: {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(37, 99, 235, 0.15)" },
-          "50%": { boxShadow: "0 0 30px rgba(37, 99, 235, 0.25)" },
-        },
-        glowPrimary: {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(37, 99, 235, 0.2)" },
-          "50%": { boxShadow: "0 0 30px rgba(37, 99, 235, 0.3)" },
-        },
-        glowSecondary: {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(5, 150, 105, 0.15)" },
-          "50%": { boxShadow: "0 0 30px rgba(5, 150, 105, 0.25)" },
-        },
-        pulseSoft: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.8" },
-        },
-      },
-
-      // باقي الإعدادات
-=======
-      // أحجام خطوط
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+      // أحجام خطوط مخصصة
       fontSize: {
         xxs: "0.625rem",
         xs: "0.75rem",
@@ -520,11 +153,8 @@ export default {
         "8xl": "6rem",
         "9xl": "8rem",
       },
-<<<<<<< HEAD
-=======
 
-      // مسافات
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+      // مسافات مخصصة
       spacing: {
         0: "0",
         1: "0.25rem",
@@ -548,10 +178,8 @@ export default {
         80: "20rem",
         96: "24rem",
       },
-<<<<<<< HEAD
-=======
 
-      // أنيميشن
+      // أنيميشن مخصصة
       animation: {
         "fade-in": "fadeIn 0.5s ease-in-out",
         "fade-out": "fadeOut 0.5s ease-in-out",
@@ -561,31 +189,21 @@ export default {
         "pulse-slow": "pulse 3s infinite",
         "spin-slow": "spin 3s linear infinite",
         float: "float 6s ease-in-out infinite",
-        "float-slow": "float 8s ease-in-out infinite",
         "pulse-ring": "pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         gradient: "gradient 3s ease infinite",
         shimmer: "shimmer 2s linear infinite",
-        "scale-up": "scaleUp 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        "scale-down": "scaleDown 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        "scale-up": "scaleUp 0.2s ease-out",
+        "scale-down": "scaleDown 0.2s ease-out",
         "slide-up": "slideUp 0.4s ease-out",
         "slide-down": "slideDown 0.4s ease-out",
-        "slide-in-right": "slideInRight 0.4s ease-out",
-        "slide-in-left": "slideInLeft 0.4s ease-out",
         wiggle: "wiggle 1s ease-in-out infinite",
         glow: "glow 2s ease-in-out infinite",
-        "glow-purple": "glowPurple 2s ease-in-out infinite",
       },
 
-      // إطارات المفاتيح
+      // إطارات المفاتيح للأنيميشن
       keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
-        fadeOut: {
-          "0%": { opacity: "1" },
-          "100%": { opacity: "0" },
-        },
+        fadeIn: { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
+        fadeOut: { "0%": { opacity: "1" }, "100%": { opacity: "0" } },
         slideIn: {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(0)" },
@@ -593,14 +211,6 @@ export default {
         slideOut: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-100%)" },
-        },
-        slideInRight: {
-          "0%": { transform: "translateX(30px)", opacity: "0" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
-        },
-        slideInLeft: {
-          "0%": { transform: "translateX(-30px)", opacity: "0" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
         },
         float: {
           "0%, 100%": { transform: "translateY(0)" },
@@ -614,9 +224,7 @@ export default {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
         },
-        shimmer: {
-          "100%": { transform: "translateX(100%)" },
-        },
+        shimmer: { "100%": { transform: "translateX(100%)" } },
         scaleUp: {
           "0%": { transform: "scale(0.9)", opacity: "0" },
           "100%": { transform: "scale(1)", opacity: "1" },
@@ -638,16 +246,12 @@ export default {
           "50%": { transform: "rotate(3deg)" },
         },
         glow: {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(139, 92, 246, 0.3)" },
-          "50%": { boxShadow: "0 0 40px rgba(139, 92, 246, 0.5)" },
-        },
-        glowPurple: {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(139, 92, 246, 0.4)" },
-          "50%": { boxShadow: "0 0 30px rgba(139, 92, 246, 0.6)" },
+          "0%, 100%": { boxShadow: "0 0 20px rgba(59,130,246,0.5)" },
+          "50%": { boxShadow: "0 0 40px rgba(59,130,246,0.8)" },
         },
       },
 
-      // ظلال
+      // ظلال مخصصة
       boxShadow: {
         xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
         sm: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
@@ -656,43 +260,33 @@ export default {
         xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
         "2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
         inner: "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
-        soft: "0 2px 8px rgba(0, 0, 0, 0.05)",
-        medium: "0 4px 12px rgba(0, 0, 0, 0.08)",
-        hard: "0 8px 24px rgba(0, 0, 0, 0.12)",
-        glow: "0 0 20px rgba(139, 92, 246, 0.3)",
-        "glow-lg": "0 0 30px rgba(139, 92, 246, 0.4)",
-        "glow-purple": "0 0 20px rgba(139, 92, 246, 0.4)",
-        "glow-fuchsia": "0 0 20px rgba(236, 72, 153, 0.4)",
-        "glow-gold": "0 0 20px rgba(245, 158, 11, 0.3)",
+        glow: "0 0 20px rgba(59,130,246,0.5)",
+        "glow-lg": "0 0 40px rgba(59,130,246,0.5)",
+        "glow-purple": "0 0 20px rgba(168,85,247,0.5)",
+        "glow-blue": "0 0 20px rgba(59,130,246,0.5)",
         none: "none",
       },
 
-      // خلفيات متدرجة
+      // خلفيات متدرجة مخصصة
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "gradient-primary": "linear-gradient(to right, #8b5cf6, #ec4899)",
-        "gradient-secondary": "linear-gradient(to right, #ec4899, #f59e0b)",
-        "gradient-accent": "linear-gradient(to right, #f59e0b, #8b5cf6)",
-        "gradient-success": "linear-gradient(to right, #10b981, #059669)",
-        "gradient-warning": "linear-gradient(to right, #f59e0b, #d97706)",
+        "gradient-primary": "linear-gradient(to right, #3b82f6, #a855f7)",
+        "gradient-secondary": "linear-gradient(to right, #a855f7, #ec4899)",
+        "gradient-accent": "linear-gradient(to right, #f97316, #f59e0b)",
+        "gradient-success": "linear-gradient(to right, #22c55e, #16a34a)",
+        "gradient-warning": "linear-gradient(to right, #eab308, #f59e0b)",
         "gradient-danger": "linear-gradient(to right, #ef4444, #dc2626)",
         "gradient-dark": "linear-gradient(to right, #1f2937, #111827)",
-        "gradient-purple": "linear-gradient(to right, #8b5cf6, #7c3aed)",
-        "gradient-fuchsia": "linear-gradient(to right, #ec4899, #db2777)",
-        "gradient-amber": "linear-gradient(to right, #f59e0b, #d97706)",
-        "gradient-violet-fuchsia": "linear-gradient(to right, #8b5cf6, #ec4899)",
-        "gradient-fuchsia-amber": "linear-gradient(to right, #ec4899, #f59e0b)",
-        "gradient-amber-violet": "linear-gradient(to right, #f59e0b, #8b5cf6)",
       },
 
-      // شبكات
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
+      // شبكات مخصصة
       gridTemplateColumns: {
         "auto-fit": "repeat(auto-fit, minmax(200px, 1fr))",
         "auto-fill": "repeat(auto-fill, minmax(200px, 1fr))",
-        gallery: "repeat(auto-fill, minmax(280px, 1fr))",
       },
+
+      // زمن الانتقال
       transitionDuration: {
         0: "0ms",
         200: "200ms",
@@ -707,78 +301,14 @@ export default {
         2000: "2000ms",
         3000: "3000ms",
       },
+
+      // منحنيات الانتقال
       transitionTimingFunction: {
         "in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",
         "out-expo": "cubic-bezier(0.19, 1, 0.22, 1)",
         "in-out-expo": "cubic-bezier(0.87, 0, 0.13, 1)",
         soft: "cubic-bezier(0.4, 0, 0.2, 1)",
         bounce: "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
-        smooth: "cubic-bezier(0.25, 0.1, 0.25, 1)",
-        elastic: "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
-      },
-<<<<<<< HEAD
-=======
-
-      // نصف قطر الحدود
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
-      borderRadius: {
-        none: "0",
-        sm: "0.125rem",
-        DEFAULT: "0.25rem",
-        md: "0.375rem",
-        lg: "0.5rem",
-        xl: "0.75rem",
-        "2xl": "1rem",
-        "3xl": "1.5rem",
-        "4xl": "2rem",
-        full: "9999px",
-      },
-<<<<<<< HEAD
-=======
-
-      // الشفافية
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
-      opacity: {
-        0: "0",
-        5: "0.05",
-        10: "0.1",
-        20: "0.2",
-        25: "0.25",
-        30: "0.3",
-        40: "0.4",
-        50: "0.5",
-        60: "0.6",
-        70: "0.7",
-        75: "0.75",
-        80: "0.8",
-        90: "0.9",
-        95: "0.95",
-        100: "1",
-      },
-<<<<<<< HEAD
-=======
-
-      // Z-Index
->>>>>>> 6b0f7410fa10801cb29b683cf6e81bde0bc0b564
-      zIndex: {
-        0: "0",
-        10: "10",
-        20: "20",
-        30: "30",
-        40: "40",
-        50: "50",
-        60: "60",
-        70: "70",
-        80: "80",
-        90: "90",
-        100: "100",
-        auto: "auto",
-        dropdown: "1000",
-        sticky: "1020",
-        fixed: "1030",
-        modal: "1040",
-        popover: "1050",
-        tooltip: "1060",
       },
     },
   },
